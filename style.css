@@ -32,19 +32,67 @@ main {
   bottom: 0;
 }
 
+.controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.controls.align-center {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.controls.align-right {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.controls.align-stretch {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 .btn {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  height: 44px;
+  padding: 5px 20px;
+  font: 700 16px/24px "Ubuntu", sans-serif;
+  border-radius: 22px;
   outline: none;
-  border: none;
+  border: 4px solid;
   background-color: transparent;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn.cancel-btn {
+  color: lightgrey;
+  border-color: lightgrey;
+}
+
+.btn.create-btn {
+  color: green;
+  border-color: green;
 }
 
 .add-note-btn {
-  position: relative;
   display: block;
   width: 44px;
-  height: 44px;
   margin: 3px auto;
-  border-radius: 50%;
+  border: none;
   background-color: #fff;
 }
 
@@ -61,5 +109,72 @@ main {
 .add-note-btn:after {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
+}
+
+.window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 10px;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.window form {
+  position: relative;
+  z-index: 1;
+}
+
+.window.active-window {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 10;
+}
+
+.window.active-window#add-note-form:before {
+  -webkit-transform: translateX(-50%) scale(25);
+          transform: translateX(-50%) scale(25);
+}
+
+#add-note-form:before {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  -webkit-transform: translateX(-50%) scale(1);
+          transform: translateX(-50%) scale(1);
+  background-color: #fff;
+  -webkit-transition: -webkit-transform .5s;
+  transition: -webkit-transform .5s;
+  transition: transform .5s;
+  transition: transform .5s, -webkit-transform .5s;
+}
+
+.input-wrap {
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.input-wrap .input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 4px solid rgba(0, 49, 82, 0.3);
+  border-radius: 22px;
+}
+
+.no-scroll {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
 }
 /*# sourceMappingURL=style.css.map */

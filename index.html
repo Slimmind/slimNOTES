@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>slimNOTE</title>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&amp;subset=cyrillic" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -23,16 +24,31 @@
         </footer>
       </div>
     </div>
-    <div class="window create-note-form">
-
+    <div class="window" id="add-note-form">
+      <form>
+        <div class="input-wrap">
+          <input class="input" type="text" name="note-title">
+        </div>
+        <div class="input-wrap">
+          <textarea class="input" name="note-text" id="note-text" cols="1" rows="3"></textarea>
+        </div>
+        <div class="input-wrap">
+          <input class="input" type="date">
+        </div>
+        <div class="controls align-stretch">
+          <button class="btn cancel-btn">Cancel</button>
+          <button class="btn create-btn">Create</button>
+        </div>
+      </form>
     </div>
-    <div class="window edit-note-form">
+    <div class="window" id="edit-note-form">
 
     </div>
     <footer class="main-footer panel bottom-panel">
       <button aria-label="Add Note Button" class="btn add-note-btn"></button>
     </footer>
   </main>
+  <script src="main.js"></script>
 </body>
 
 </html>

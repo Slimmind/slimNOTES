@@ -1,5 +1,8 @@
 $color-main: #003152;
 $color-white: #fff;
+$color-light-grey: lightgrey;
+$color-green: green;
+$fonty: 'Ubuntu', sans-serif;
 * {
   margin: 0;
   padding: 0;
@@ -27,18 +30,49 @@ main {
     bottom: 0;
   }
 }
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &.align-center {
+    justify-content: space-around;
+  }
+  &.align-right {
+    justify-content: flex-end;
+  }
+  &.align-stretch {
+    justify-content: space-between;
+  }
+
+}
 .btn {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  height: 44px;
+  padding: 5px 20px;
+  font: 700 16px/24px $fonty;
+  border-radius: 22px;
   outline: none;
-  border: none;
+  border: 4px solid;
   background-color: transparent;
+  text-transform: uppercase;
+  cursor: pointer;
+  &.cancel-btn {
+    color: $color-light-grey;
+    border-color: $color-light-grey
+  }
+  &.create-btn {
+    color: $color-green;
+    border-color: $color-green;
+  }
 }
 .add-note-btn {
-  position: relative;
   display: block;
   width: 44px;
-  height: 44px;
   margin: 3px auto;
-  border-radius: 50%;
+  border: none;
   background-color: $color-white;
   &:before,
   &:after {
@@ -53,4 +87,63 @@ main {
   &:after {
     transform: rotate(90deg);
   }
+}
+.window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 10px;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  form {
+    position: relative;
+    z-index: 1;
+  }
+  &.active-window {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 10;
+    &#add-note-form {
+      &:before {
+        transform: translateX(-50%) scale(25);
+      }
+    }
+  }
+}
+#add-note-form {
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    transform: translateX(-50%) scale(1);
+    background-color: $color-white;
+    transition: transform .5s;
+  }
+}
+.input-wrap {
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+  .input {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 20px;
+    border: 4px solid rgba($color-main, .3);
+    border-radius: 22px;
+  }
+}
+
+.no-scroll {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
 }
