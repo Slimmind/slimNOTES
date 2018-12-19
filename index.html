@@ -13,6 +13,11 @@
 <body>
   <main>
     <header class="main-header panel top-panel"></header>
+    <label><input type="radio" name="note_status" value="normal" id="status-normal" checked></label>
+    <!-- <label for="status-normal"></label> -->
+    <label><input type="radio" name="note_status" value="warning" id="status-warning"></label>
+    <!-- <label for="status-warning"></label> -->
+    <label><input type="radio" name="note_status" value="urgent" id="status-urgent"></label>
     <div class="notes-list">
       <div class="note urgent">
         <header class="note-header">Header</header>
@@ -27,13 +32,27 @@
     <div class="window" id="add-note-form">
       <form>
         <div class="input-wrap">
-          <input class="input" type="text" name="note-title">
+          <input class="input" type="text" name="note-title" placeholder="Note title...">
         </div>
         <div class="input-wrap">
-          <textarea class="input" name="note-text" id="note-text" cols="1" rows="3"></textarea>
+          <textarea class="input" name="note-text" id="note-text" cols="1" rows="3" placeholder="Note text..."></textarea>
         </div>
         <div class="input-wrap">
-          <input class="input" type="date">
+          <input class="input" name="note-exp-date" type="date">
+        </div>
+        <div class="controls align-center">
+          <div class="input-wrap">
+            <input type="radio" name="note-status" value="normal" id="status-normal" checked>
+            <!-- <label for="status-normal"></label> -->
+          </div>
+          <div class="input-wrap">
+            <input type="radio" name="note-status" value="warning" id="status-warning">
+            <!-- <label for="status-warning"></label> -->
+          </div>
+          <div class="input-wrap">
+            <input type="radio" name="note-status" value="urgent" id="status-urgent">
+            <!-- <label for="status-urgent"></label> -->
+          </div>
         </div>
         <div class="controls align-stretch">
           <button class="btn cancel-btn">Cancel</button>
