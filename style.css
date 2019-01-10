@@ -49,6 +49,7 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 100%;
 }
 
 .controls.align-center {
@@ -74,7 +75,7 @@ main {
   width: auto;
   max-width: 100%;
   height: 44px;
-  padding: 5px 20px;
+  padding: 5px 15px;
   font: 700 16px/24px "Ubuntu", sans-serif;
   border-radius: 22px;
   outline: none;
@@ -90,16 +91,76 @@ main {
 }
 
 .btn.create-btn {
-  color: green;
-  border-color: green;
+  color: #226f45;
+  border-color: #226f45;
+}
+
+.btn.delete-btn {
+  color: #d04526;
+  border-color: #d04526;
+}
+
+.btn.round-btn {
+  width: 44px;
+  border: none;
+  background-color: #fff;
+}
+
+.clean-btn {
+  -webkit-box-shadow: inset 0 0 0 8px rgba(208, 69, 38, 0.2);
+          box-shadow: inset 0 0 0 8px rgba(208, 69, 38, 0.2);
+}
+
+.clean-btn:before, .clean-btn:after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 2px);
+  left: calc(50% - 16px);
+  width: 32px;
+  height: 4px;
+  background-color: #d04526;
+}
+
+.clean-btn:before {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.clean-btn:after {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.list-btn {
+  -webkit-box-shadow: inset 0 0 0 8px rgba(34, 111, 69, 0.2);
+          box-shadow: inset 0 0 0 8px rgba(34, 111, 69, 0.2);
+}
+
+.list-btn:before, .list-btn:after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 15px);
+  width: 30px;
+}
+
+.list-btn:before {
+  top: calc(50% - 10px);
+  height: 12px;
+  border: solid #226f45;
+  border-width: 4px 0;
+}
+
+.list-btn:after {
+  top: calc(50% - 2px);
+  height: 4px;
+  background-color: #226f45;
 }
 
 .add-note-btn {
   display: block;
-  width: 44px;
-  margin: 3px auto;
-  border: none;
   background-color: #fff;
+  -webkit-box-shadow: inset 0 0 0 8px rgba(0, 49, 82, 0.2);
+          box-shadow: inset 0 0 0 8px rgba(0, 49, 82, 0.2);
 }
 
 .add-note-btn:before, .add-note-btn:after {
@@ -129,42 +190,7 @@ main {
   overflow: hidden;
 }
 
-.window form {
-  position: relative;
-  z-index: 1;
-}
-
-.window.active-window {
-  opacity: 1;
-  pointer-events: all;
-  z-index: 10;
-}
-
-.window.active-window#add-note-form form {
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
-  opacity: 1;
-}
-
-.window.active-window#add-note-form:before {
-  -webkit-transform: translateX(-50%) scale(30);
-          transform: translateX(-50%) scale(30);
-}
-
-#add-note-form form {
-  position: relative;
-  -webkit-transform-origin: center bottom;
-          transform-origin: center bottom;
-  -webkit-transform: translateY(100px);
-          transform: translateY(100px);
-  opacity: 0;
-  -webkit-transition: opacity .7s .2s, -webkit-transform .5s .2s;
-  transition: opacity .7s .2s, -webkit-transform .5s .2s;
-  transition: transform .5s .2s, opacity .7s .2s;
-  transition: transform .5s .2s, opacity .7s .2s, -webkit-transform .5s .2s;
-}
-
-#add-note-form:before {
+.window:before {
   content: "";
   position: absolute;
   bottom: 3px;
@@ -179,6 +205,41 @@ main {
   transition: -webkit-transform .5s;
   transition: transform .5s;
   transition: transform .5s, -webkit-transform .5s;
+}
+
+.window h3 {
+  margin-bottom: 20px;
+}
+
+.window form {
+  position: relative;
+  -webkit-transform-origin: center bottom;
+          transform-origin: center bottom;
+  -webkit-transform: translateY(100px);
+          transform: translateY(100px);
+  opacity: 0;
+  -webkit-transition: opacity .7s .2s, -webkit-transform .5s .2s;
+  transition: opacity .7s .2s, -webkit-transform .5s .2s;
+  transition: transform .5s .2s, opacity .7s .2s;
+  transition: transform .5s .2s, opacity .7s .2s, -webkit-transform .5s .2s;
+  z-index: 1;
+}
+
+.window.active-window {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 10;
+}
+
+.window.active-window form {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  opacity: 1;
+}
+
+.window.active-window:before {
+  -webkit-transform: translateX(-50%) scale(30);
+          transform: translateX(-50%) scale(30);
 }
 
 .input-wrap {
@@ -199,6 +260,37 @@ main {
 
 .input-wrap textarea {
   resize: none;
+}
+
+.note {
+  position: relative;
+  padding: 10px;
+  color: #fff;
+  -webkit-transition: -webkit-transform .5s;
+  transition: -webkit-transform .5s;
+  transition: transform .5s;
+  transition: transform .5s, -webkit-transform .5s;
+}
+
+.note:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.note.normal {
+  background-color: #2b5796;
+}
+
+.note.warning {
+  background-color: #226f45;
+}
+
+.note.urgent {
+  background-color: #d04526;
 }
 
 .no-scroll {
