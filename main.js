@@ -62,6 +62,7 @@ function renderNote(obj) {
   const note = $doc.createElement('div');
   const noteTitle = $doc.createElement('h3');
   const noteTitleValue = $doc.createTextNode(obj.noteTitle);
+  const noteSymbol = obj.noteTitle.charAt(0);
   const noteText = $doc.createElement('p');
   const noteTextValue = $doc.createTextNode(obj.noteText);
   const noteExpDate = $doc.createElement('small');
@@ -73,6 +74,7 @@ function renderNote(obj) {
   note.classList.add('note', obj.noteStatus);
   note.setAttribute('id', obj.noteId);
   note.setAttribute('data-creation-date', obj.noteCreationDate);
+  note.setAttribute('data-note-symbol', noteSymbol)
   note.appendChild(noteTitle);
   note.appendChild(noteText);
   note.appendChild(noteExpDate);
@@ -107,6 +109,10 @@ function getData(form) {
   console.log('NOTES: ', noteArr);
 }
 
+// function editNoteForm(id) {
+//   getData('#edit-note-form');
+// }
+
 // render notes
 renderNotes(noteArr);
 
@@ -131,7 +137,7 @@ $doc.addEventListener('click', (event) => {
     openNoteHandler(event);
   } else if(event.target.classList.contains('delete-btn')) {
 
-  } else if(event.target.classList('change-btn')) {
-    
+  } else if(event.target.classList.contains('change-btn')) {
+    console.log();
   }
 });

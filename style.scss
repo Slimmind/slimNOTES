@@ -1,5 +1,7 @@
 $color-main: #003152;
 $color-white: #fff;
+$color-black: #000;
+$color-grey: #cdcdcd;
 $color-light-grey: lightgrey;
 $color-green: #226f45;
 $color-blue: #2b5796;
@@ -28,7 +30,7 @@ body {
 main {
   min-height: 100%;
   padding: 50px 0;
-  background-color: #cdcdcd;
+  background-color: $color-grey;
 }
 
 .panel {
@@ -228,28 +230,55 @@ main {
     resize: none;
   }
 }
-
+.notes-list {
+  padding: 10px;
+}
 .note {
   position: relative;
-  padding: 10px;
+  padding: 8px 10px 9px 80px;
   color: $color-white;
   transition: transform .5s;
-  &:after {
+  border-radius: 4px;
+  box-shadow: 0 0 10px 1px rgba($color-black, .2);
+  &:before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 70px;
     height: 100%;
+    border-radius: 4px 0 0 4px;
+  }
+  &:after {
+    content: attr(data-note-symbol);
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 35px;
+    background-color: $color-grey;
+    font-size: 32px;
+    text-align: center;
+    line-height: 50px;
   }
   &.normal {
-    background-color: $color-blue;
+    background-color: rgba($color-blue, .3);
+    &:before {
+      background-color: $color-blue;
+    }
   }
   &.warning {
-    background-color: $color-green;
+    background-color: rgba($color-green, .3);
+    &:before {
+      background-color: $color-green;
+    }
   }
   &.urgent {
-    background-color: $color-red;
+    background-color: rgba($color-red, .3);
+    &:before {
+      background-color: $color-red;
+    }
   }
 }
 
