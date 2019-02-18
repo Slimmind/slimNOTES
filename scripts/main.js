@@ -8,6 +8,7 @@ const addNoteBtn = $doc.querySelector('.add-note-btn');
 const notesList = $doc.querySelector('.notes-list');
 const windows = $doc.querySelectorAll('.window');
 const noteArr = (store.length > 0) ? JSON.parse(store.getItem('notes')) : [];
+const date = new Date();
 
 function closingHandler(elem, classToRemove) {
   if(mainWrap.classList.contains('no-scroll')) {
@@ -46,7 +47,6 @@ function generateId() {
   return Math.random().toString(36).substr(2, 9);
 }
 function getCreationDate() {
-	const date = new Date();
 	return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
 }
 
@@ -97,12 +97,13 @@ function getData(form) {
   const formy = document.querySelector(`${form} form`);
   const dataObj = {
     noteId: generateId(),
-    noteTitle: formy.querySelector('[name="note-title"]').value,
-    noteText: formy.querySelector('[name="note-text"]').value,
+    noteTitle: formy.querySelector('[name="note-title"]').value || '...',
+    noteText: formy.querySelector('[name="note-text"]').value || '...',
     noteCreationDate: getCreationDate(),
-    noteExpDate: formy.querySelector('[name="note-exp-date"]').value,
+    noteExpDate: formy.querySelector('[name="note-exp-date"]').value || `${date.getDate()}-${parseInt(date.getMonth()+1)}-${date.getFullYear()}`,
     noteStatus: formy.querySelector('[name="note-status"]:checked').value
   }
+  console.log("OBJ: ", dataObj);
   noteArr.push(dataObj);
   setStore(noteArr);
   renderNote(dataObj);
@@ -118,26 +119,41 @@ renderNotes(noteArr);
 
 // HANDLERS 
 $doc.addEventListener('click', (event) => {
+  // ADD NOTE (opens AddNote form)
   if(event.target.classList.contains('add-note-btn')) {
     mainWrap.classList.add('no-scroll');
     addNoteForm.classList.add('active-window');
-  } else if(event.target.classList.contains('cancel-btn')) {
+  } 
+  // CANCEL
+  else if(event.target.classList.contains('cancel-btn')) {
     event.preventDefault();
     closingHandler(windows, 'active-window');
-  } else if(event.target.classList.contains('create-btn')) {
+  } 
+  // CREATE NOTE
+  else if(event.target.classList.contains('create-btn')) {
     event.preventDefault();
     closingHandler(windows, 'active-window');
     getData('#add-note-form');
-  } else if(event.target.classList.contains('list-btn')) {
+  } 
+  // CONSOLE LIST of NOTES
+  else if(event.target.classList.contains('list-btn')) {
     console.warn('STORE', store.getItem('notes'));
-  } else if(event.target.classList.contains('clean-btn')) {
+  } 
+  // CLEAR STORE
+  else if(event.target.classList.contains('clean-btn')) {
     clearStore();
-  } else if(event.target.classList.contains('note')) {
+  } 
+  // OPEN NOTE
+  else if(event.target.classList.contains('note')) {
     mainWrap.classList.add('no-scroll');
     openNoteHandler(event);
-  } else if(event.target.classList.contains('delete-btn')) {
+  } 
+  // DELETE NOTE
+  else if(event.target.classList.contains('delete-btn')) {
 
-  } else if(event.target.classList.contains('change-btn')) {
+  } 
+  // CHANGE BTN
+  else if(event.target.classList.contains('change-btn')) {
     console.log();
   }
 });

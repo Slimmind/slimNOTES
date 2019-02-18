@@ -17,9 +17,21 @@ body {
 }
 
 main {
+  position: relative;
   min-height: 100%;
-  padding: 50px 0;
-  background-color: #cdcdcd;
+  padding: 0 0 50px;
+}
+
+main:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../images/tiny-squares.png");
+  opacity: .3;
+  z-index: -1;
 }
 
 .panel {
@@ -27,7 +39,7 @@ main {
   left: 0;
   width: 100%;
   height: 50px;
-  background-color: #003152;
+  background-color: rgba(0, 49, 82, 0.3);
 }
 
 .panel.top-panel {
@@ -106,11 +118,6 @@ main {
   background-color: #fff;
 }
 
-.clean-btn {
-  -webkit-box-shadow: inset 0 0 0 8px rgba(208, 69, 38, 0.2);
-          box-shadow: inset 0 0 0 8px rgba(208, 69, 38, 0.2);
-}
-
 .clean-btn:before, .clean-btn:after {
   content: "";
   position: absolute;
@@ -129,11 +136,6 @@ main {
 .clean-btn:after {
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
-}
-
-.list-btn {
-  -webkit-box-shadow: inset 0 0 0 8px rgba(34, 111, 69, 0.2);
-          box-shadow: inset 0 0 0 8px rgba(34, 111, 69, 0.2);
 }
 
 .list-btn:before, .list-btn:after {
@@ -159,16 +161,14 @@ main {
 .add-note-btn {
   display: block;
   background-color: #fff;
-  -webkit-box-shadow: inset 0 0 0 8px rgba(0, 49, 82, 0.2);
-          box-shadow: inset 0 0 0 8px rgba(0, 49, 82, 0.2);
 }
 
 .add-note-btn:before, .add-note-btn:after {
   content: "";
   position: absolute;
   top: calc(50% - 2px);
-  left: calc(50% - 20px);
-  width: 40px;
+  left: calc(50% - 17px);
+  width: 34px;
   height: 4px;
   background-color: #003152;
 }
@@ -268,6 +268,7 @@ main {
 
 .note {
   position: relative;
+  margin-bottom: 10px;
   padding: 8px 10px 9px 80px;
   color: #fff;
   -webkit-transition: -webkit-transform .5s;
