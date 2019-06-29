@@ -88,6 +88,8 @@ function renderNote(obj) {
   const noteTextValue = $doc.createTextNode(obj.noteText);
   const noteExpDate = $doc.createElement('small');
   const noteExpDataValue = $doc.createTextNode(obj.noteExpDate);
+  const checkBtn = $doc.createElement('span');
+  const template = $doc.createDocumentFragment();
 
   noteTitle.appendChild(noteTitleValue);
   noteTitle.classList.add('note-title');
@@ -95,13 +97,19 @@ function renderNote(obj) {
   noteText.classList.add('note-text');
   noteExpDate.appendChild(noteExpDataValue);
   noteExpDate.classList.add('note-date');
+  checkBtn.classList.add('check-btn');
   note.classList.add('note', obj.noteStatus);
   note.setAttribute('id', obj.noteId);
   note.setAttribute('data-creation-date', obj.noteCreationDate);
   note.setAttribute('data-note-symbol', noteSymbol)
-  note.appendChild(noteTitle);
-  note.appendChild(noteText);
-  note.appendChild(noteExpDate);
+
+  template.appendChild(noteTitle);
+  template.appendChild(noteText);
+  template.appendChild(noteExpDate);
+  template.appendChild(checkBtn);
+
+  note.appendChild(template);
+
   notesList.appendChild(note);
 }
 
@@ -179,5 +187,9 @@ $doc.addEventListener('click', (event) => {
   // CHANGE BTN
   else if(event.target.classList.contains('change-btn')) {
     console.log('CHANGE-handler');
+  }
+  // CHECK BTN
+  else if(event.target.classList.contains('check-btn')) {
+    event.target.parentNode.classList.toggle('done');
   }
 });
