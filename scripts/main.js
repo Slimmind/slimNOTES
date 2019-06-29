@@ -55,7 +55,7 @@ function fillForm(obj) {
   editNoteForm.querySelector('[name="note-title"]').value = obj.noteTitle;
   editNoteForm.querySelector('[name="note-text"]').value = obj.noteText;
   editNoteForm.querySelector('[name="note-exp-date"]').value = obj.noteExpDate;
-  editNoteForm.querySelector(`[value="${obj.noteStatus}"]`).setAttribute('checked', 'checked');
+  editNoteForm.querySelector(`[value="${obj.noteStatus}"]`).setAttribute('checked', true);
   editNoteForm.classList.add('active-window');
 }
 
