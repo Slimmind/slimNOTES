@@ -48,8 +48,17 @@ main {
   position: fixed;
   left: 0;
   width: 100%;
-  height: 50px;
-  background-color: rgba($color-main, .3);
+  height: 70px;
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-image: linear-gradient( to top, rgba($color-main,.5), transparent);
+    pointer-events: none;
+  }
 
   &.top-panel {
     top: 0;
@@ -93,6 +102,7 @@ main {
   background-color: transparent;
   text-transform: uppercase;
   cursor: pointer;
+  flex-shrink: 0;
 
   &.cancel-btn {
     color: $color-light-grey;
@@ -112,62 +122,64 @@ main {
     border: none;
     background-color: $color-white;
   }
-}
-
-.clean-btn {
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    top: calc(50% - 2px);
-    left: calc(50% - 16px);
-    width: 32px;
-    height: 4px;
-    background-color: $color-red;
+  &.clean-btn {
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 2px);
+      left: calc(50% - 16px);
+      width: 32px;
+      height: 4px;
+      background-color: $color-red;
+    }
+    &:before {
+      transform: rotate(-45deg);
+    }
+    &:after {
+      transform: rotate(45deg);
+    }
   }
-  &:before {
-    transform: rotate(-45deg);
+  &.list-btn {
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      left: calc(50% - 15px);
+      width: 30px;
+    }
+    &:before {
+      top: calc(50% - 10px);
+      height: 12px;
+      border: solid $color-green;
+      border-width: 4px 0;
+    }
+    &:after {
+      top: calc(50% - 2px);
+      height: 4px;
+      background-color: $color-green;
+    }
   }
-  &:after {
-    transform: rotate(45deg);
-  }
-}
-.list-btn {
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    left: calc(50% - 15px);
-    width: 30px;
-  }
-  &:before {
-    top: calc(50% - 10px);
-    height: 12px;
-    border: solid $color-green;
-    border-width: 4px 0;
-  }
-  &:after {
-    top: calc(50% - 2px);
-    height: 4px;
-    background-color: $color-green;
-  }
-}
-.add-note-btn {
-  display: block;
-  background-color: $color-white;
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    top: calc(50% - 2px);
-    left: calc(50% - 17px);
-    width: 34px;
-    height: 4px;
-    background-color: $color-main;
-  }
-
-  &:after {
-    transform: rotate(90deg);
+  &.add-note-btn {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: $color-white;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 2px);
+      left: calc(50% - 17px);
+      width: 34px;
+      height: 4px;
+      background-color: $color-main;
+    }
+  
+    &:after {
+      transform: rotate(90deg);
+    }
   }
 }
 
@@ -179,20 +191,9 @@ main {
   height: 100vh;
   padding: 10px;
   opacity: 0;
+  background-color: $color-white;
   pointer-events: none;
   overflow: hidden;
-  &:before {
-    content: "";
-    position: absolute;
-    bottom: 3px;
-    left: 50%;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    transform: translateX(-50%) scale(1);
-    background-color: $color-white;
-    transition: transform .5s;
-  }
   h3 {
     margin-bottom: 20px;
   }
@@ -201,7 +202,7 @@ main {
     transform-origin: center bottom;
     transform: translateY(100px);
     opacity: 0;
-    transition: transform .5s .2s, opacity .7s .2s;
+    transition: transform .3s, opacity .3s;
     z-index: 1;
   }
 
@@ -212,9 +213,6 @@ main {
     form {
       transform: translateY(0);
       opacity: 1;
-    }
-    &:before {
-      transform: translateX(-50%) scale(30);
     }
   }
 }
@@ -232,6 +230,7 @@ main {
     padding: 5px 15px;
     border: 4px solid rgba($color-main, .3);
     border-radius: 22px;
+    outline-color: transparent;
   }
 
   textarea {
@@ -254,7 +253,7 @@ main {
     position: absolute;
     top: 0;
     left: 0;
-    width: 70px;
+    width: 100%;
     height: 100%;
     border-radius: 4px 0 0 4px;
   }
@@ -266,29 +265,49 @@ main {
     width: 50px;
     height: 50px;
     border-radius: 35px;
-    background-color: $color-grey;
+    background-color: $color-white;
     font-size: 32px;
     text-align: center;
     line-height: 50px;
   }
   &.normal {
-    background-color: rgba($color-blue, .3);
-    &:before {
-      background-color: $color-blue;
+    background-image: linear-gradient(to right, $color-blue, rgba($color-blue, .3));
+    &::after {
+      color: $color-blue;
+    }
+    .note-date {
+      color: $color-blue;
     }
   }
   &.warning {
-    background-color: rgba($color-green, .3);
-    &:before {
-      background-color: $color-green;
+    background-image: linear-gradient(to right, $color-green, rgba($color-green, .3));
+    &::after {
+      color: $color-green;
+    }
+    .note-date {
+      color: $color-green;
     }
   }
   &.urgent {
-    background-color: rgba($color-red, .3);
-    &:before {
-      background-color: $color-red;
+    background-image: linear-gradient(to right, $color-red, rgba($color-red, .3));
+    &::after {
+      color: $color-red;
+    }
+    .note-date {
+      color: $color-red;
     }
   }
+}
+.note-text {
+  margin-bottom: 5px;
+}
+.note-date {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 5px;
+  background-color: rgba($color-white, .5);
+  line-height: 18px;
+  border-radius: 3px;
 }
 
 .no-scroll {

@@ -7,10 +7,12 @@ const editNoteForm = $doc.getElementById('edit-note-form');
 const addNoteBtn = $doc.querySelector('.add-note-btn');
 const notesList = $doc.querySelector('.notes-list');
 const windows = $doc.querySelectorAll('.window');
-const noteArr = (store.length > 0) ? JSON.parse(store.getItem('notes')) : [];
+let noteArr = (store.length > 0) ? JSON.parse(store.getItem('notes')) : [];
 const date = new Date();
+let noteId = '';
 
-function closingHandler(elem, classToRemove) {
+function closeHandler(elem, classToRemove) {
+  noteId = '';
   if(mainWrap.classList.contains('no-scroll')) {
     mainWrap.classList.remove('no-scroll');
   }
@@ -23,16 +25,30 @@ function closingHandler(elem, classToRemove) {
   } else {
     elem.classList.remove(classToRemove);
   }
+  clearForm();
 }
 
 function openNoteHandler(event) {
-  elemId = event.target.getAttribute("id");
+  noteId = event.target.getAttribute("id");
+  console.log("OPEN: ", noteId);
   function chooseElem (elem) {
-    if(elem.noteId === elemId) {
+    if(elem.noteId === noteId) {
       return elem;
     }
   }
   fillForm(noteArr.find(chooseElem));
+}
+
+function deleteNoteHandler(event, noteId) {
+  event.preventDefault();
+  if(!noteId) return;
+  noteArr = noteArr.filter((note) => {
+    return note.noteId !== noteId;
+  });
+  console.log('ARR: ', noteArr);
+  setStore();
+  $doc.getElementById(noteId).remove();
+  closeHandler(windows, 'active-window');
 }
 
 function fillForm(obj) {
@@ -43,6 +59,11 @@ function fillForm(obj) {
   editNoteForm.classList.add('active-window');
 }
 
+function clearForm() {
+  const forms = $doc.querySelectorAll('form');
+  [...forms].forEach(form => form.reset());
+}
+
 function generateId() {
   return Math.random().toString(36).substr(2, 9);
 }
@@ -50,8 +71,8 @@ function getCreationDate() {
 	return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
 }
 
-function setStore(data) {
-  store.setItem("notes", JSON.stringify(data));
+function setStore() {
+  store.setItem("notes", JSON.stringify(noteArr));
 }
 
 function clearStore() {
@@ -69,8 +90,11 @@ function renderNote(obj) {
   const noteExpDataValue = $doc.createTextNode(obj.noteExpDate);
 
   noteTitle.appendChild(noteTitleValue);
+  noteTitle.classList.add('note-title');
   noteText.appendChild(noteTextValue);
+  noteText.classList.add('note-text');
   noteExpDate.appendChild(noteExpDataValue);
+  noteExpDate.classList.add('note-date');
   note.classList.add('note', obj.noteStatus);
   note.setAttribute('id', obj.noteId);
   note.setAttribute('data-creation-date', obj.noteCreationDate);
@@ -105,7 +129,7 @@ function getData(form) {
   }
   console.log("OBJ: ", dataObj);
   noteArr.push(dataObj);
-  setStore(noteArr);
+  setStore();
   renderNote(dataObj);
   console.log('NOTES: ', noteArr);
 }
@@ -127,13 +151,13 @@ $doc.addEventListener('click', (event) => {
   // CANCEL
   else if(event.target.classList.contains('cancel-btn')) {
     event.preventDefault();
-    closingHandler(windows, 'active-window');
+    closeHandler(windows, 'active-window');
   } 
   // CREATE NOTE
   else if(event.target.classList.contains('create-btn')) {
     event.preventDefault();
-    closingHandler(windows, 'active-window');
     getData('#add-note-form');
+    closeHandler(windows, 'active-window');
   } 
   // CONSOLE LIST of NOTES
   else if(event.target.classList.contains('list-btn')) {
@@ -150,10 +174,10 @@ $doc.addEventListener('click', (event) => {
   } 
   // DELETE NOTE
   else if(event.target.classList.contains('delete-btn')) {
-
+    deleteNoteHandler(event, noteId);
   } 
   // CHANGE BTN
   else if(event.target.classList.contains('change-btn')) {
-    console.log();
+    console.log('CHANGE-handler');
   }
 });
