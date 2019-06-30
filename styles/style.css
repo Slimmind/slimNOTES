@@ -254,6 +254,7 @@ main:before {
   margin-bottom: 30px;
 }
 
+.input-wrap input,
 .input-wrap .input {
   display: block;
   width: 100%;
@@ -263,6 +264,7 @@ main:before {
   border: 4px solid rgba(0, 49, 82, 0.3);
   border-radius: 25px;
   outline-color: transparent;
+  -webkit-appearance: none;
 }
 
 .input-wrap textarea {

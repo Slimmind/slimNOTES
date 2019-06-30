@@ -133,7 +133,8 @@ function getData(form) {
     noteText: formy.querySelector('[name="note-text"]').value || '...',
     noteCreationDate: getCreationDate(),
     noteExpDate: formy.querySelector('[name="note-exp-date"]').value || `${date.getDate()}-${parseInt(date.getMonth()+1)}-${date.getFullYear()}`,
-    noteStatus: formy.querySelector('[name="note-status"]:checked').value
+    noteStatus: formy.querySelector('[name="note-status"]:checked').value,
+    noteDone: false
   }
   console.log("OBJ: ", dataObj);
   noteArr.push(dataObj);
@@ -145,6 +146,15 @@ function getData(form) {
 // function editNoteForm(id) {
 //   getData('#edit-note-form');
 // }
+
+function checkDone(event) {
+  noteId = event.target.parentNode.getAttribute("id");
+  $doc.getElementById(noteId).classList.toggle('done');
+  const targetNote = noteArr.find((note) => {
+    return note.noteId === noteId;
+  });
+  console.log("TARGET: ", targetNote);
+}
 
 // render notes
 renderNotes(noteArr);
@@ -190,6 +200,6 @@ $doc.addEventListener('click', (event) => {
   }
   // CHECK BTN
   else if(event.target.classList.contains('check-btn')) {
-    event.target.parentNode.classList.toggle('done');
+    checkDone(event);
   }
 });
