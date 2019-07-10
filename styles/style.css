@@ -95,7 +95,7 @@ main:before {
 
 .controls .input-wrap {
   position: relative;
-  padding-top: 40px;
+  padding-top: 60px;
   text-align: center;
 }
 
@@ -258,17 +258,44 @@ main:before {
 .input-wrap .input {
   display: block;
   width: 100%;
-  font: 18px/24px "Ubuntu", sans-serif;
-  min-height: 50px;
-  padding: 5px 15px;
+  font: 18px/32px "Ubuntu", sans-serif;
+  min-height: 60px;
+  padding: 10px 15px;
   border: 4px solid rgba(0, 49, 82, 0.3);
-  border-radius: 25px;
+  border-radius: 30px;
   outline-color: transparent;
   -webkit-appearance: none;
 }
 
+.input-wrap input::-webkit-input-placeholder,
+.input-wrap .input::-webkit-input-placeholder {
+  color: rgba(0, 49, 82, 0.3);
+}
+
+.input-wrap input:-moz-placeholder,
+.input-wrap .input:-moz-placeholder {
+  opacity: 1;
+  color: rgba(0, 49, 82, 0.3);
+}
+
+.input-wrap input::-moz-placeholder,
+.input-wrap .input::-moz-placeholder {
+  opacity: 1;
+  color: rgba(0, 49, 82, 0.3);
+}
+
+.input-wrap input:-ms-input-placeholder,
+.input-wrap .input:-ms-input-placeholder {
+  color: rgba(0, 49, 82, 0.3);
+}
+
 .input-wrap textarea {
   resize: none;
+}
+
+.input-wrap [type="date"] {
+  padding-right: 50px;
+  background: url("../images/calendar.svg") no-repeat calc(100% - 11px) center/contain;
 }
 
 .input-wrap .note-status {
@@ -285,17 +312,17 @@ main:before {
   position: relative;
   font-size: 14px;
   line-height: 30px;
-  padding-top: 50px;
+  padding-top: 70px;
 }
 
 .input-wrap .note-status + label:before, .input-wrap .note-status + label:after {
   content: '';
   position: absolute;
   top: 0;
-  left: calc(50% - 20px);
+  left: calc(50% - 30px);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -332,6 +359,18 @@ main:before {
 
 .input-wrap .note-status.urgent + label:after {
   background-color: #d04526;
+}
+
+.input-wrap .note-status:checked.normal + label {
+  color: #2b5796;
+}
+
+.input-wrap .note-status:checked.warning + label {
+  color: #226f45;
+}
+
+.input-wrap .note-status:checked.urgent + label {
+  color: #d04526;
 }
 
 .input-wrap .note-status:checked + label:after {

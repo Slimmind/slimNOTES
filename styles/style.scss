@@ -10,6 +10,59 @@ $color-red: #d04526;
 $fonty: 'Ubuntu',
 sans-serif;
 
+// MIXINS
+
+@mixin bg ($posX: null, $posY: null, $sizeX: null, $sizeY: null) {
+  background: {
+    repeat: no-repeat;
+    position: $posX $posY;
+    size: $sizeX $sizeY;
+  }
+}
+@mixin pos ($pos: null, $top: null, $left: null, $bottom: null, $right: null) {
+  position: $pos;
+  right: $right;
+  bottom: $bottom;
+  @if ($top == "center" and $left == "center") {
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+  @if($top == "center" and $left != "center") {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @if not($top == "center") {
+    top: $top;
+  }
+  @if($left == "center" and $top != "center") {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  @if not($left == "center") {
+    left: $left;
+  }
+}
+@mixin flex ($fd: null, $jc: null, $ai: null, $fw: null, $ac: null) {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-direction: $fd;
+  flex-direction: $fd;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-wrap: $fw;
+  align-content: $ac;
+}
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder {opacity: 1; @content}
+  &::-moz-placeholder {opacity: 1; @content}
+  &:-ms-input-placeholder {@content}
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -88,7 +141,7 @@ main {
   }
   .input-wrap {
     position: relative;
-    padding-top: 40px;
+    padding-top: 60px;
     text-align: center;
     label {
       cursor: pointer;
@@ -234,17 +287,25 @@ main {
   .input {
     display: block;
     width: 100%;
-    font: 18px/24px $fonty;
-    min-height: 50px;
-    padding: 5px 15px;
+    font: 18px/32px $fonty;
+    min-height: 60px;
+    padding: 10px 15px;
     border: 4px solid rgba($color-main, .3);
-    border-radius: 25px;
+    border-radius: 30px;
     outline-color: transparent;
     -webkit-appearance: none;
+    @include placeholder {
+      color: rgba($color-main, .3);
+    }
   }
 
   textarea {
     resize: none;
+  }
+
+  [type="date"] {
+    padding-right: 50px;
+    background: url('../images/calendar.svg') no-repeat calc(100% - 11px) center / contain;
   }
 
   .note-status {
@@ -259,16 +320,16 @@ main {
       position: relative;
       font-size: 14px;
       line-height: 30px;
-      padding-top: 50px;
+      padding-top: 70px;
       &:before,
       &:after {
         content: '';
         position: absolute;
         top: 0;
-        left: calc(50% - 20px);
+        left: calc(50% - 30px);
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         box-sizing: border-box;
       }
       &:before {
@@ -303,8 +364,19 @@ main {
         background-color: $color-red;
       }
     }
-    &:checked + label:after {
-      opacity: 1;
+    &:checked {
+      &.normal + label {
+        color: $color-blue;
+      }
+      &.warning + label {
+        color: $color-green;
+      }
+      &.urgent + label {
+        color: $color-red;
+      }
+      + label:after {
+        opacity: 1;
+      }
     }
   }
 }

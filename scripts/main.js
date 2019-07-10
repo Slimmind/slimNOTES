@@ -55,8 +55,25 @@ function fillForm(obj) {
   editNoteForm.querySelector('[name="note-title"]').value = obj.noteTitle;
   editNoteForm.querySelector('[name="note-text"]').value = obj.noteText;
   editNoteForm.querySelector('[name="note-exp-date"]').value = obj.noteExpDate;
-  editNoteForm.querySelector(`[value="${obj.noteStatus}"]`).setAttribute('checked', true);
   editNoteForm.classList.add('active-window');
+  const checkboxes = editNoteForm.querySelectorAll('[name="edit-note-status"]');
+  [...checkboxes].forEach((checky) => {
+    if(checky.value === obj.noteStatus) {
+      checky.setAttribute('checked', true);
+    } else {
+      checky.removeAttribute('checked');
+    }
+  });
+}
+
+function editNote (notes, newNote) {
+	const noteId = newNote.id;
+	const editNote = notes.find((item) => item.id === noteId);
+	const editNoteIndex = notes.indexOf(editNote);
+	for(let key in editNote) {
+		editNote[key] === newNote[key] ? null : editNote[key] = newNote[key];
+	}
+	return editNoteIndex;
 }
 
 function clearForm() {
@@ -80,14 +97,15 @@ function clearStore() {
 }
 
 function renderNote(obj) {
+  const {noteId, noteStatus, noteTitle, noteText, noteExpDate, noteCreationDate} = obj;
   const note = $doc.createElement('div');
   const noteTitle = $doc.createElement('h3');
-  const noteTitleValue = $doc.createTextNode(obj.noteTitle);
-  const noteSymbol = obj.noteTitle.charAt(0);
+  const noteTitleValue = $doc.createTextNode(noteTitle);
+  const noteSymbol = noteTitle.charAt(0);
   const noteText = $doc.createElement('p');
-  const noteTextValue = $doc.createTextNode(obj.noteText);
+  const noteTextValue = $doc.createTextNode(noteText);
   const noteExpDate = $doc.createElement('small');
-  const noteExpDataValue = $doc.createTextNode(obj.noteExpDate);
+  const noteExpDataValue = $doc.createTextNode(noteExpDate);
   const checkBtn = $doc.createElement('span');
   const template = $doc.createDocumentFragment();
 
@@ -98,9 +116,9 @@ function renderNote(obj) {
   noteExpDate.appendChild(noteExpDataValue);
   noteExpDate.classList.add('note-date');
   checkBtn.classList.add('check-btn');
-  note.classList.add('note', obj.noteStatus);
-  note.setAttribute('id', obj.noteId);
-  note.setAttribute('data-creation-date', obj.noteCreationDate);
+  note.classList.add('note', noteStatus);
+  note.setAttribute('id', noteId);
+  note.setAttribute('data-creation-date', noteCreationDate);
   note.setAttribute('data-note-symbol', noteSymbol)
 
   template.appendChild(noteTitle);
@@ -194,8 +212,10 @@ $doc.addEventListener('click', (event) => {
   else if(event.target.classList.contains('delete-btn')) {
     deleteNoteHandler(event, noteId);
   } 
-  // CHANGE BTN
+  // EDIT NOTE
   else if(event.target.classList.contains('change-btn')) {
+    getData('#edit-note-form');
+    editNote(noteArr, noteId)
     console.log('CHANGE-handler');
   }
   // CHECK BTN
