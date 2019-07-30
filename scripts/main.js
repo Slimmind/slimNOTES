@@ -14,12 +14,12 @@ let noteIndex = 0;
 
 function closeHandler(elem, classToRemove) {
   noteId = '';
-  if(mainWrap.classList.contains('no-scroll')) {
+  if (mainWrap.classList.contains('no-scroll')) {
     mainWrap.classList.remove('no-scroll');
   }
-  if(elem.length > 1) {
+  if (elem.length > 1) {
     [...elem].forEach((item) => {
-      if(item.classList.contains(classToRemove)) {
+      if (item.classList.contains(classToRemove)) {
         item.classList.remove(classToRemove);
       }
     });
@@ -29,24 +29,23 @@ function closeHandler(elem, classToRemove) {
   clearForm();
 }
 
+function getNoteById(id) {
+  return noteArr.find((item) => item.noteId === id);
+}
+
 function openNoteHandler(event) {
   noteId = event.target.getAttribute("id");
-  console.log("OPEN: ", noteId);
-  function chooseElem (elem) {
-    if(elem.noteId === noteId) {
-      return elem;
-    }
-  }
-  fillForm(noteArr.find(chooseElem));
+  // console.log("OPEN: ", noteId);
+  fillForm(getNoteById(noteId));
 }
 
 function deleteNoteHandler(event, noteId) {
   event.preventDefault();
-  if(!noteId) return;
+  if (!noteId) return;
   noteArr = noteArr.filter((note) => {
     return note.noteId !== noteId;
   });
-  console.log('ARR: ', noteArr);
+  // console.log('ARR: ', noteArr);
   setStore();
   $doc.getElementById(noteId).remove();
   closeHandler(windows, 'active-window');
@@ -57,25 +56,36 @@ function fillForm(obj) {
   editNoteForm.querySelector('[name="note-text"]').value = obj.noteText;
   editNoteForm.querySelector('[name="note-exp-date"]').value = obj.noteExpDate;
   editNoteForm.classList.add('active-window');
-  const checkboxes = editNoteForm.querySelectorAll('[name="edit-note-status"]');
+  const checkboxes = editNoteForm.querySelectorAll('[name="note-status"]');
   [...checkboxes].forEach((checky) => {
-    if(checky.value === obj.noteStatus) {
-      checky.setAttribute('checked', true);
+    if (checky.value === obj.noteStatus) {
+      console.log(`=^..^= ${checky.value} === ${obj.noteStatus}`);
+      checky.checked = true;
     } else {
-      checky.removeAttribute('checked');
+      checky.checked = false;
     }
   });
 }
 
-function editNote (newNote) {
-  console.log('ID: ', noteId);
-	const editNote = noteArr.find((item) => item.id === noteId);
-	noteIndex = noteArr.indexOf(editNote);
-	for(let key in editNote) {
-    editNote[key] === newNote[key] ? null : editNote[key] = newNote[key];
-    console.log(`${editNote[key]} === ${newNote[key]}`)
+function editNote(editingNoteId) {
+  const editingNoteIndex = noteArr.indexOf(getNoteById(editingNoteId));
+  const changedData = getData('#edit-note-form');
+  const noteProps = Object.keys(noteArr[editingNoteIndex]);
+  let changedProps = 0;
+  for(let prop in changedData) {
+    if(changedData[prop] !== noteArr[editingNoteIndex][prop]) {
+      console.log(`PROPS: ${changedData[prop]} === ${noteArr[editingNoteIndex][prop]}`);
+      changedProps += 1;
+      // noteArr[editingNoteIndex].prop = prop;
+    }
   }
-  console.log("CHANGED: ", noteArr);
+  if(changedProps > 0) {
+    console.log("Note was edited");
+  } else {
+    closeHandler(windows, 'active-window');
+    clearForm();
+  }
+  console.log("CHANGES: ", changedProps);
 }
 
 function clearForm() {
@@ -86,8 +96,9 @@ function clearForm() {
 function generateId() {
   return Math.random().toString(36).substr(2, 9);
 }
+
 function getCreationDate() {
-	return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 }
 
 function setStore() {
@@ -102,7 +113,7 @@ function renderNote(obj) {
   const note = $doc.createElement('div');
   const noteTitle = $doc.createElement('h3');
   const noteTitleValue = $doc.createTextNode(obj.noteTitle);
-  const noteSymbol = obj.noteTitle.charAt(0);
+  const noteSymbol = obj.noteTitle ? obj.noteTitle.charAt(0) : '=^..^=';
   const noteText = $doc.createElement('p');
   const noteTextValue = $doc.createTextNode(obj.noteText);
   const noteExpDate = $doc.createElement('small');
@@ -133,7 +144,7 @@ function renderNote(obj) {
 }
 
 function renderNotes(arr) {
-  console.log("NOTES RENDERING", arr);
+  // console.log("NOTES RENDERING", arr);
   notesList.innerHTML = '';
   arr.forEach((item) => {
     renderNote(item);
@@ -148,19 +159,14 @@ function openForm() {
 function getData(form) {
   const formy = document.querySelector(`${form} form`);
   const dataObj = {
-    noteId: generateId(),
     noteTitle: formy.querySelector('[name="note-title"]').value || '...',
     noteText: formy.querySelector('[name="note-text"]').value || '...',
-    noteCreationDate: getCreationDate(),
-    noteExpDate: formy.querySelector('[name="note-exp-date"]').value || `${date.getDate()}-${parseInt(date.getMonth()+1)}-${date.getFullYear()}`,
-    noteStatus: formy.querySelector('[name="note-status"]:checked').value,
-    noteDone: false
+    noteExpDate: formy.querySelector('[name="note-exp-date"]').value || `${date.getFullYear()}-${parseInt(date.getMonth()+1)}-${date.getDate()}`,
+    noteStatus: formy.querySelector('[name="note-status"]:checked').value
   }
-  console.log("OBJ: ", dataObj);
-  noteArr.push(dataObj);
-  setStore();
-  renderNote(dataObj);
-  console.log('NOTES: ', noteArr);
+
+  // console.log("SAVED DATA: ", noteArr);
+  return dataObj;
 }
 
 // function editNoteForm(id) {
@@ -173,7 +179,7 @@ function checkDone(event) {
   const targetNote = noteArr.find((note) => {
     return note.noteId === noteId;
   });
-  console.log("TARGET: ", targetNote);
+  // console.log("TARGET: ", targetNote);
 }
 
 // render notes
@@ -182,46 +188,51 @@ renderNotes(noteArr);
 // HANDLERS 
 $doc.addEventListener('click', (event) => {
   // ADD NOTE (opens AddNote form)
-  if(event.target.classList.contains('add-note-btn')) {
+  if (event.target.classList.contains('add-note-btn')) {
     mainWrap.classList.add('no-scroll');
     addNoteForm.classList.add('active-window');
-  } 
+  }
   // CANCEL
-  else if(event.target.classList.contains('cancel-btn')) {
+  else if (event.target.classList.contains('cancel-btn')) {
     event.preventDefault();
     closeHandler(windows, 'active-window');
-  } 
+  }
   // CREATE NOTE
-  else if(event.target.classList.contains('create-btn')) {
+  else if (event.target.classList.contains('create-btn')) {
     event.preventDefault();
-    getData('#add-note-form');
+    const fullNoteData = {...getData('#add-note-form'), noteId: generateId(), noteCreationDate: getCreationDate(), noteDone: false};
+    noteArr.push(fullNoteData);
+    setStore();
+    renderNote(fullNoteData);
     closeHandler(windows, 'active-window');
-  } 
+    // console.log('NOTES: ', noteArr);
+  }
   // CONSOLE LIST of NOTES
-  else if(event.target.classList.contains('list-btn')) {
-    console.warn('STORE', store.getItem('notes'));
-  } 
+  else if (event.target.classList.contains('list-btn')) {
+    // console.warn('STORE', store.getItem('notes'));
+    console.warn('NOTES: ', noteArr);
+  }
   // CLEAR STORE
-  else if(event.target.classList.contains('clean-btn')) {
+  else if (event.target.classList.contains('clean-btn')) {
     clearStore();
-    console.log("NOTE ARR: ", noteArr);
-  } 
+    // console.log("NOTE ARR: ", noteArr);
+  }
   // OPEN NOTE
-  else if(event.target.classList.contains('note')) {
+  else if (event.target.classList.contains('note')) {
     mainWrap.classList.add('no-scroll');
     openNoteHandler(event);
-  } 
+  }
   // DELETE NOTE
-  else if(event.target.classList.contains('delete-btn')) {
+  else if (event.target.classList.contains('delete-btn')) {
     deleteNoteHandler(event, noteId);
-  } 
+  }
   // EDIT NOTE
-  else if(event.target.classList.contains('change-btn')) {
+  else if (event.target.classList.contains('change-btn')) {
     event.preventDefault();
     editNote(noteId);
   }
   // CHECK BTN
-  else if(event.target.classList.contains('check-btn')) {
+  else if (event.target.classList.contains('check-btn')) {
     checkDone(event);
   }
 });
