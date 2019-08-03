@@ -29,14 +29,13 @@ function closeHandler(elem, classToRemove) {
   clearForm();
 }
 
-function getNoteById(id) {
+function getNoteFromArray(id) {
   return noteArr.find((item) => item.noteId === id);
 }
 
 function openNoteHandler(event) {
   noteId = event.target.getAttribute("id");
-  // console.log("OPEN: ", noteId);
-  fillForm(getNoteById(noteId));
+  fillForm(getNoteFromArray(noteId));
 }
 
 function deleteNoteHandler(event, noteId) {
@@ -45,8 +44,6 @@ function deleteNoteHandler(event, noteId) {
   noteArr = noteArr.filter((note) => {
     return note.noteId !== noteId;
   });
-  // console.log('ARR: ', noteArr);
-  setStore();
   $doc.getElementById(noteId).remove();
   closeHandler(windows, 'active-window');
 }
@@ -59,7 +56,6 @@ function fillForm(obj) {
   const checkboxes = editNoteForm.querySelectorAll('[name="note-status"]');
   [...checkboxes].forEach((checky) => {
     if (checky.value === obj.noteStatus) {
-      console.log(`=^..^= ${checky.value} === ${obj.noteStatus}`);
       checky.checked = true;
     } else {
       checky.checked = false;
@@ -68,24 +64,30 @@ function fillForm(obj) {
 }
 
 function editNote(editingNoteId) {
-  const editingNoteIndex = noteArr.indexOf(getNoteById(editingNoteId));
+  const editingNoteIndex = noteArr.indexOf(getNoteFromArray(editingNoteId));
   const changedData = getData('#edit-note-form');
-  const noteProps = Object.keys(noteArr[editingNoteIndex]);
   let changedProps = 0;
   for(let prop in changedData) {
     if(changedData[prop] !== noteArr[editingNoteIndex][prop]) {
-      console.log(`PROPS: ${changedData[prop]} === ${noteArr[editingNoteIndex][prop]}`);
+      noteArr[editingNoteIndex][prop] = changedData[prop];
       changedProps += 1;
-      // noteArr[editingNoteIndex].prop = prop;
+      setStore();
+      updateNote(editingNoteIndex, noteArr[editingNoteIndex]);
+      closeHandler(windows, 'active-window');
+      clearForm();
     }
   }
   if(changedProps > 0) {
-    console.log("Note was edited");
   } else {
     closeHandler(windows, 'active-window');
     clearForm();
   }
-  console.log("CHANGES: ", changedProps);
+}
+
+function updateNote (noteIndex, noteData) {
+  const note = notesList.querySelectorAll('.note')[noteIndex];
+  note.querySelector('.note-title').textContent = noteData.noteTitle;
+  note.setAttribute('class', `note ${noteData.noteStatus}`);
 }
 
 function clearForm() {
@@ -144,7 +146,6 @@ function renderNote(obj) {
 }
 
 function renderNotes(arr) {
-  // console.log("NOTES RENDERING", arr);
   notesList.innerHTML = '';
   arr.forEach((item) => {
     renderNote(item);
@@ -164,22 +165,17 @@ function getData(form) {
     noteExpDate: formy.querySelector('[name="note-exp-date"]').value || `${date.getFullYear()}-${parseInt(date.getMonth()+1)}-${date.getDate()}`,
     noteStatus: formy.querySelector('[name="note-status"]:checked').value
   }
-
-  // console.log("SAVED DATA: ", noteArr);
   return dataObj;
 }
 
-// function editNoteForm(id) {
-//   getData('#edit-note-form');
-// }
-
 function checkDone(event) {
-  noteId = event.target.parentNode.getAttribute("id");
-  $doc.getElementById(noteId).classList.toggle('done');
-  const targetNote = noteArr.find((note) => {
-    return note.noteId === noteId;
-  });
-  // console.log("TARGET: ", targetNote);
+  const notes = notesList.querySelectorAll('.note');
+  const note = event.target.parentNode;
+  const noteIndex = [...notes].indexOf(note);
+  noteId = note.getAttribute("id");
+  note.classList.toggle('done');
+  noteArr[noteIndex].noteDone = !noteArr[noteIndex].noteDone;
+  setStore();
 }
 
 // render notes
@@ -205,17 +201,14 @@ $doc.addEventListener('click', (event) => {
     setStore();
     renderNote(fullNoteData);
     closeHandler(windows, 'active-window');
-    // console.log('NOTES: ', noteArr);
   }
   // CONSOLE LIST of NOTES
   else if (event.target.classList.contains('list-btn')) {
-    // console.warn('STORE', store.getItem('notes'));
     console.warn('NOTES: ', noteArr);
   }
   // CLEAR STORE
   else if (event.target.classList.contains('clean-btn')) {
     clearStore();
-    // console.log("NOTE ARR: ", noteArr);
   }
   // OPEN NOTE
   else if (event.target.classList.contains('note')) {
