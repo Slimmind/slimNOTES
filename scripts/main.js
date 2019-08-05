@@ -90,6 +90,7 @@ function updateNote (noteIndex, noteData) {
   note.querySelector('.note-text').textContent = noteData.noteText;
   note.querySelector('.note-date').textContent = noteData.noteExpDate;
   note.setAttribute('class', `note ${noteData.noteStatus}`);
+  note.setAttribute('data-note-symbol', noteData.noteTitle.charAt(0));
 }
 
 function clearForm() {
@@ -135,7 +136,7 @@ function renderNote(obj) {
   note.classList.add('note', obj.noteStatus);
   note.setAttribute('id', obj.noteId);
   note.setAttribute('data-creation-date', obj.noteCreationDate);
-  note.setAttribute('data-note-symbol', noteSymbol)
+  note.setAttribute('data-note-symbol', noteSymbol);
 
   template.appendChild(noteTitle);
   template.appendChild(noteText);
@@ -183,10 +184,6 @@ function checkDone(event) {
 // render notes
 renderNotes(noteArr);
 
-//
-//
-//
-//
 // HANDLERS 
 $doc.addEventListener('click', (event) => {
   // ADD NOTE (opens AddNote form)
