@@ -87,6 +87,8 @@ function editNote(editingNoteId) {
 function updateNote (noteIndex, noteData) {
   const note = notesList.querySelectorAll('.note')[noteIndex];
   note.querySelector('.note-title').textContent = noteData.noteTitle;
+  note.querySelector('.note-text').textContent = noteData.noteText;
+  note.querySelector('.note-date').textContent = noteData.noteExpDate;
   note.setAttribute('class', `note ${noteData.noteStatus}`);
 }
 
@@ -181,6 +183,10 @@ function checkDone(event) {
 // render notes
 renderNotes(noteArr);
 
+//
+//
+//
+//
 // HANDLERS 
 $doc.addEventListener('click', (event) => {
   // ADD NOTE (opens AddNote form)

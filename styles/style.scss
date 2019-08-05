@@ -414,6 +414,7 @@ main {
     font-size: 32px;
     text-align: center;
     line-height: 50px;
+    text-transform: uppercase;
   }
   &.normal {
     background-image: linear-gradient(to right, $color-blue, rgba($color-blue, .3));
