@@ -118,6 +118,7 @@ function renderNote(obj) {
   const note = $doc.createElement('div');
   const noteTitle = $doc.createElement('h3');
   const noteTitleValue = $doc.createTextNode(obj.noteTitle);
+  const done = obj.noteDone;
   const noteSymbol = obj.noteTitle ? obj.noteTitle.charAt(0) : '=^..^=';
   const noteText = $doc.createElement('p');
   const noteTextValue = $doc.createTextNode(obj.noteText);
@@ -133,7 +134,7 @@ function renderNote(obj) {
   noteExpDate.appendChild(noteExpDataValue);
   noteExpDate.classList.add('note-date');
   checkBtn.classList.add('check-btn');
-  note.classList.add('note', obj.noteStatus);
+  note.classList.add('note', obj.noteStatus, (done) ? 'done' : null, (new Date(obj.noteExpDate) < date) ? 'overdue' : null);
   note.setAttribute('id', obj.noteId);
   note.setAttribute('data-creation-date', obj.noteCreationDate);
   note.setAttribute('data-note-symbol', noteSymbol);
@@ -174,11 +175,12 @@ function getData(form) {
 function checkDone(event) {
   const notes = notesList.querySelectorAll('.note');
   const note = event.target.parentNode;
-  const noteIndex = [...notes].indexOf(note);
+  const noteIndex = parseInt([...notes].indexOf(note));
   noteId = note.getAttribute("id");
   note.classList.toggle('done');
   noteArr[noteIndex].noteDone = !noteArr[noteIndex].noteDone;
   setStore();
+  console.log(`DONE: ${noteArr[noteIndex].noteDone}`);
 }
 
 // render notes

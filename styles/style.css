@@ -13,7 +13,7 @@ body {
 }
 
 body {
-  font: 500 16px/24px "Ubuntu", sans-serif;
+  font: 400 14px/24px "Ubuntu", sans-serif;
   cursor: pointer;
 }
 
@@ -126,6 +126,11 @@ main:before {
   border-color: lightgrey;
 }
 
+.btn.change-btn {
+  color: #2b5796;
+  border-color: #2b5796;
+}
+
 .btn.create-btn {
   color: #226f45;
   border-color: #226f45;
@@ -228,6 +233,8 @@ main:before {
           transform-origin: center bottom;
   -webkit-transform: translateY(100px);
           transform: translateY(100px);
+  max-height: 100%;
+  overflow: auto;
   opacity: 0;
   -webkit-transition: opacity .3s, -webkit-transform .3s;
   transition: opacity .3s, -webkit-transform .3s;
@@ -421,6 +428,11 @@ main:before {
   text-align: center;
   line-height: 50px;
   text-transform: uppercase;
+}
+
+.note.overdue .note-date {
+  background-color: #d04526;
+  color: #fff !important;
 }
 
 .note.normal {

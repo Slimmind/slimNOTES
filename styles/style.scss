@@ -77,7 +77,7 @@ body {
 }
 
 body {
-  font: 500 16px/24px $fonty;
+  font: 400 14px/24px $fonty;
   cursor: pointer;
 }
 
@@ -168,6 +168,10 @@ main {
   &.cancel-btn {
     color: $color-light-grey;
     border-color: $color-light-grey
+  }
+  &.change-btn {
+    color: $color-blue;
+    border-color: $color-blue;
   }
 
   &.create-btn {
@@ -262,6 +266,8 @@ main {
     position: relative;
     transform-origin: center bottom;
     transform: translateY(100px);
+    max-height: 100%;
+    overflow: auto;
     opacity: 0;
     transition: transform .3s, opacity .3s;
     z-index: 1;
@@ -415,6 +421,12 @@ main {
     text-align: center;
     line-height: 50px;
     text-transform: uppercase;
+  }
+  &.overdue {
+    .note-date {
+      background-color: $color-red;
+      color: $color-white !important;
+    }
   }
   &.normal {
     background-image: linear-gradient(to right, $color-blue, rgba($color-blue, .3));
