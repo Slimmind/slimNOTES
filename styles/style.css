@@ -13,7 +13,7 @@ body {
 }
 
 body {
-  font: 400 14px/24px "Ubuntu", sans-serif;
+  font: 400 14px/20px "Ubuntu", sans-serif;
   cursor: pointer;
 }
 
@@ -418,7 +418,7 @@ main:before {
 .note:after {
   content: attr(data-note-symbol);
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 10px;
   width: 50px;
   height: 50px;
@@ -433,6 +433,8 @@ main:before {
 .note.overdue .note-date {
   background-color: #d04526;
   color: #fff !important;
+  -webkit-box-shadow: 0 0 5px 0px rgba(255, 255, 255, 0.5);
+          box-shadow: 0 0 5px 0px rgba(255, 255, 255, 0.5);
 }
 
 .note.normal {
@@ -494,6 +496,10 @@ main:before {
   opacity: 1;
   -webkit-transform: rotate(45deg) translate(-6px, -7px) scaleY(1);
           transform: rotate(45deg) translate(-6px, -7px) scaleY(1);
+}
+
+.note-title {
+  margin-bottom: 3px;
 }
 
 .note-text {

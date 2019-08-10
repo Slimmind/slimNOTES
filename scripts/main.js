@@ -8,9 +8,15 @@ const addNoteBtn = $doc.querySelector('.add-note-btn');
 const notesList = $doc.querySelector('.notes-list');
 const windows = $doc.querySelectorAll('.window');
 let noteArr = (store.length > 0) ? JSON.parse(store.getItem('notes')) : [];
-const date = new Date();
+const dateData = new Date();
+const month = parseInt(dateData.getMonth()+1) < 10 ? `0${parseInt(dateData.getMonth()+1)}` : parseInt(dateData.getMonth()+1);
+const day = dateData.getDate() < 10 ? `0${dateData.getDate()}` : dateData.getDate();
+const dateString = `${dateData.getFullYear()}-${month}-${day}`;
+console.log("DATE: ", dateString);
 let noteId = '';
 let noteIndex = 0;
+
+
 
 function closeHandler(elem, classToRemove) {
   noteId = '';
@@ -89,7 +95,7 @@ function updateNote (noteIndex, noteData) {
   note.querySelector('.note-title').textContent = noteData.noteTitle;
   note.querySelector('.note-text').textContent = noteData.noteText;
   note.querySelector('.note-date').textContent = noteData.noteExpDate;
-  note.setAttribute('class', `note ${noteData.noteStatus}`);
+  note.setAttribute('class', `note ${noteData.noteStatus} ${checkOverDue(noteData)}`);
   note.setAttribute('data-note-symbol', noteData.noteTitle.charAt(0));
 }
 
@@ -103,7 +109,7 @@ function generateId() {
 }
 
 function getCreationDate() {
-  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  return dateString;
 }
 
 function setStore() {
@@ -112,6 +118,10 @@ function setStore() {
 
 function clearStore() {
   store.clear();
+}
+
+function checkOverDue(obj) {
+  return (new Date(obj.noteExpDate) < new Date(dateString)) ? 'overdue' : null
 }
 
 function renderNote(obj) {
@@ -134,9 +144,9 @@ function renderNote(obj) {
   noteExpDate.appendChild(noteExpDataValue);
   noteExpDate.classList.add('note-date');
   checkBtn.classList.add('check-btn');
-  note.classList.add('note', obj.noteStatus, (done) ? 'done' : null, (new Date(obj.noteExpDate) < date) ? 'overdue' : null);
+  note.classList.add('note', obj.noteStatus, (done) ? 'done' : null, checkOverDue(obj));
   note.setAttribute('id', obj.noteId);
-  note.setAttribute('data-creation-date', obj.noteCreationDate);
+  // note.setAttribute('data-creation-date', obj.noteCreationDate);
   note.setAttribute('data-note-symbol', noteSymbol);
 
   template.appendChild(noteTitle);
@@ -166,7 +176,7 @@ function getData(form) {
   const dataObj = {
     noteTitle: formy.querySelector('[name="note-title"]').value || '...',
     noteText: formy.querySelector('[name="note-text"]').value || '...',
-    noteExpDate: formy.querySelector('[name="note-exp-date"]').value || `${date.getFullYear()}-${parseInt(date.getMonth()+1)}-${date.getDate()}`,
+    noteExpDate: formy.querySelector('[name="note-exp-date"]').value || dateString,
     noteStatus: formy.querySelector('[name="note-status"]:checked').value
   }
   return dataObj;
