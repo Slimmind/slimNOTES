@@ -1,3 +1,10 @@
+// TODO: wrap your code a function
+//(function (window, document, store) {
+//  // your codes
+//})(window, document, window.localStorage);
+
+// TODO: create a note object with methods: create, edit, delete
+
 const $win = window;
 const $doc = document;
 const store = window.localStorage;
@@ -12,7 +19,6 @@ const dateData = new Date();
 const month = parseInt(dateData.getMonth()+1) < 10 ? `0${parseInt(dateData.getMonth()+1)}` : parseInt(dateData.getMonth()+1);
 const day = dateData.getDate() < 10 ? `0${dateData.getDate()}` : dateData.getDate();
 const dateString = `${dateData.getFullYear()}-${month}-${day}`;
-console.log("DATE: ", dateString);
 let noteId = '';
 let noteIndex = 0;
 
@@ -146,7 +152,6 @@ function renderNote(obj) {
   checkBtn.classList.add('check-btn');
   note.classList.add('note', obj.noteStatus, (done) ? 'done' : null, checkOverDue(obj));
   note.setAttribute('id', obj.noteId);
-  // note.setAttribute('data-creation-date', obj.noteCreationDate);
   note.setAttribute('data-note-symbol', noteSymbol);
 
   template.appendChild(noteTitle);
@@ -190,7 +195,6 @@ function checkDone(event) {
   note.classList.toggle('done');
   noteArr[noteIndex].noteDone = !noteArr[noteIndex].noteDone;
   setStore();
-  console.log(`DONE: ${noteArr[noteIndex].noteDone}`);
 }
 
 // render notes

@@ -426,7 +426,7 @@ main {
     .note-date {
       background-color: $color-red;
       color: $color-white !important;
-      box-shadow: 0 0 5px 0px rgba($color-white, .5);
+      // box-shadow: 0 0 5px 0px rgba($color-white, .5);
     }
   }
   &.normal {
