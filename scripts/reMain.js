@@ -2,16 +2,31 @@
 
   const Selectors = {
     mainWrap: 'html',
-    addNoteForm: 'add-note-form',
-    editNoteForm: 'edit-note-form'
+    window: '.window',
+    addNoteForm: '#add-note-form',
+    editNoteForm: '#edit-note-form',
+    notesList: '.note-list',
+    note: '.note',
+    noteTitle: '.note-title',
+    noteText: '.note-text',
+    noteDate: '.note-date',
+
+    inputTitle: '[name="note-title"]',
+    inputText: '[name="note-text"]',
+    inputExpDate: '[name="note-exp-date"]',
+    inputStatus: '[name="note-status"]:checked',
+
+    addNoteBtn: '.add-note-btn',
+    cancelBtn: '.cancel-btn',
+    listBtn: '.list-btn',
+    cleanBtn: '.clean-btn',
+    deleteBtn: '.delete-btn',
+    changeBtn: '.change-btn',
+    createBtn: '.create-btn',
+
   }
 
-  const mainWrap = document.querySelector('html');
-  const addNoteForm = document.getElementById('add-note-form');
-  const editNoteForm = document.getElementById('edit-note-form');
-  const addNoteBtn = document.querySelector('.add-note-btn');
-  const notesList = document.querySelector('.notes-list');
-  const windows = document.querySelectorAll('.window');
+  //VARS
   let noteArr = (store.length > 0) ? JSON.parse(store.getItem('notes')) : [];
   const dateData = new Date();
   const month = parseInt(dateData.getMonth() + 1) < 10 ? `0${parseInt(dateData.getMonth()+1)}` : parseInt(dateData.getMonth() + 1);
@@ -20,6 +35,7 @@
   let noteId = '';
   let noteIndex = 0;
 
+  // NOTE
   const note = {
     renderSingle(obj) {
       const note = $doc.createElement('div');
@@ -66,7 +82,7 @@
     },
     edit(editingNoteId) {
       const editingNoteIndex = noteArr.indexOf(getNoteFromArray(editingNoteId));
-      const changedData = getData('#edit-note-form');
+      const changedData = getData(Selectors.editNoteForm);
       let changedProps = 0;
       for (let prop in changedData) {
         if (changedData[prop] !== noteArr[editingNoteIndex][prop]) {
@@ -84,10 +100,10 @@
       }
     },
     update(noteIndex, noteData) {
-      const note = notesList.querySelectorAll('.note')[noteIndex];
-      note.querySelector('.note-title').textContent = noteData.noteTitle;
-      note.querySelector('.note-text').textContent = noteData.noteText;
-      note.querySelector('.note-date').textContent = noteData.noteExpDate;
+      const note = notesList.querySelectorAll(Selectors.note)[noteIndex];
+      note.querySelector(Selectors.noteTitle).textContent = noteData.noteTitle;
+      note.querySelector(Selectors.noteText).textContent = noteData.noteText;
+      note.querySelector(Selectors.noteDate).textContent = noteData.noteExpDate;
       note.setAttribute('class', `note ${noteData.noteStatus} ${checkOverDue(noteData)}`);
       note.setAttribute('data-note-symbol', noteData.noteTitle.charAt(0));
     },
@@ -102,6 +118,7 @@
     }
   }
 
+  // FORM
   const form = {
     clear() {
       const forms = $doc.querySelectorAll('form');
@@ -109,16 +126,16 @@
     },
 
     fill(obj) {
-      editNoteForm.querySelector('[name="note-title"]').value = obj.noteTitle;
-      editNoteForm.querySelector('[name="note-text"]').value = obj.noteText;
-      editNoteForm.querySelector('[name="note-exp-date"]').value = obj.noteExpDate;
+      editNoteForm.querySelector(Selectors.inputTitle).value = obj.noteTitle;
+      editNoteForm.querySelector(Selectors.inputText).value = obj.noteText;
+      editNoteForm.querySelector(Selectors.inputExpDate).value = obj.noteExpDate;
       editNoteForm.classList.add('active-window');
-      const checkboxes = editNoteForm.querySelectorAll('[name="note-status"]');
-      [...checkboxes].forEach((checky) => {
-        if (checky.value === obj.noteStatus) {
-          checky.checked = true;
+      const checkBoxes = editNoteForm.querySelectorAll(Selectors.inputStatus);
+      [...checkBoxes].forEach((checkBox) => {
+        if (checkBox.value === obj.noteStatus) {
+          checkBox.checked = true;
         } else {
-          checky.checked = false;
+          checkBox.checked = false;
         }
       });
     },
@@ -133,16 +150,70 @@
     }
   }
 
+  // CONTROLLER
   const controller = function() {
     const setupEventListeners = function() {
+      // ADD NOTE (opens AddNote form)
+      document.querySelector(Selectors.addNoteBtn).addEventListener('click', () => {
+        mainWrap.classList.add('no-scroll');
+        addNoteForm.classList.add('active-window');
+      });
 
+      // CANCEL
+      document.querySelector(Selectors.cancelBtn).addEventListener('click', (event) => {
+        event.preventDefault();
+        closeHandler(windows, 'active-window');
+      });
+
+      // CREATE NOTE
+      document.querySelector(Selctors.createBtn).addEventListener('click', (event) => {
+        event.preventDefault();
+        const fullNoteData = {...getData(Selectors.addNoteForm), noteId: generateId(), noteCreationDate: getCreationDate(), noteDone: false};
+        noteArr.push(fullNoteData);
+        setStore();
+        renderNote(fullNoteData);
+        closeHandler(windows, 'active-window');
+      });
+
+      // OPEN NOTE
+      document.querySelector(Selectors.note).addEventListener('click', () => {
+        mainWrap.classList.add('no-scroll');
+        openNoteHandler(event);
+      });
+
+      // EDIT NOTE
+      document.querySelector(Selectors.changeBtn).addEventListener('click', () => {
+        event.preventDefault();
+        editNote(noteId);
+      });
+
+      // CHECK NOTE AS DONE
+      document.querySelector(Selectors.checkBtn).addEventListener('click', () => {
+        checkDone(event);
+      }); 
+
+      // DELETE NOTE
+      document.querySelector(Selectors.deleteBtn).addEventListener('click', () => {
+        deleteNoteHandler(event, noteId);
+      });
+
+      // CONSOLE LIST of NOTES
+      document.querySelector(Selectors.listBtn).addEventListener('click', () => {
+        console.warn('NOTES: ', noteArr);
+      });
+
+      // CLEAR STORE
+      document.querySelector(Selectors.cleanBtn).addEventListener('click', () => {
+        clearStore();
+      }); 
     }
 
     return {
       init: function() {
         console.log('App has started!');
         setupEventListeners();
-    }
-  };
+      }
+    };
+  }
   controller.init();
 })(window, document, window.localStorage);
