@@ -1,31 +1,24 @@
-// TODO: wrap your code a function
-//(function (window, document, store) {
-//  // your codes
-//})(window, document, window.localStorage);
-
-// TODO: create a note object with methods: create, edit, delete
-
 const $win = window;
 const $doc = document;
 const store = window.localStorage;
 const mainWrap = $doc.querySelector('html');
-const addNoteForm = $doc.getElementById('add-note-form');
-const editNoteForm = $doc.getElementById('edit-note-form');
-const addNoteBtn = $doc.querySelector('.add-note-btn');
-const notesList = $doc.querySelector('.notes-list');
+const addItemForm = $doc.getElementById('add-item-form');
+const editItemForm = $doc.getElementById('edit-item-form');
+const addItemBtn = $doc.querySelector('.add-item-btn');
+const itemsList = $doc.querySelector('.items-list');
 const windows = $doc.querySelectorAll('.window');
-let noteArr = (store.length > 0) ? JSON.parse(store.getItem('notes')) : [];
+let itemsArr = (store.length > 0) ? JSON.parse(store.getItem('items')) : [];
 const dateData = new Date();
 const month = parseInt(dateData.getMonth()+1) < 10 ? `0${parseInt(dateData.getMonth()+1)}` : parseInt(dateData.getMonth()+1);
 const day = dateData.getDate() < 10 ? `0${dateData.getDate()}` : dateData.getDate();
 const dateString = `${dateData.getFullYear()}-${month}-${day}`;
-let noteId = '';
+let itemId = '';
 let noteIndex = 0;
 
 
 
 function closeHandler(elem, classToRemove) {
-  noteId = '';
+  itemId = '';
   if (mainWrap.classList.contains('no-scroll')) {
     mainWrap.classList.remove('no-scroll');
   }
@@ -41,33 +34,34 @@ function closeHandler(elem, classToRemove) {
   clearForm();
 }
 
-function getNoteFromArray(id) {
-  return noteArr.find((item) => item.noteId === id);
+function getItemFromArray(id) {
+  return itemsArr.find((item) => item.itemId === id);
 }
 
-function openNoteHandler(event) {
-  noteId = event.target.getAttribute("id");
-  fillForm(getNoteFromArray(noteId));
+function openItemHandler(event) {
+  itemId = event.target.getAttribute("id");
+  fillForm(getItemFromArray(itemId));
 }
 
-function deleteNoteHandler(event, noteId) {
+function deleteItemHandler(event, itemId) {
+  console.log("ID: ", itemId);
   event.preventDefault();
-  if (!noteId) return;
-  noteArr = noteArr.filter((note) => {
-    return note.noteId !== noteId;
+  if (!itemId) return;
+  itemsArr = itemsArr.filter((item) => {
+    return item.itemId !== itemId;
   });
-  $doc.getElementById(noteId).remove();
+  $doc.getElementById(itemId).remove();
   closeHandler(windows, 'active-window');
 }
 
 function fillForm(obj) {
-  editNoteForm.querySelector('[name="note-title"]').value = obj.noteTitle;
-  editNoteForm.querySelector('[name="note-text"]').value = obj.noteText;
-  editNoteForm.querySelector('[name="note-exp-date"]').value = obj.noteExpDate;
-  editNoteForm.classList.add('active-window');
-  const checkboxes = editNoteForm.querySelectorAll('[name="note-status"]');
+  editItemForm.querySelector('[name="item-title"]').value = obj.itemTitle;
+  editItemForm.querySelector('[name="item-text"]').value = obj.itemText;
+  editItemForm.querySelector('[name="todo-exp-date"]').value = obj.todoExpDate;
+  editItemForm.classList.add('active-window');
+  const checkboxes = editItemForm.querySelectorAll('[name="item-status"]');
   [...checkboxes].forEach((checky) => {
-    if (checky.value === obj.noteStatus) {
+    if (checky.value === obj.itemStatus) {
       checky.checked = true;
     } else {
       checky.checked = false;
@@ -75,16 +69,16 @@ function fillForm(obj) {
   });
 }
 
-function editNote(editingNoteId) {
-  const editingNoteIndex = noteArr.indexOf(getNoteFromArray(editingNoteId));
-  const changedData = getData('#edit-note-form');
+function editItem(editingitemId) {
+  const editingItemIndex = itemsArr.indexOf(getItemFromArray(editingitemId));
+  const changedData = getData('#edit-Item-form');
   let changedProps = 0;
   for(let prop in changedData) {
-    if(changedData[prop] !== noteArr[editingNoteIndex][prop]) {
-      noteArr[editingNoteIndex][prop] = changedData[prop];
+    if(changedData[prop] !== itemsArr[editingItemIndex][prop]) {
+      itemsArr[editingItemIndex][prop] = changedData[prop];
       changedProps += 1;
       setStore();
-      updateNote(editingNoteIndex, noteArr[editingNoteIndex]);
+      updateItem(editingItemIndex, itemsArr[editingItemIndex]);
       closeHandler(windows, 'active-window');
       clearForm();
     }
@@ -96,13 +90,13 @@ function editNote(editingNoteId) {
   }
 }
 
-function updateNote (noteIndex, noteData) {
-  const note = notesList.querySelectorAll('.note')[noteIndex];
-  note.querySelector('.note-title').textContent = noteData.noteTitle;
-  note.querySelector('.note-text').textContent = noteData.noteText;
-  note.querySelector('.note-date').textContent = noteData.noteExpDate;
-  note.setAttribute('class', `note ${noteData.noteStatus} ${checkOverDue(noteData)}`);
-  note.setAttribute('data-note-symbol', noteData.noteTitle.charAt(0));
+function updateItem (itemIndex, itemData) {
+  const item = itemsList.querySelectorAll('.item')[itemIndex];
+  item.querySelector('.item-title').textContent = itemData.itemTitle;
+  item.querySelector('.item-text').textContent = itemData.itemText;
+  item.querySelector('.item-date').textContent = itemData.itemExpDate;
+  item.setAttribute('class', `item ${itemData.itemStatus} ${checkOverDue(itemData)}`);
+  item.setAttribute('data-item-symbol', itemData.itemTitle.charAt(0));
 }
 
 function clearForm() {
@@ -119,7 +113,7 @@ function getCreationDate() {
 }
 
 function setStore() {
-  store.setItem("notes", JSON.stringify(noteArr));
+  store.setItem("items", JSON.stringify(itemsArr));
 }
 
 function clearStore() {
@@ -127,102 +121,120 @@ function clearStore() {
 }
 
 function checkOverDue(obj) {
-  return (new Date(obj.noteExpDate) < new Date(dateString)) ? 'overdue' : null
+  return (new Date(obj.todoExpDate) < new Date(dateString)) ? 'overdue' : null
 }
 
-function renderNote(obj) {
-  const note = `
+function renderTodo(obj) {
+  console.log("OBJ", obj);
+  const todo = `
     <div 
-    class="note ${obj.noteStatus} ${obj.done ? 'done' : null} ${checkOverDue(obj)}"
-    id="${obj.noteId}"
-    data-note-symbol="${obj.noteTitle.charAt(0)}">
-      <h3 class="note-title">${obj.noteTitle}</h3>
-      <p class="note-text">${obj.noteText}</p>
-      <small class="note-date">${obj.noteExpDate}</small>
+    class="item todo ${obj.itemStatus} ${obj.done ? 'done' : null} ${checkOverDue(obj)}"
+    id="${obj.itemId}"
+    data-item-symbol="${obj.itemTitle.charAt(0)}">
+      <h3 class="item-title">${obj.itemTitle}</h3>
+      <p class="item-text">${obj.itemText}</p>
+      <small class="item-date">${obj.itemExpDate}</small>
       <span class="check-btn"></span>
     </div>
   `;
-  notesList.insertAdjacentHTML('beforeend', note);
+  itemsList.insertAdjacentHTML('beforeend', todo);
 }
 
-function renderNotes(arr) {
-  notesList.innerHTML = '';
-  arr.forEach((item) => {
-    renderNote(item);
-  });
+function renderNote(obj) {
+//   const note = `
+//     <div 
+//     class="item note"
+//     id="${obj.itemId}"
+//     data-note-symbol="${obj.noteTitle.charAt(0)}">
+//       <h3 class="note-title">${obj.noteTitle}</h3>
+//       <p class="note-text">${obj.noteText}</p>
+//     </div>
+//   `;
+//   itemsList.insertAdjacentHTML('beforeend', note);
+console.log('RENDER NOTE');
+}
+
+function renderItems(arr) {
+  if(arr) {
+    itemsList.innerHTML = '';
+    arr.forEach((item) => {
+      // (item.type === 'note') ? renderNote(item) : renderTodo(item);
+      renderTodo(item);
+    });
+  }
 }
 
 function openForm() {
   mainWrap.classList.add('no-scroll');
-  addNoteForm.classList.add('active-window');
+  addItemForm.classList.add('active-window');
 }
 
 function getData(form) {
   const formy = document.querySelector(`${form} form`);
   const dataObj = {
-    noteTitle: formy.querySelector('[name="note-title"]').value || '...',
-    noteText: formy.querySelector('[name="note-text"]').value || '...',
-    noteExpDate: formy.querySelector('[name="note-exp-date"]').value || dateString,
-    noteStatus: formy.querySelector('[name="note-status"]:checked').value
+    itemTitle: formy.querySelector('[name="item-title"]').value || '...',
+    itemText: formy.querySelector('[name="item-text"]').value || '...',
+    itemExpDate: formy.querySelector('[name="todo-exp-date"]').value || dateString,
+    itemStatus: formy.querySelector('[name="todo-status"]:checked').value
   }
   return dataObj;
 }
 
 function checkDone(event) {
-  const notes = notesList.querySelectorAll('.note');
-  const note = event.target.parentNode;
-  const noteIndex = parseInt([...notes].indexOf(note));
-  noteId = note.getAttribute("id");
-  note.classList.toggle('done');
-  noteArr[noteIndex].noteDone = !noteArr[noteIndex].noteDone;
+  const todoList = itemsList.querySelectorAll('.todo');
+  const todo = event.target.parentNode;
+  const todoIndex = parseInt([...todoList].indexOf(todo));
+  itemId = todo.getAttribute("id");
+  todo.classList.toggle('done');
+  itemsArr[todoIndex].todoDone = !itemsArr[todoIndex].todoDone;
   setStore();
 }
 
-// render notes
-renderNotes(noteArr);
+// RENDER ITEMS
+renderItems(itemsArr);
 
 // HANDLERS 
 $doc.addEventListener('click', (event) => {
-  // ADD NOTE (opens AddNote form)
-  if (event.target.classList.contains('add-note-btn')) {
+  // ADD ITEM (opens AddItem form)
+  if (event.target.classList.contains('add-item-btn')) {
     mainWrap.classList.add('no-scroll');
-    addNoteForm.classList.add('active-window');
+    addItemForm.classList.add('active-window');
   }
   // CANCEL
   else if (event.target.classList.contains('cancel-btn')) {
     event.preventDefault();
     closeHandler(windows, 'active-window');
   }
-  // CREATE NOTE
+  // CREATE TODO
   else if (event.target.classList.contains('create-btn')) {
     event.preventDefault();
-    const fullNoteData = {...getData('#add-note-form'), noteId: generateId(), noteCreationDate: getCreationDate(), noteDone: false};
-    noteArr.push(fullNoteData);
+    const fullTodoData = {...getData('#add-item-form'), itemId: generateId(), itemCreationDate: getCreationDate(), todoDone: false};
+    itemsArr.push(fullTodoData);
     setStore();
-    renderNote(fullNoteData);
+    renderTodo(fullTodoData);
     closeHandler(windows, 'active-window');
   }
-  // CONSOLE LIST of NOTES
+  // CONSOLE LIST of ITEMS
   else if (event.target.classList.contains('list-btn')) {
-    console.warn('NOTES: ', noteArr);
+    console.warn('ITEMS: ', itemsArr);
   }
   // CLEAR STORE
   else if (event.target.classList.contains('clean-btn')) {
     clearStore();
   }
-  // OPEN NOTE
-  else if (event.target.classList.contains('note')) {
+  // OPEN ITEM
+  else if (event.target.classList.contains('item')) {
     mainWrap.classList.add('no-scroll');
-    openNoteHandler(event);
+    openItemHandler(event);
   }
-  // DELETE NOTE
+  // DELETE ITEM
   else if (event.target.classList.contains('delete-btn')) {
-    deleteNoteHandler(event, noteId);
+    deleteItemHandler(event, itemId);
   }
-  // EDIT NOTE
+  // EDIT ITEM
   else if (event.target.classList.contains('change-btn')) {
     event.preventDefault();
-    editNote(noteId);
+    editItem(itemId);
   }
   // CHECK BTN
   else if (event.target.classList.contains('check-btn')) {
