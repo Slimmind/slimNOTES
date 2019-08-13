@@ -131,37 +131,18 @@ function checkOverDue(obj) {
 }
 
 function renderNote(obj) {
-  const note = $doc.createElement('div');
-  const noteTitle = $doc.createElement('h3');
-  const noteTitleValue = $doc.createTextNode(obj.noteTitle);
-  const done = obj.noteDone;
-  const noteSymbol = obj.noteTitle ? obj.noteTitle.charAt(0) : '=^..^=';
-  const noteText = $doc.createElement('p');
-  const noteTextValue = $doc.createTextNode(obj.noteText);
-  const noteExpDate = $doc.createElement('small');
-  const noteExpDataValue = $doc.createTextNode(obj.noteExpDate);
-  const checkBtn = $doc.createElement('span');
-  const template = $doc.createDocumentFragment();
-
-  noteTitle.appendChild(noteTitleValue);
-  noteTitle.classList.add('note-title');
-  noteText.appendChild(noteTextValue);
-  noteText.classList.add('note-text');
-  noteExpDate.appendChild(noteExpDataValue);
-  noteExpDate.classList.add('note-date');
-  checkBtn.classList.add('check-btn');
-  note.classList.add('note', obj.noteStatus, (done) ? 'done' : null, checkOverDue(obj));
-  note.setAttribute('id', obj.noteId);
-  note.setAttribute('data-note-symbol', noteSymbol);
-
-  template.appendChild(noteTitle);
-  template.appendChild(noteText);
-  template.appendChild(noteExpDate);
-  template.appendChild(checkBtn);
-
-  note.appendChild(template);
-
-  notesList.appendChild(note);
+  const note = `
+    <div 
+    class="note ${obj.noteStatus} ${obj.done ? 'done' : null} ${checkOverDue(obj)}"
+    id="${obj.noteId}"
+    data-note-symbol="${obj.noteTitle.charAt(0)}">
+      <h3 class="note-title">${obj.noteTitle}</h3>
+      <p class="note-text">${obj.noteText}</p>
+      <small class="note-date">${obj.noteExpDate}</small>
+      <span class="check-btn"></span>
+    </div>
+  `;
+  notesList.insertAdjacentHTML('beforeend', note);
 }
 
 function renderNotes(arr) {

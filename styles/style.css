@@ -96,6 +96,7 @@ main:before {
 
 .controls .input-wrap {
   position: relative;
+  margin-bottom: 0;
   padding-top: 60px;
   text-align: center;
 }
@@ -265,7 +266,7 @@ main:before {
 .input-wrap .input {
   display: block;
   width: 100%;
-  font: 18px/32px "Ubuntu", sans-serif;
+  font: 18px/22px "Ubuntu", sans-serif;
   min-height: 60px;
   padding: 10px 15px;
   border: none;
@@ -300,6 +301,7 @@ main:before {
 }
 
 .input-wrap textarea {
+  height: 145px;
   resize: none;
 }
 
@@ -454,7 +456,7 @@ main:before {
 }
 
 .note.normal.done {
-  background: rgba(43, 87, 150, 0.5);
+  background: rgba(43, 87, 150, 0.7);
 }
 
 .note.warning {
@@ -471,7 +473,7 @@ main:before {
 }
 
 .note.warning.done {
-  background: rgba(34, 111, 69, 0.5);
+  background: rgba(34, 111, 69, 0.7);
 }
 
 .note.urgent {
@@ -488,7 +490,7 @@ main:before {
 }
 
 .note.urgent.done {
-  background: rgba(208, 69, 38, 0.5);
+  background: rgba(208, 69, 38, 0.7);
 }
 
 .note.done {
