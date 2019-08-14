@@ -1,1 +1,6 @@
 /node_modules
+<<<<<<< HEAD
+yarn.lock
+.DS_Store
+=======
+>>>>>>> 8a160bc25e26dc34d28bc7a372396639a57179c8
