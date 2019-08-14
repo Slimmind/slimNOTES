@@ -96,6 +96,7 @@ main:before {
 
 .controls .input-wrap {
   position: relative;
+  margin-bottom: 0;
   padding-top: 60px;
   text-align: center;
 }
@@ -186,7 +187,7 @@ main:before {
   background-color: #226f45;
 }
 
-.btn.add-note-btn {
+.btn.add-item-btn {
   display: block;
   width: 60px;
   height: 60px;
@@ -194,7 +195,7 @@ main:before {
   background-color: #fff;
 }
 
-.btn.add-note-btn:before, .btn.add-note-btn:after {
+.btn.add-item-btn:before, .btn.add-item-btn:after {
   content: "";
   position: absolute;
   top: calc(50% - 2px);
@@ -204,7 +205,7 @@ main:before {
   background-color: #003152;
 }
 
-.btn.add-note-btn:after {
+.btn.add-item-btn:after {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
@@ -265,7 +266,7 @@ main:before {
 .input-wrap .input {
   display: block;
   width: 100%;
-  font: 18px/32px "Ubuntu", sans-serif;
+  font: 18px/22px "Ubuntu", sans-serif;
   min-height: 60px;
   padding: 10px 15px;
   border: none;
@@ -300,6 +301,7 @@ main:before {
 }
 
 .input-wrap textarea {
+  height: 145px;
   resize: none;
 }
 
@@ -308,7 +310,7 @@ main:before {
   background: #ededed url("../images/calendar.svg") no-repeat calc(100% - 11px) center/contain;
 }
 
-.input-wrap .note-status {
+.input-wrap .todo-status {
   position: absolute;
   top: 0;
   left: 0;
@@ -318,14 +320,14 @@ main:before {
   pointer-events: none;
 }
 
-.input-wrap .note-status + label {
+.input-wrap .todo-status + label {
   position: relative;
   font-size: 14px;
   line-height: 30px;
   padding-top: 70px;
 }
 
-.input-wrap .note-status + label:before, .input-wrap .note-status + label:after {
+.input-wrap .todo-status + label:before, .input-wrap .todo-status + label:after {
   content: '';
   position: absolute;
   top: 0;
@@ -337,63 +339,63 @@ main:before {
           box-sizing: border-box;
 }
 
-.input-wrap .note-status + label:before {
+.input-wrap .todo-status + label:before {
   border: 4px solid;
   -webkit-box-shadow: 0 1px 3px 0 rgba(100, 100, 100, 0.4);
           box-shadow: 0 1px 3px 0 rgba(100, 100, 100, 0.4);
 }
 
-.input-wrap .note-status + label:after {
+.input-wrap .todo-status + label:after {
   opacity: 0;
   -webkit-transition: opacity .3s;
   transition: opacity .3s;
 }
 
-.input-wrap .note-status.normal + label:before {
+.input-wrap .todo-status.normal + label:before {
   border-color: #2b5796;
 }
 
-.input-wrap .note-status.normal + label:after {
+.input-wrap .todo-status.normal + label:after {
   background-color: #2b5796;
 }
 
-.input-wrap .note-status.warning + label:before {
+.input-wrap .todo-status.warning + label:before {
   border-color: #226f45;
 }
 
-.input-wrap .note-status.warning + label:after {
+.input-wrap .todo-status.warning + label:after {
   background-color: #226f45;
 }
 
-.input-wrap .note-status.urgent + label:before {
+.input-wrap .todo-status.urgent + label:before {
   border-color: #d04526;
 }
 
-.input-wrap .note-status.urgent + label:after {
+.input-wrap .todo-status.urgent + label:after {
   background-color: #d04526;
 }
 
-.input-wrap .note-status:checked.normal + label {
+.input-wrap .todo-status:checked.normal + label {
   color: #2b5796;
 }
 
-.input-wrap .note-status:checked.warning + label {
+.input-wrap .todo-status:checked.warning + label {
   color: #226f45;
 }
 
-.input-wrap .note-status:checked.urgent + label {
+.input-wrap .todo-status:checked.urgent + label {
   color: #d04526;
 }
 
-.input-wrap .note-status:checked + label:after {
+.input-wrap .todo-status:checked + label:after {
   opacity: 1;
 }
 
-.notes-list {
+.items-list {
   padding: 10px;
 }
 
-.note {
+.todo {
   position: relative;
   margin-bottom: 10px;
   padding: 8px 55px 9px 70px;
@@ -410,7 +412,7 @@ main:before {
   transition: opacity .3s;
 }
 
-.note:before {
+.todo:before {
   content: "";
   position: absolute;
   top: 0;
@@ -420,8 +422,8 @@ main:before {
   background-image: linear-gradient(to right, transparent calc(100% - 50px), rgba(255, 255, 255, 0.3) calc(100% - 50px), rgba(255, 255, 255, 0.3) 100%);
 }
 
-.note:after {
-  content: attr(data-note-symbol);
+.todo:after {
+  content: attr(data-todo-symbol);
   position: absolute;
   top: 10px;
   left: 10px;
@@ -435,81 +437,81 @@ main:before {
   text-transform: uppercase;
 }
 
-.note.overdue .note-date {
+.todo.overdue .todo-date {
   background-color: #d04526;
   color: #fff !important;
 }
 
-.note.normal {
+.todo.normal {
   background-image: -webkit-gradient(linear, left top, right top, from(#2b5796), to(rgba(43, 87, 150, 0.3)));
   background-image: linear-gradient(to right, #2b5796, rgba(43, 87, 150, 0.3));
 }
 
-.note.normal::after {
+.todo.normal::after {
   color: #2b5796;
 }
 
-.note.normal .note-date {
+.todo.normal .todo-date {
   color: #2b5796;
 }
 
-.note.normal.done {
-  background: rgba(43, 87, 150, 0.5);
+.todo.normal.done {
+  background: rgba(43, 87, 150, 0.7);
 }
 
-.note.warning {
+.todo.warning {
   background-image: -webkit-gradient(linear, left top, right top, from(#226f45), to(rgba(34, 111, 69, 0.3)));
   background-image: linear-gradient(to right, #226f45, rgba(34, 111, 69, 0.3));
 }
 
-.note.warning::after {
+.todo.warning::after {
   color: #226f45;
 }
 
-.note.warning .note-date {
+.todo.warning .todo-date {
   color: #226f45;
 }
 
-.note.warning.done {
-  background: rgba(34, 111, 69, 0.5);
+.todo.warning.done {
+  background: rgba(34, 111, 69, 0.7);
 }
 
-.note.urgent {
+.todo.urgent {
   background-image: -webkit-gradient(linear, left top, right top, from(#d04526), to(rgba(208, 69, 38, 0.3)));
   background-image: linear-gradient(to right, #d04526, rgba(208, 69, 38, 0.3));
 }
 
-.note.urgent::after {
+.todo.urgent::after {
   color: #d04526;
 }
 
-.note.urgent .note-date {
+.todo.urgent .todo-date {
   color: #d04526;
 }
 
-.note.urgent.done {
-  background: rgba(208, 69, 38, 0.5);
+.todo.urgent.done {
+  background: rgba(208, 69, 38, 0.7);
 }
 
-.note.done {
+.todo.done {
   opacity: .4;
 }
 
-.note.done .check-btn:before {
+.todo.done .check-btn:before {
   opacity: 1;
   -webkit-transform: rotate(45deg) translate(-6px, -7px) scaleY(1);
           transform: rotate(45deg) translate(-6px, -7px) scaleY(1);
 }
 
-.note-title {
+.todo-title {
   margin-bottom: 3px;
 }
 
-.note-text {
+.todo-text {
   margin-bottom: 5px;
 }
 
-.note-date {
+.todo-date {
   display: inline-block;
   vertical-align: top;
   padding: 0 5px;

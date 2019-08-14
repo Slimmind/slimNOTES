@@ -144,6 +144,7 @@ main {
   }
   .input-wrap {
     position: relative;
+    margin-bottom: 0;
     padding-top: 60px;
     text-align: center;
     label {
@@ -225,7 +226,7 @@ main {
       background-color: $color-green;
     }
   }
-  &.add-note-btn {
+  &.add-item-btn {
     display: block;
     width: 60px;
     height: 60px;
@@ -294,10 +295,9 @@ main {
   .input {
     display: block;
     width: 100%;
-    font: 18px/32px $main-font;
+    font: 18px/22px $main-font;
     min-height: 60px;
     padding: 10px 15px;
-    // border: 4px solid rgba($color-main, .3);
     border: none;
     border-radius: $main-radius;
     box-shadow: $main-shadow;
@@ -310,6 +310,7 @@ main {
   }
 
   textarea {
+    height: 145px;
     resize: none;
   }
 
@@ -318,7 +319,7 @@ main {
     background: $color-grey-light url('../images/calendar.svg') no-repeat calc(100% - 11px) center / contain;
   }
 
-  .note-status {
+  .todo-status {
     position: absolute;
     top: 0;
     left: 0;
@@ -391,10 +392,10 @@ main {
     }
   }
 }
-.notes-list {
+.items-list {
   padding: 10px;
 }
-.note {
+.todo {
   position: relative;
   margin-bottom: 10px;
   padding: 8px 55px 9px 70px;
@@ -414,7 +415,7 @@ main {
     background-image: linear-gradient(to right, transparent calc(100% - 50px), rgba($color-white, .3) calc(100% - 50px), rgba($color-white, .3) 100%);
   }
   &:after {
-    content: attr(data-note-symbol);
+    content: attr(data-todo-symbol);
     position: absolute;
     top: 10px;
     left: 10px;
@@ -428,7 +429,7 @@ main {
     text-transform: uppercase;
   }
   &.overdue {
-    .note-date {
+    .todo-date {
       background-color: $color-red;
       color: $color-white !important;
       // box-shadow: 0 0 5px 0px rgba($color-white, .5);
@@ -439,11 +440,11 @@ main {
     &::after {
       color: $color-blue;
     }
-    .note-date {
+    .todo-date {
       color: $color-blue;
     }
     &.done {
-      background: rgba($color-blue, .5);
+      background: rgba($color-blue, .7);
     }
   }
   &.warning {
@@ -451,11 +452,11 @@ main {
     &::after {
       color: $color-green;
     }
-    .note-date {
+    .todo-date {
       color: $color-green;
     }
     &.done {
-      background: rgba($color-green, .5);
+      background: rgba($color-green, .7);
     }
   }
   &.urgent {
@@ -463,11 +464,11 @@ main {
     &::after {
       color: $color-red;
     }
-    .note-date {
+    .todo-date {
       color: $color-red;
     }
     &.done {
-      background: rgba($color-red, .5);
+      background: rgba($color-red, .7);
     }
   }
   &.done {
@@ -480,14 +481,14 @@ main {
     }
   }
 }
-.note-title {
+.todo-title {
   margin-bottom: 3px;
   // background-color: rgba($color-white, .3);
 }
-.note-text {
+.todo-text {
   margin-bottom: 5px;
 }
-.note-date {
+.todo-date {
   display: inline-block;
   vertical-align: top;
   padding: 0 5px;
