@@ -1,0 +1,536 @@
+$color-main: #003152;
+$color-white: #fff;
+$color-black: #000;
+$color-grey: #cdcdcd;
+$color-grey-light: #ededed;
+$color-green: #226f45;
+$color-blue: #2b5796;
+$color-yellow: amber;
+$color-red: #d04526;
+$main-font: 'Ubuntu',
+sans-serif;
+$main-radius: 3px;
+$main-shadow: 0 1px 3px 0 rgba(100,100,100, .4);
+
+// MIXINS
+
+@mixin bg ($posX: null, $posY: null, $sizeX: null, $sizeY: null) {
+  background: {
+    repeat: no-repeat;
+    position: $posX $posY;
+    size: $sizeX $sizeY;
+  }
+}
+@mixin pos ($pos: null, $top: null, $left: null, $bottom: null, $right: null) {
+  position: $pos;
+  right: $right;
+  bottom: $bottom;
+  @if ($top == "center" and $left == "center") {
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+  @if($top == "center" and $left != "center") {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @if not($top == "center") {
+    top: $top;
+  }
+  @if($left == "center" and $top != "center") {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  @if not($left == "center") {
+    left: $left;
+  }
+}
+@mixin flex ($fd: null, $jc: null, $ai: null, $fw: null, $ac: null) {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-direction: $fd;
+  flex-direction: $fd;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-wrap: $fw;
+  align-content: $ac;
+}
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder {opacity: 1; @content}
+  &::-moz-placeholder {opacity: 1; @content}
+  &:-ms-input-placeholder {@content}
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font: 400 14px/20px $main-font;
+  cursor: pointer;
+}
+
+main {
+  position: relative;
+  min-height: 100%;
+  padding: 0 0 50px;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/tiny-squares.png');
+    opacity: .3;
+    z-index: -1;
+  }
+}
+
+.panel {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-image: linear-gradient( to top, rgba($color-main,.5), transparent);
+    pointer-events: none;
+  }
+
+  &.top-panel {
+    top: 0;
+  }
+
+  &.bottom-panel {
+    bottom: 0;
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  padding: 5px 0;
+  &.align-center {
+    justify-content: space-around;
+  }
+
+  &.align-right {
+    justify-content: flex-end;
+  }
+
+  &.align-stretch {
+    justify-content: space-between;
+  }
+  .input-wrap {
+    position: relative;
+    margin-bottom: 0;
+    padding-top: 60px;
+    text-align: center;
+    label {
+      cursor: pointer;
+    }
+  }
+}
+
+.btn {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  height: 40px;
+  padding: 5px 15px;
+  font: 700 16px/20px $main-font;
+  color: $color-white;
+  border: none;
+  border-radius: $main-radius;
+  outline: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: $main-shadow;
+
+  &.cancel-btn {
+    background-color: $color-grey;
+  }
+  &.change-btn {
+    background-color: $color-blue;
+  }
+
+  &.create-btn {
+    background-color: $color-green;
+  }
+  &.delete-btn {
+    background-color: $color-red;
+  }
+  &.round-btn {
+    width: 50px;
+    border: none;
+    background-color: $color-white;
+  }
+  &.clean-btn {
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 2px);
+      left: calc(50% - 16px);
+      width: 32px;
+      height: 4px;
+      background-color: $color-red;
+    }
+    &:before {
+      transform: rotate(-45deg);
+    }
+    &:after {
+      transform: rotate(45deg);
+    }
+  }
+  &.list-btn {
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      left: calc(50% - 15px);
+      width: 30px;
+    }
+    &:before {
+      top: calc(50% - 10px);
+      height: 12px;
+      border: solid $color-green;
+      border-width: 4px 0;
+    }
+    &:after {
+      top: calc(50% - 2px);
+      height: 4px;
+      background-color: $color-green;
+    }
+  }
+  &.add-item-btn {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: $color-white;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 2px);
+      left: calc(50% - 17px);
+      width: 34px;
+      height: 4px;
+      background-color: $color-main;
+    }
+  
+    &:after {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 10px;
+  opacity: 0;
+  background-color: $color-white;
+  pointer-events: none;
+  overflow: hidden;
+  h3 {
+    margin-bottom: 20px;
+  }
+  form {
+    position: relative;
+    padding: 0 10px;
+    transform-origin: center bottom;
+    transform: translateY(100px);
+    max-height: 100%;
+    overflow: auto;
+    opacity: 0;
+    transition: transform .3s, opacity .3s;
+    z-index: 1;
+  }
+
+  &.active-window {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 10;
+    form {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.input-wrap {
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+
+  input,
+  .input {
+    display: block;
+    width: 100%;
+    font: 18px/22px $main-font;
+    min-height: 60px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: $main-radius;
+    box-shadow: $main-shadow;
+    background-color: $color-grey-light;
+    outline-color: transparent;
+    -webkit-appearance: none;
+    @include placeholder {
+      color: rgba($color-main, .3);
+    }
+  }
+
+  textarea {
+    height: 145px;
+    resize: none;
+  }
+
+  [type="date"] {
+    padding-right: 50px;
+    background: $color-grey-light url('../images/calendar.svg') no-repeat calc(100% - 11px) center / contain;
+  }
+
+  .todo-status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+    + label {
+      position: relative;
+      font-size: 14px;
+      line-height: 30px;
+      padding-top: 70px;
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: calc(50% - 30px);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        box-sizing: border-box;
+      }
+      &:before {
+        border: 4px solid;
+        box-shadow: $main-shadow;
+      }
+      &:after {
+        opacity: 0;
+        transition: opacity .3s;
+      }
+    }
+    &.normal + label {
+      &:before {
+        border-color: $color-blue;
+      }
+      &:after {
+        background-color: $color-blue;
+      }
+    }
+    &.warning + label {
+      &:before {
+        border-color: $color-green;
+      }
+      &:after {
+        background-color: $color-green;
+      }
+    }
+    &.urgent + label {
+      &:before {
+        border-color: $color-red;
+      }
+      &:after {
+        background-color: $color-red;
+      }
+    }
+    &:checked {
+      &.normal + label {
+        color: $color-blue;
+      }
+      &.warning + label {
+        color: $color-green;
+      }
+      &.urgent + label {
+        color: $color-red;
+      }
+      + label:after {
+        opacity: 1;
+      }
+    }
+  }
+}
+.items-list {
+  padding: 10px;
+}
+.todo {
+  position: relative;
+  margin-bottom: 10px;
+  padding: 8px 55px 9px 70px;
+  color: $color-white;
+  transition: transform .5s;
+  border-radius: 4px;
+  box-shadow: $main-shadow;
+  opacity: 1;
+  transition: opacity .3s;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, transparent calc(100% - 50px), rgba($color-white, .3) calc(100% - 50px), rgba($color-white, .3) 100%);
+  }
+  &:after {
+    content: attr(data-todo-symbol);
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 35px;
+    background-color: $color-white;
+    font-size: 32px;
+    text-align: center;
+    line-height: 50px;
+    text-transform: uppercase;
+  }
+  &.overdue {
+    .todo-date {
+      background-color: $color-red;
+      color: $color-white !important;
+      // box-shadow: 0 0 5px 0px rgba($color-white, .5);
+    }
+  }
+  &.normal {
+    background-image: linear-gradient(to right, $color-blue, rgba($color-blue, .3));
+    &::after {
+      color: $color-blue;
+    }
+    .todo-date {
+      color: $color-blue;
+    }
+    &.done {
+      background: rgba($color-blue, .7);
+    }
+  }
+  &.warning {
+    background-image: linear-gradient(to right, $color-green, rgba($color-green, .3));
+    &::after {
+      color: $color-green;
+    }
+    .todo-date {
+      color: $color-green;
+    }
+    &.done {
+      background: rgba($color-green, .7);
+    }
+  }
+  &.urgent {
+    background-image: linear-gradient(to right, $color-red, rgba($color-red, .3));
+    &::after {
+      color: $color-red;
+    }
+    .todo-date {
+      color: $color-red;
+    }
+    &.done {
+      background: rgba($color-red, .7);
+    }
+  }
+  &.done {
+    opacity: .4;
+    .check-btn {
+      &:before {
+        opacity: 1;
+        transform: rotate(45deg) translate(-6px, -7px) scaleY(1);
+      }
+    }
+  }
+}
+.todo-title {
+  margin-bottom: 3px;
+  // background-color: rgba($color-white, .3);
+}
+.todo-text {
+  margin-bottom: 5px;
+}
+.todo-date {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 5px;
+  background-color: rgba($color-white, .5);
+  line-height: 18px;
+  border-radius: 3px;
+}
+.check-btn {
+  position: absolute;
+  top: calc(50% - 15px);
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba($color-white, .7);
+  border-radius: 50%;
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 10px);
+    left: calc(50% - 6px);
+    width: 12px;
+    height: 20px;
+    border-right: 4px solid $color-white;
+    border-bottom: 4px solid $color-white;
+    transform: rotate(45deg) translate(-6px, -7px) scaleY(0);
+    opacity: 0;
+    transition: opacity .3s, transform .3s;
+    will-change: transform;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.no-scroll {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
