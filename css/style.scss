@@ -111,9 +111,8 @@ main {
 
   &:before {
     content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
+    @include pos(absolute, 0, 0);
+    width: 100%;
     width: 100%;
     height: 100%;
     background: url('../img/tiny-squares.png');
@@ -130,9 +129,7 @@ main {
 
   &:before {
     content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    @include pos(absolute, $bottom: 0, $left: 0);
     width: 100%;
     height: 100px;
     background-image: linear-gradient(to top, rgba($color-main, .5), transparent);
@@ -223,9 +220,7 @@ main {
     &:before,
     &:after {
       content: "";
-      position: absolute;
-      top: calc(50% - 2px);
-      left: calc(50% - 16px);
+      @include pos(absolute, calc(50% - 2px), calc(50% - 16px));
       width: 32px;
       height: 4px;
       background-color: $color-red;
@@ -274,9 +269,7 @@ main {
     &:before,
     &:after {
       content: "";
-      position: absolute;
-      top: calc(50% - 2px);
-      left: calc(50% - 17px);
+      @include pos(absolute, calc(50% - 2px), calc(50% - 17px));
       width: 34px;
       height: 4px;
       background-color: $color-main;
@@ -289,9 +282,7 @@ main {
 }
 
 .window {
-  position: fixed;
-  top: 0;
-  left: 0;
+  @include pos(fixed, 0, 0);
   width: 100%;
   height: 100vh;
   padding: 10px;
@@ -362,9 +353,7 @@ main {
   }
 
   .todo-status {
-    position: absolute;
-    top: 0;
-    left: 0;
+    @include pos(absolute, 0, 0);
     width: 0;
     height: 0;
     opacity: 0;
@@ -379,9 +368,7 @@ main {
       &:before,
       &:after {
         content: '';
-        position: absolute;
-        top: 0;
-        left: calc(50% - 30px);
+        @include pos(absolute, 0, calc(50% - 30px));
         border-radius: 50%;
         width: 60px;
         height: 60px;
@@ -453,22 +440,23 @@ main {
   padding: 10px;
 }
 
-.todo {
+.item {
   position: relative;
   margin-bottom: 10px;
+  box-shadow: $main-shadow;
+  border-radius: $main-radius;
+}
+
+.todo {
   padding: 8px 55px 9px 70px;
   color: $color-white;
   transition: transform .5s;
-  border-radius: 4px;
-  box-shadow: $main-shadow;
   opacity: 1;
   transition: opacity .3s;
 
   &:before {
     content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
+    @include pos(absolute, 0, 0);
     width: 100%;
     height: 100%;
     background-image: linear-gradient(to right, transparent calc(100% - 50px), rgba($color-white, .3) calc(100% - 50px), rgba($color-white, .3) 100%);
@@ -476,9 +464,7 @@ main {
 
   &:after {
     content: attr(data-todo-symbol);
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    @include pos(absolute, 10px, 10px);
     width: 50px;
     height: 50px;
     border-radius: 35px;
@@ -575,10 +561,28 @@ main {
   border-radius: 3px;
 }
 
+.note {
+  padding: 8px;
+  background-color: $color-white;
+  &:after {
+    content: "";
+    @include pos(absolute, 0,0,0,0);
+  }
+  .item-title {
+    position: relative;
+    padding-bottom: 2px;
+    &:after {
+      content: "";
+      @include pos(absolute, $bottom: 0, $left: 0);
+      width: 100%;
+      height: 1px;
+      background-image: linear-gradient(to right, rgba($color-black, .2) 0%, transparent 100%);
+    }
+  }
+}
+
 .check-btn {
-  position: absolute;
-  top: calc(50% - 15px);
-  right: 10px;
+  @include pos(absolute, calc(50% - 15px), $right: 10px);
   width: 30px;
   height: 30px;
   border: 3px solid rgba($color-white, .7);
@@ -586,9 +590,7 @@ main {
 
   &:before {
     content: '';
-    position: absolute;
-    top: calc(50% - 10px);
-    left: calc(50% - 6px);
+    @include pos(absolute, calc(50% - 10px), $left: calc(50% - 6px));
     width: 12px;
     height: 20px;
     border-right: 4px solid $color-white;
@@ -601,9 +603,7 @@ main {
 
   &:after {
     content: '';
-    position: absolute;
-    top: calc(50% - 25px);
-    left: calc(50% - 25px);
+    @include pos(absolute, calc(50% - 25px), calc(50% - 25px));
     width: 50px;
     height: 50px;
   }
@@ -620,6 +620,20 @@ main {
     max-height: 0;
     opacity: 0;
     pointer-events: none;
+  }
+}
+
+.edit-form {
+  .toggle-type {
+    display: none;
+  }
+}
+
+.todo-form {
+  .block.hidden {
+    max-height: 600px;
+    opacity: 1;
+    pointer-events: all;
   }
 }
 
