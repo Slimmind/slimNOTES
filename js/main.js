@@ -13,7 +13,8 @@
     addItemBtn: document.querySelector('.add-item-btn'),
     itemsList: document.querySelector('.items-list'),
     expandFormToggler: document.querySelectorAll('[name="item-type"]'),
-    todoBlock: document.querySelector('.todo-block')
+    todoBlock: document.querySelector('.todo-block'),
+    toggleType: document.querySelector('.toggle-type'),
   };
 
   console.log("DOM: ", DOM.itemForm);
@@ -42,18 +43,13 @@
 
   function closeHandler(elem, classToRemove) {
     itemId = '';
+    const classes = classToRemove.replace(/ /g, '').split(',');
     if (DOM.html.classList.contains('no-scroll')) {
       DOM.html.classList.remove('no-scroll');
     }
-    if (elem.length > 1) {
-      [...elem].forEach((item) => {
-        if (item.classList.contains(classToRemove)) {
-          item.classList.remove(classToRemove);
-        }
-      });
-    } else {
-      elem.classList.remove(classToRemove);
-    }
+    classes.length && classes.forEach((item) => {
+      elem.classList.contains(item) && elem.classList.remove(item);
+    });
     clearForm();
   }
 
@@ -61,9 +57,15 @@
     return itemArr.find((item) => item.itemId === id);
   }
 
-  function openNoteHandler(event) {
-    itemId = event.target.getAttribute("id");
-    fillForm(getNoteFromArray(itemId));
+  function openItemHandler(event) {
+    itemId = event.target.getAttribute('id');
+    const item = getNoteFromArray(itemId);
+    console.log("iTEM: ", item.itemType);
+    DOM.itemForm.classList.add('edit-form');
+    if(item.itemType === 'todo') {
+      DOM.itemForm.classList.add('todo-form');
+    }
+    fillForm(item);
   }
 
   function deleteNoteHandler(event, itemId) {
@@ -225,7 +227,7 @@
     // CANCEL
     else if (event.target.classList.contains('cancel-btn')) {
       event.preventDefault();
-      closeHandler(DOM.windows, 'active-window');
+      closeHandler(DOM.windows, 'active-window, edit-form, todo-form');
     }
     // CREATE NOTE
     else if (event.target.classList.contains('create-btn')) {
@@ -239,7 +241,7 @@
       itemArr.push(fullNoteData);
       setStore();
       renderItem(fullNoteData);
-      closeHandler(DOM.windows, 'active-window');
+      closeHandler(DOM.windows, 'active-window, edit-form, todo-form');
     }
     // CONSOLE LIST of NOTES
     else if (event.target.classList.contains('list-btn')) {
@@ -249,14 +251,15 @@
     else if (event.target.classList.contains('clean-btn')) {
       clearStore();
     }
-    // OPEN NOTE
-    else if (event.target.classList.contains('note')) {
+    // OPEN ITEM
+    else if (event.target.classList.contains('item')) {
       DOM.html.classList.add('no-scroll');
-      openNoteHandler(event);
+      openItemHandler(event);
     }
     // DELETE NOTE
     else if (event.target.classList.contains('delete-btn')) {
       deleteNoteHandler(event, itemId);
+      closeHandler(DOM.windows, 'active-window, edit-form, todo-form');
     }
     // EDIT NOTE
     else if (event.target.classList.contains('change-btn')) {
