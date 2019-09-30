@@ -615,7 +615,7 @@ main:before {
   left: calc(50% - 12px);
   width: 24px;
   height: 4px;
-  background-color: #003152;
+  background-color: #226f45;
 }
 
 .btn.add-item-btn:after {
