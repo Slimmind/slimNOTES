@@ -1,82 +1,117 @@
-<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>slimNotes</title>
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&amp;subset=cyrillic" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Notix</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-  <main>
-    <!-- <header class="main-header panel top-panel"></header> -->
-    <div class="items-list">
-      <!-- <div class="note urgent">
-        <header class="note-header">Header</header>
-        <div class="note-content">
-          <p>Lorem ipsum dolor sit amet.</p>
+    <div class="wrapper">
+        <main>
+            <div class="items-list">
+                <div class="item todo warning null null" id="sxri09x5b" data-todo-symbol=".">
+                    <h3 class="item-title">...</h3>
+                    <p class="item-text">...</p>
+                    <small>2019-09-27</small>
+                    <span class="check-btn"></span>
+                </div>
+
+                <div class="item todo urgent null null" id="8kvq2jlew" data-todo-symbol=".">
+                    <h3 class="item-title">...</h3>
+                    <p class="item-text">...</p>
+                    <small>2019-09-27</small>
+                    <span class="check-btn"></span>
+                </div>
+                <div class="item note " id="756ybkqmt">
+                    <h3 class="item-title">...</h3>
+                    <p class="item-text">...</p>
+                </div>
+            </div>
+            <div class="window" id="item-form">
+                <form>
+                    <div class="create-form-elements">
+                        <h3>Create Item</h3>
+                    </div>
+                    <div class="edit-form-elements">
+                        <h3>Edit Item</h3>
+                    </div>
+                    <div class="toggler toggle-type">
+                        <div class="input-wrap">
+                            <input type="radio" name="item-type" value="note" id="type-note" checked="">
+                            <label for="type-note">Note</label>
+                        </div>
+                        <div class="input-wrap">
+                            <input type="radio" name="item-type" value="todo" id="type-todo">
+                            <label for="type-todo">ToDo</label>
+                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <input class="input" type="text" name="item-title" placeholder="item title...">
+                    </div>
+                    <div class="input-wrap">
+                        <textarea class="input" name="item-text" cols="1" rows="3"
+                            placeholder="item text..."></textarea>
+                    </div>
+
+                    <div class="todo-block block hidden">
+                        <div class="input-wrap">
+                            <input class="input" name="todo-exp-date" type="date">
+                        </div>
+                        <div class="controls align-center">
+                            <div class="input-wrap">
+                                <input class="todo-status normal" type="radio" name="todo-status" value="normal"
+                                    id="status-normal" checked="">
+                                <label for="status-normal">Normal</label>
+                            </div>
+                            <div class="input-wrap">
+                                <input class="todo-status warning" type="radio" name="todo-status" value="warning"
+                                    id="status-warning">
+                                <label for="status-warning">Warning</label>
+                            </div>
+                            <div class="input-wrap">
+                                <input class="todo-status urgent" type="radio" name="todo-status" value="urgent"
+                                    id="status-urgent">
+                                <label for="status-urgent">Urgent</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="create-form-elements">
+                        <div class="controls align-stretch">
+                            <button class="btn cancel-btn">Cancel</button>
+                            <button class="btn create-btn">Create</button>
+                        </div>
+                    </div>
+                    <div class="edit-form-elements">
+                        <div class="controls align-stretch">
+                            <button class="btn cancel-btn">Cancel</button>
+                            <button class="btn delete-btn">Delete</button>
+                            <button class="btn change-btn">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <div class="nav-panel">
+            <div class="main-menu">
+                <ul>
+                    <li>Test menu item</li>
+                    <li>Test menu item</li>
+                    <li>Test menu item</li>
+                    <li>
+                        <button class="btn clean-btn" aria-label="clean storage"></button>
+                    </li>
+                </ul>
+            </div>
+            <div class="controls align-center">
+                <button class="btn menu-btn" aria-label="open menu"></button>
+                <input type="search" placeholder="Search..." class="input">
+                <strong class="btn add-item-btn" role="button" aria-label="add item"></strong>
+            </div>
         </div>
-        <footer class="note-footer">
-          <small class="exp-date">21.12.2018</small>
-        </footer>
-      </div> -->
     </div>
-    <div class="window" id="item-form">
-      <form>
-        <h3>Create Item</h3>
-        <div class="toggler toggle-type">
-          <div class="input-wrap">
-            <input type="radio" name="item-type" value="note" id="type-note" checked>
-            <label for="type-note">Note</label>
-          </div>
-          <div class="input-wrap">
-            <input type="radio" name="item-type" value="todo" id="type-todo">
-            <label for="type-todo">ToDo</label>
-          </div>
-        </div>
-        <div class="input-wrap">
-          <input class="input" type="text" name="item-title" placeholder="item title...">
-        </div>
-        <div class="input-wrap">
-          <textarea class="input" name="item-text" cols="1" rows="3" placeholder="item text..."></textarea>
-        </div>
-        <div class="todo-block block hidden">
-          <div class="input-wrap">
-            <input class="input" name="todo-exp-date" type="date">
-          </div>
-          <div class="controls align-center">
-            <div class="input-wrap">
-              <input class="todo-status normal" type="radio" name="todo-status" value="normal" id="status-normal" checked>
-              <label for="status-normal">Normal</label>
-            </div>
-            <div class="input-wrap">
-              <input class="todo-status warning" type="radio" name="todo-status" value="warning" id="status-warning">
-              <label for="status-warning">Warning</label>
-            </div>
-            <div class="input-wrap">
-              <input class="todo-status urgent" type="radio" name="todo-status" value="urgent" id="status-urgent">
-              <label for="status-urgent">Urgent</label>
-            </div>
-          </div>
-        </div>
-        <div class="controls align-stretch">
-          <button class="btn cancel-btn">Cancel</button>
-          <button class="btn create-btn">Create</button>
-        </div>
-      </form>
-    </div>
-    <footer class="main-footer panel bottom-panel">
-      <div class="controls align-center">
-        <button aria-label="Clear Storage" class="btn round-btn clean-btn"></button>
-        <button aria-label="Add item Button" class="btn round-btn add-item-btn"></button>
-        <button aria-label="Show Store Button" class="btn round-btn list-btn"></button>
-      </div>
-    </footer>
-  </main>
-  <script src="js/main.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 
 </html>
