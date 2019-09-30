@@ -1,8 +1,3 @@
-// TODO: wrap your code a function
-//(function (window, document, store) {
-//  // your codes
-//})(window, document, window.localStorage);
-
 // TODO: create a note object with methods: create, edit, delete
 
 (function (window, document, store) {
@@ -10,12 +5,20 @@
     windows: document.querySelector('.window'),
     html: document.querySelector('html'),
     itemForm: document.querySelector('#item-form'),
-    addItemBtn: document.querySelector('.add-item-btn'),
     itemsList: document.querySelector('.items-list'),
+    item: document.querySelectorAll('.item'),
     expandFormToggler: document.querySelectorAll('[name="item-type"]'),
     todoBlock: document.querySelector('.todo-block'),
     toggleType: document.querySelector('.toggle-type'),
     navPanel: document.querySelector('.nav-panel'),
+    cancelBtn: document.querySelector('.cancel-btn'),
+    addItemBtn: document.querySelector('.add-item-btn'),
+    cleanStoreBtn: document.querySelector('.clean-btn'),
+    menuBtn: document.querySelector('.menu-btn'),
+    createItemBtn: document.querySelector('.create-btn'),
+    deleteItemBtn: document.querySelector('.delete-btn'),
+    changeItemBTn: document.querySelector('.change-btn'),
+    checkBtn: document.querySelectorAll('.check-btn'),
   };
 
   let itemArr = (store.length > 0) ? JSON.parse(store.getItem('items')) : [];
@@ -25,21 +28,6 @@
   const dateString = `${dateData.getFullYear()}-${month}-${day}`;
   let itemId = '';
   let itemIndex = 0;
-
-  ((DOM) => {
-    [...DOM.expandFormToggler].forEach((input) => {
-      input.addEventListener('change', (event) => {
-        switch (event.target.value) {
-          case 'todo':
-            DOM.todoBlock.classList.remove('hidden');
-            break;
-          default:
-            DOM.todoBlock.classList.add('hidden');
-            break;
-        }
-      });
-    });
-  })(DOM);
 
   function closeHandler(elem, classToRemove) {
     itemId = '';
@@ -98,7 +86,7 @@
         itemArr[editingItemIndex][prop] = changedData[prop];
         changedProps += 1;
         setStore();
-        updateNote(editingItemIndex, itemArr[editingItemIndex]);
+        updateItem(editingItemIndex, itemArr[editingItemIndex]);
         closeHandler(DOM.windows, 'active-window, edit-form');
         clearForm();
       }
@@ -109,7 +97,7 @@
     }
   }
 
-  function updateNote(itemIndex, itemData) {
+  function updateItem(itemIndex, itemData) {
     const note = DOM.itemsList.querySelectorAll('.item')[itemIndex];
     note.querySelector('.item-title').textContent = itemData.itemTitle;
     note.querySelector('.item-text').textContent = itemData.itemText;
@@ -142,7 +130,7 @@
   }
 
   function checkOverDue(obj) {
-    return (new Date(obj.noteExpDate) < new Date(dateString)) ? 'overdue' : null
+    return (new Date(obj.noteExpDate) < new Date(dateString)) ? 'overdue' : ''
   }
 
   function renderItem(obj) {
@@ -151,7 +139,7 @@
     if (obj.itemType === "todo") {
       item = `
         <div 
-        class="item todo ${obj.todoStatus} ${(obj.done) ? 'done' : null} ${checkOverDue(obj)}"
+        class="item todo ${obj.todoStatus} ${(obj.done) ? 'done' : ''} ${checkOverDue(obj)}"
         id="${obj.itemId}"
         data-todo-symbol="${obj.itemTitle.charAt(0)}">
           <h3 class="item-title">${obj.itemTitle}</h3>
@@ -185,7 +173,6 @@
 
   function getData(form) {
     const itemType = form.querySelector('[name="item-type"]:checked').value;
-    console.log("TYPE: ", itemType);
     let dataObj
     if (itemType === 'todo') {
       dataObj = {
@@ -205,10 +192,10 @@
     return dataObj;
   }
 
-  function checkDone(event) {
+  function checkDone(elem) {
     const todoList = DOM.itemsList.querySelectorAll('.todo');
-    const todo = event.target.parentNode;
-    const itemIndex = parseInt([...todoList].indexOf(todo));
+    const todo = elem.parentNode;
+    const itemIndex = [...todoList].indexOf(todo);
     itemId = todo.getAttribute("id");
     todo.classList.toggle('done');
     itemArr[itemIndex].todoDone = !itemArr[itemIndex].todoDone;
@@ -218,65 +205,84 @@
   // render notes
   renderItems(itemArr);
 
-  // HANDLERS 
-  document.addEventListener('click', (event) => {
+  // HANDLERS
 
-    // ADD NOTE (opens AddNote form)
-    if (event.target.classList.contains('add-item-btn')) {
+  // CANCEL
+  DOM.cancelBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    closeHandler(DOM.windows, 'active-window, edit-form, todo-form, create-form');
+  });
+
+  // CLEAR STORE
+  DOM.cleanStoreBtn.addEventListener('click', clearStore);
+
+  // MENU BTN
+  DOM.menuBtn.addEventListener('click', () => {
+    DOM.navPanel.classList.toggle('menu-is-open');
+  });
+
+  // ADD NOTE (opens AddNote form)
+  DOM.addItemBtn.addEventListener('click', () => {
+    DOM.html.classList.add('no-scroll');
+    DOM.itemForm.classList.add('active-window', 'create-form');
+  });
+
+  // CREATE NOTE
+  DOM.createItemBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const fullNoteData = {
+      ...getData(DOM.itemForm),
+      itemId: generateId(),
+      noteCreationDate: getCreationDate(),
+      noteDone: false
+    };
+    itemArr.push(fullNoteData);
+    setStore();
+    renderItem(fullNoteData);
+    closeHandler(DOM.windows, 'active-window, todo-form, create-form');
+  })
+
+  // OPEN ITEM
+  DOM.itemsList.addEventListener('click', (event) => {
+    if(event.target.classList.contains('item')) {
       DOM.html.classList.add('no-scroll');
-      DOM.itemForm.classList.add('active-window', 'create-form');
-      console.log("FORM: ", DOM.itemForm);
-    }
-    // CANCEL
-    else if (event.target.classList.contains('cancel-btn')) {
-      event.preventDefault();
-      closeHandler(DOM.windows, 'active-window, edit-form, todo-form, create-form');
-    }
-    // CREATE NOTE
-    else if (event.target.classList.contains('create-btn')) {
-      event.preventDefault();
-      const fullNoteData = {
-        ...getData(DOM.itemForm),
-        itemId: generateId(),
-        noteCreationDate: getCreationDate(),
-        noteDone: false
-      };
-      itemArr.push(fullNoteData);
-      setStore();
-      renderItem(fullNoteData);
-      closeHandler(DOM.windows, 'active-window, todo-form, create-form');
-    }
-    // CONSOLE LIST of NOTES
-    else if (event.target.classList.contains('list-btn')) {
-      console.warn('NOTES: ', itemArr);
-    }
-    // CLEAR STORE
-    else if (event.target.classList.contains('clean-btn')) {
-      clearStore();
-    }
-    // OPEN ITEM
-    else if (event.target.classList.contains('item')) {
-      DOM.html.classList.add('no-scroll');
+      console.log("TEST: ", event.target);
       openItemHandler(event);
     }
-    // DELETE Item
-    else if (event.target.classList.contains('delete-btn')) {
-      deleteItemHandler(event, itemId);
-      closeHandler(DOM.windows, 'active-window, edit-form, todo-form');
-    }
-    // EDIT Item
-    else if (event.target.classList.contains('change-btn')) {
-      event.preventDefault();
-      editItem(itemId);
-    }
-    // CHECK BTN
-    else if (event.target.classList.contains('check-btn')) {
-      checkDone(event);
-    }
+  });
 
-    // MENU BTN
-    else if (event.target.classList.contains('menu-btn')) {
-      DOM.navPanel.classList.toggle('menu-is-open');
+  // DELETE Item
+  DOM.deleteItemBtn.addEventListener('click', (event) => {
+    deleteItemHandler(event, itemId);
+    closeHandler(DOM.windows, 'active-window, edit-form, todo-form');
+  });
+
+  // EDIT Item
+  DOM.changeItemBTn.addEventListener('click', (event) => {
+    event.preventDefault();
+    editItem(itemId);
+  });
+
+  // CHECK BTN
+  DOM.itemsList.addEventListener('click', (event) => {
+    if(event.target.classList.contains('check-btn')) {
+      checkDone(event.target);
     }
   });
+
+  // CHOOSE TYPE of ITEM
+  ((DOM) => {
+    [...DOM.expandFormToggler].forEach((input) => {
+      input.addEventListener('change', (event) => {
+        switch (event.target.value) {
+          case 'todo':
+            DOM.todoBlock.classList.remove('hidden');
+            break;
+          default:
+            DOM.todoBlock.classList.add('hidden');
+            break;
+        }
+      });
+    });
+  })(DOM); 
 })(window, document, window.localStorage);

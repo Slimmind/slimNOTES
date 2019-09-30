@@ -639,7 +639,7 @@ main {
       @include pos(absolute, calc(50% - 2px), calc(50% - 12px));
       width: 24px;
       height: 4px;
-      background-color: $color-main;
+      background-color: $color-green;
     }
 
     &:after {
