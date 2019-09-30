@@ -15,9 +15,9 @@
     expandFormToggler: document.querySelectorAll('[name="item-type"]'),
     todoBlock: document.querySelector('.todo-block'),
     toggleType: document.querySelector('.toggle-type'),
+    navPanel: document.querySelector('.nav-panel'),
   };
 
-  console.log("DOM: ", DOM.itemForm);
   let itemArr = (store.length > 0) ? JSON.parse(store.getItem('items')) : [];
   const dateData = new Date();
   const month = parseInt(dateData.getMonth() + 1) < 10 ? `0${parseInt(dateData.getMonth()+1)}` : parseInt(dateData.getMonth() + 1);
@@ -60,20 +60,20 @@
   function openItemHandler(event) {
     itemId = event.target.getAttribute('id');
     const item = getNoteFromArray(itemId);
-    console.log("iTEM: ", item.itemType);
     DOM.itemForm.classList.add('edit-form');
-    if(item.itemType === 'todo') {
+    if (item.itemType === 'todo') {
       DOM.itemForm.classList.add('todo-form');
     }
     fillForm(item);
   }
 
-  function deleteNoteHandler(event, itemId) {
+  function deleteItemHandler(event, itemId) {
     event.preventDefault();
     if (!itemId) return;
     itemArr = itemArr.filter((note) => {
       return note.itemId !== itemId;
     });
+    setStore();
     document.getElementById(itemId).remove();
     closeHandler(DOM.windows, 'active-window');
   }
@@ -99,7 +99,7 @@
         changedProps += 1;
         setStore();
         updateNote(editingItemIndex, itemArr[editingItemIndex]);
-        closeHandler(DOM.windows, 'active-window');
+        closeHandler(DOM.windows, 'active-window, edit-form');
         clearForm();
       }
     }
@@ -110,12 +110,14 @@
   }
 
   function updateNote(itemIndex, itemData) {
-    const note = DOM.itemsList.querySelectorAll('.note')[itemIndex];
+    const note = DOM.itemsList.querySelectorAll('.item')[itemIndex];
     note.querySelector('.item-title').textContent = itemData.itemTitle;
     note.querySelector('.item-text').textContent = itemData.itemText;
-    note.querySelector('.todo-date').textContent = itemData.todoExpDate;
-    note.setAttribute('class', `note ${itemData.todoStatus} ${checkOverDue(itemData)}`);
-    note.setAttribute('data-note-symbol', itemData.itemTitle.charAt(0));
+    if (itemData.itemType === 'todo') {
+      note.querySelector('.todo-date').textContent = itemData.todoExpDate;
+      note.setAttribute('class', `todo ${itemData.todoStatus} ${checkOverDue(itemData)}`);
+      note.setAttribute('data-todo-symbol', itemData.itemTitle.charAt(0));
+    }
   }
 
   function clearForm() {
@@ -146,7 +148,7 @@
   function renderItem(obj) {
     console.log("OBJ: ", obj);
     let item = '';
-    if(obj.itemType === "todo") {
+    if (obj.itemType === "todo") {
       item = `
         <div 
         class="item todo ${obj.todoStatus} ${(obj.done) ? 'done' : null} ${checkOverDue(obj)}"
@@ -164,7 +166,7 @@
         <p class="item-text">${obj.itemText}</p>
       </div>`
     }
-    
+
     DOM.itemsList.insertAdjacentHTML('beforeend', item);
   }
 
@@ -185,7 +187,7 @@
     const itemType = form.querySelector('[name="item-type"]:checked').value;
     console.log("TYPE: ", itemType);
     let dataObj
-    if(itemType === 'todo') {
+    if (itemType === 'todo') {
       dataObj = {
         itemType: itemType,
         itemTitle: form.querySelector('[name="item-title"]').value || '...',
@@ -218,16 +220,17 @@
 
   // HANDLERS 
   document.addEventListener('click', (event) => {
+
     // ADD NOTE (opens AddNote form)
     if (event.target.classList.contains('add-item-btn')) {
       DOM.html.classList.add('no-scroll');
-      DOM.itemForm.classList.add('active-window');
+      DOM.itemForm.classList.add('active-window', 'create-form');
       console.log("FORM: ", DOM.itemForm);
     }
     // CANCEL
     else if (event.target.classList.contains('cancel-btn')) {
       event.preventDefault();
-      closeHandler(DOM.windows, 'active-window, edit-form, todo-form');
+      closeHandler(DOM.windows, 'active-window, edit-form, todo-form, create-form');
     }
     // CREATE NOTE
     else if (event.target.classList.contains('create-btn')) {
@@ -241,7 +244,7 @@
       itemArr.push(fullNoteData);
       setStore();
       renderItem(fullNoteData);
-      closeHandler(DOM.windows, 'active-window, edit-form, todo-form');
+      closeHandler(DOM.windows, 'active-window, todo-form, create-form');
     }
     // CONSOLE LIST of NOTES
     else if (event.target.classList.contains('list-btn')) {
@@ -256,12 +259,12 @@
       DOM.html.classList.add('no-scroll');
       openItemHandler(event);
     }
-    // DELETE NOTE
+    // DELETE Item
     else if (event.target.classList.contains('delete-btn')) {
-      deleteNoteHandler(event, itemId);
+      deleteItemHandler(event, itemId);
       closeHandler(DOM.windows, 'active-window, edit-form, todo-form');
     }
-    // EDIT NOTE
+    // EDIT Item
     else if (event.target.classList.contains('change-btn')) {
       event.preventDefault();
       editItem(itemId);
@@ -269,6 +272,11 @@
     // CHECK BTN
     else if (event.target.classList.contains('check-btn')) {
       checkDone(event);
+    }
+
+    // MENU BTN
+    else if (event.target.classList.contains('menu-btn')) {
+      DOM.navPanel.classList.toggle('menu-is-open');
     }
   });
 })(window, document, window.localStorage);
