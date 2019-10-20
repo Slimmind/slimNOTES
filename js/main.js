@@ -1,6 +1,5 @@
 // TODO: create a note object with methods: create, edit, delete
 // TODO: add animations of creating, editing and deleting items
-// FIXME: control's position on item-form
 
 (function (window, document, store) {
   const DOM = {
@@ -46,7 +45,7 @@
     classes.length && classes.forEach((item) => {
       elem.classList.contains(item) && elem.classList.remove(item);
     });
-    DOM.todoBlock.classList.add('hidden');
+    DOM.todoBlock.classList.remove('hidden');
     clearForm();
   }
 
@@ -112,7 +111,6 @@
   function updateItem(itemIndex, itemData) {
     const type = itemData.itemType;
     const item = (type === 'todo') ? DOM.todoList.querySelectorAll('.item')[itemIndex] : DOM.noteList.querySelectorAll('.item')[itemIndex];
-    console.log('TYPE: ', DOM.todoList.querySelectorAll('.item')[itemIndex], itemIndex);
     item.querySelector('.item-title').textContent = itemData.itemTitle;
     item.querySelector('.item-text').textContent = itemData.itemText;
     if (type === 'todo') {
@@ -148,10 +146,9 @@
   }
 
   function renderItem(obj) {
-    console.log("OBJ: ", obj);
     let item = '';
     if (obj.itemType === "todo") {
-      item = `<div class="item todo ${obj.todoStatus} ${(obj.done) ? 'done' : ''} ${checkOverDue(obj)}"
+      item = `<div class="item todo ${obj.todoStatus} ${(obj.todoDone) ? 'done' : ''} ${checkOverDue(obj)}"
         id="${obj.itemId}"
         data-todo-symbol="${obj.itemTitle.charAt(0)}">
           <h3 class="item-title">${obj.itemTitle}</h3>
@@ -206,12 +203,11 @@
   }
 
   function checkDone(elem) {
-    const todoList = DOM.itemsList.querySelectorAll('.todo');
     const todo = elem.parentNode;
-    const itemIndex = [...todoList].indexOf(todo);
+    const itemArrayIndex = itemArr.indexOf(getNoteFromArray(todo.getAttribute('id')));
     itemId = todo.getAttribute("id");
     todo.classList.toggle('done');
-    itemArr[itemIndex].todoDone = !itemArr[itemIndex].todoDone;
+    itemArr[itemArrayIndex].todoDone = !itemArr[itemArrayIndex].todoDone;
     setStore();
   }
 
@@ -319,7 +315,6 @@
     list.addEventListener('click', (event) => {
       if(event.target.classList.contains('item')) {
         DOM.html.classList.add('no-scroll');
-        console.log("TEST: ", event.target);
         openItemHandler(event);
       }
     });

@@ -59,50 +59,45 @@
                         <h3>Edit Item</h3>
                     </div>
                     <!-- FORM'S TITLES end -->
-
-                    <div class="fields-wrap">
-                        <div class="toggler toggle-type">
-                            <div class="input-wrap">
-                                <input type="radio" name="item-type" value="note" id="type-note" checked="">
-                                <label for="type-note">Note</label>
-                            </div>
-                            <div class="input-wrap">
-                                <input type="radio" name="item-type" value="todo" id="type-todo">
-                                <label for="type-todo">ToDo</label>
-                            </div>
+                    <div class="toggler toggle-type">
+                        <div class="input-wrap">
+                            <input type="radio" name="item-type" value="todo" id="type-todo" checked="">
+                            <label for="type-todo">ToDo</label>
                         </div>
                         <div class="input-wrap">
-                            <input class="input" type="text" name="item-title" placeholder="item title...">
+                            <input type="radio" name="item-type" value="note" id="type-note">
+                            <label for="type-note">Note</label>
                         </div>
-                        <div class="input-wrap">
-                            <textarea class="input" name="item-text" cols="1" rows="3"
-                                placeholder="item text..."></textarea>
-                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <input class="input" type="text" name="item-title" placeholder="item title...">
+                    </div>
+                    <div class="input-wrap">
+                        <textarea class="input" name="item-text" cols="1" rows="3" placeholder="item text..."></textarea>
+                    </div>
 
-                        <div class="todo-block block hidden">
+                    <div class="todo-block block">
+                        <div class="input-wrap">
+                            <input class="input" name="todo-exp-date" type="date">
+                        </div>
+                        <div class="controls align-center">
                             <div class="input-wrap">
-                                <input class="input" name="todo-exp-date" type="date">
+                                <input class="todo-status normal" type="radio" name="todo-status" value="normal"
+                                    id="status-normal" checked="">
+                                <label for="status-normal">Normal</label>
                             </div>
-                            <div class="controls align-center">
-                                <div class="input-wrap">
-                                    <input class="todo-status normal" type="radio" name="todo-status" value="normal"
-                                        id="status-normal" checked="">
-                                    <label for="status-normal">Normal</label>
-                                </div>
-                                <div class="input-wrap">
-                                    <input class="todo-status warning" type="radio" name="todo-status" value="warning"
-                                        id="status-warning">
-                                    <label for="status-warning">Warning</label>
-                                </div>
-                                <div class="input-wrap">
-                                    <input class="todo-status urgent" type="radio" name="todo-status" value="urgent"
-                                        id="status-urgent">
-                                    <label for="status-urgent">Urgent</label>
-                                </div>
+                            <div class="input-wrap">
+                                <input class="todo-status warning" type="radio" name="todo-status" value="warning"
+                                    id="status-warning">
+                                <label for="status-warning">Warning</label>
+                            </div>
+                            <div class="input-wrap">
+                                <input class="todo-status urgent" type="radio" name="todo-status" value="urgent"
+                                    id="status-urgent">
+                                <label for="status-urgent">Urgent</label>
                             </div>
                         </div>
                     </div>
-                    <!-- FIELD'S WRAP end -->
 
                     <div class="create-form-elements controls align-stretch">
                         <button class="btn cancel-btn">Cancel</button>
