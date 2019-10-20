@@ -1,11 +1,15 @@
 // TODO: create a note object with methods: create, edit, delete
+// TODO: add animations of creating, editing and deleting items
+// FIXME: control's position on item-form
 
 (function (window, document, store) {
   const DOM = {
     windows: document.querySelector('.window'),
     html: document.querySelector('html'),
     itemForm: document.querySelector('#item-form'),
-    itemsList: document.querySelector('.items-list'),
+    itemsList: document.querySelectorAll('.items-list'),
+    todoList: document.querySelector('.todo-list'),
+    noteList: document.querySelector('.note-list'),
     item: document.querySelectorAll('.item'),
     expandFormToggler: document.querySelectorAll('[name="item-type"]'),
     todoBlock: document.querySelector('.todo-block'),
@@ -19,6 +23,10 @@
     deleteItemBtn: document.querySelector('.delete-btn'),
     changeItemBTn: document.querySelector('.change-btn'),
     checkBtn: document.querySelectorAll('.check-btn'),
+    showStorageBtn: document.getElementById('show-local-storage'),
+    callServiceBtn: document.getElementById('call-service-message'),
+    serviceMessages: document.querySelector('.service-messages'),
+    listTypeInput: document.querySelectorAll('input[name="list-type"]'),
   };
 
   let itemArr = (store.length > 0) ? JSON.parse(store.getItem('items')) : [];
@@ -38,6 +46,7 @@
     classes.length && classes.forEach((item) => {
       elem.classList.contains(item) && elem.classList.remove(item);
     });
+    DOM.todoBlock.classList.add('hidden');
     clearForm();
   }
 
@@ -67,6 +76,7 @@
   }
 
   function fillForm(obj) {
+    DOM.itemForm.querySelector(`[value="${obj.itemType}"]`).checked = true;
     DOM.itemForm.querySelector('[name="item-title"]').value = obj.itemTitle;
     DOM.itemForm.querySelector('[name="item-text"]').value = obj.itemText;
     DOM.itemForm.querySelector('[name="todo-exp-date"]').value = obj.todoExpDate;
@@ -78,15 +88,17 @@
   }
 
   function editItem(editingItemId) {
-    const editingItemIndex = itemArr.indexOf(getNoteFromArray(editingItemId));
+    const itemParent = document.getElementById(editingItemId).parentNode;
+    const editingItemIndex = [...itemParent.children].indexOf(document.getElementById(editingItemId));
+    const editingItemArrayIndex = itemArr.indexOf(getNoteFromArray(editingItemId));
     const changedData = getData(DOM.itemForm);
     let changedProps = 0;
     for (let prop in changedData) {
-      if (changedData[prop] !== itemArr[editingItemIndex][prop]) {
-        itemArr[editingItemIndex][prop] = changedData[prop];
+      if (changedData[prop] !== itemArr[editingItemArrayIndex][prop]) {
+        itemArr[editingItemArrayIndex][prop] = changedData[prop];
         changedProps += 1;
         setStore();
-        updateItem(editingItemIndex, itemArr[editingItemIndex]);
+        updateItem(editingItemIndex, itemArr[editingItemArrayIndex]);
         closeHandler(DOM.windows, 'active-window, edit-form');
         clearForm();
       }
@@ -98,13 +110,15 @@
   }
 
   function updateItem(itemIndex, itemData) {
-    const note = DOM.itemsList.querySelectorAll('.item')[itemIndex];
-    note.querySelector('.item-title').textContent = itemData.itemTitle;
-    note.querySelector('.item-text').textContent = itemData.itemText;
-    if (itemData.itemType === 'todo') {
-      note.querySelector('.todo-date').textContent = itemData.todoExpDate;
-      note.setAttribute('class', `todo ${itemData.todoStatus} ${checkOverDue(itemData)}`);
-      note.setAttribute('data-todo-symbol', itemData.itemTitle.charAt(0));
+    const type = itemData.itemType;
+    const item = (type === 'todo') ? DOM.todoList.querySelectorAll('.item')[itemIndex] : DOM.noteList.querySelectorAll('.item')[itemIndex];
+    console.log('TYPE: ', DOM.todoList.querySelectorAll('.item')[itemIndex], itemIndex);
+    item.querySelector('.item-title').textContent = itemData.itemTitle;
+    item.querySelector('.item-text').textContent = itemData.itemText;
+    if (type === 'todo') {
+      item.querySelector('.todo-date').textContent = itemData.todoExpDate;
+      item.setAttribute('class', `item todo ${itemData.todoStatus} ${checkOverDue(itemData)}`);
+      item.setAttribute('data-todo-symbol', itemData.itemTitle.charAt(0));
     }
   }
 
@@ -137,30 +151,29 @@
     console.log("OBJ: ", obj);
     let item = '';
     if (obj.itemType === "todo") {
-      item = `
-        <div 
-        class="item todo ${obj.todoStatus} ${(obj.done) ? 'done' : ''} ${checkOverDue(obj)}"
+      item = `<div class="item todo ${obj.todoStatus} ${(obj.done) ? 'done' : ''} ${checkOverDue(obj)}"
         id="${obj.itemId}"
         data-todo-symbol="${obj.itemTitle.charAt(0)}">
           <h3 class="item-title">${obj.itemTitle}</h3>
           <p class="item-text">${obj.itemText}</p>
-          <small>${obj.todoExpDate}</small>
+          <small class="todo-date">${obj.todoExpDate}</small>
           <span class="check-btn"></span>
         </div>
       `;
+      DOM.todoList.insertAdjacentHTML('beforeend', item);
     } else {
       item = `<div class="item note " id="${obj.itemId}">
         <h3 class="item-title">${obj.itemTitle}</h3>
         <p class="item-text">${obj.itemText}</p>
-      </div>`
+      </div>`;
+      DOM.noteList.insertAdjacentHTML('beforeend', item);
     }
 
-    DOM.itemsList.insertAdjacentHTML('beforeend', item);
   }
 
   function renderItems(arr) {
-    console.log(DOM.itemsList);
-    DOM.itemsList.innerHTML = '';
+    DOM.todoList.innerHTML = '';
+    DOM.noteList.innerHTML = '';
     arr.forEach((item) => {
       renderItem(item);
     });
@@ -172,11 +185,11 @@
   }
 
   function getData(form) {
-    const itemType = form.querySelector('[name="item-type"]:checked').value;
+    const type = form.querySelector('[name="item-type"]:checked').value;
     let dataObj
-    if (itemType === 'todo') {
+    if (type === 'todo') {
       dataObj = {
-        itemType: itemType,
+        itemType: type,
         itemTitle: form.querySelector('[name="item-title"]').value || '...',
         itemText: form.querySelector('[name="item-text"]').value || '...',
         todoExpDate: form.querySelector('[name="todo-exp-date"]').value || dateString,
@@ -184,7 +197,7 @@
       }
     } else {
       dataObj = {
-        itemType: itemType,
+        itemType: type,
         itemTitle: form.querySelector('[name="item-title"]').value || '...',
         itemText: form.querySelector('[name="item-text"]').value || '...',
       }
@@ -202,10 +215,55 @@
     setStore();
   }
 
-  // render notes
+  function closeNav() {
+    DOM.navPanel.classList.remove('menu-is-open');
+  }
+
+  function serviceMessage(messageType='info', messageTitle='', messageText='') {
+    const message = `
+    <div class="service-message ${messageType}">
+    <strong class="close-message" role="button" aria-label="close-message"></strong>
+    <h3 class="message-title">${messageTitle}</h3>
+    <div class="message-text">
+    <p>${messageText}</p>
+    </div>
+    </div>
+    `;
+
+    DOM.serviceMessages.insertAdjacentHTML('beforeend', message);
+
+    DOM.serviceMessages.addEventListener('click', (event) => {
+      closeNav();
+      if(event.target.classList.contains('close-message')) {
+        DOM.serviceMessages.classList.add('hidden');
+        setTimeout(() => {
+          DOM.serviceMessages.innerHTML = '';
+          DOM.serviceMessages.classList.remove('hidden');
+        },1000);
+      }
+    })
+  }
+
+  // render items
   renderItems(itemArr);
 
   // HANDLERS
+
+  // TOGGLE ITEMS LIST
+  [...DOM.listTypeInput].forEach((input) => {
+    input.addEventListener('change', (event) => {
+      [...DOM.itemsList].forEach((list) => {
+        list.classList.add('hidden');
+      });
+      document.querySelector(`.${event.target.value}`).classList.remove('hidden');
+    });
+  });
+
+  // SHOW STORAGE
+  DOM.showStorageBtn.addEventListener('click', () => {
+    console.log("STORAGE: ", JSON.parse(store.getItem('items')));
+    closeNav();
+  });
 
   // CANCEL
   DOM.cancelBtn.addEventListener('click', (event) => {
@@ -214,7 +272,10 @@
   });
 
   // CLEAR STORE
-  DOM.cleanStoreBtn.addEventListener('click', clearStore);
+  DOM.cleanStoreBtn.addEventListener('click', () => {
+    clearStore();
+    closeNav();
+  });
 
   // MENU BTN
   DOM.menuBtn.addEventListener('click', () => {
@@ -230,25 +291,38 @@
   // CREATE NOTE
   DOM.createItemBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    const fullNoteData = {
-      ...getData(DOM.itemForm),
-      itemId: generateId(),
-      noteCreationDate: getCreationDate(),
-      noteDone: false
-    };
-    itemArr.push(fullNoteData);
+    let fullItemData = {};
+
+    if (DOM.itemForm.itemType === 'todo') {
+      fullItemData = {
+        ...getData(DOM.itemForm),
+        itemId: generateId(),
+        itemCreationDate: getCreationDate(),
+        todoDone: false
+      };
+    } else {
+      fullItemData = {
+        ...getData(DOM.itemForm),
+        itemId: generateId(),
+        itemCreationDate: getCreationDate(),
+      };
+    }
+
+    itemArr.push(fullItemData);
     setStore();
-    renderItem(fullNoteData);
+    renderItem(fullItemData);
     closeHandler(DOM.windows, 'active-window, todo-form, create-form');
-  })
+  });
 
   // OPEN ITEM
-  DOM.itemsList.addEventListener('click', (event) => {
-    if(event.target.classList.contains('item')) {
-      DOM.html.classList.add('no-scroll');
-      console.log("TEST: ", event.target);
-      openItemHandler(event);
-    }
+  [...DOM.itemsList].forEach((list) => {
+    list.addEventListener('click', (event) => {
+      if(event.target.classList.contains('item')) {
+        DOM.html.classList.add('no-scroll');
+        console.log("TEST: ", event.target);
+        openItemHandler(event);
+      }
+    });
   });
 
   // DELETE Item
@@ -264,7 +338,7 @@
   });
 
   // CHECK BTN
-  DOM.itemsList.addEventListener('click', (event) => {
+  DOM.todoList.addEventListener('click', (event) => {
     if(event.target.classList.contains('check-btn')) {
       checkDone(event.target);
     }
@@ -285,4 +359,10 @@
       });
     });
   })(DOM); 
+
+  // CALL SERVICE MESSAGE
+  DOM.callServiceBtn.addEventListener('click', () => {
+    serviceMessage('info', 'Call Test Message', 'Test message text');
+  });
+
 })(window, document, window.localStorage);
