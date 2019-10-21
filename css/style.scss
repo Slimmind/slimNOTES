@@ -85,7 +85,7 @@ $color-yellow: amber;
 $color-red: #d04526;
 $main-font: 'Ubuntu',
 sans-serif;
-$main-radius: 3px;
+$main-radius: 10px;
 $main-shadow: 0 0 3px 0 rgba(100, 100, 100, .4);
 
 * {
@@ -129,7 +129,9 @@ main {
     z-index: -1;
   }
 }
-
+ul {
+  list-style: none;
+}
 .block {
   max-height: 600px;
   opacity: 1;
@@ -243,13 +245,11 @@ main {
     .todo-date {
       background-color: $color-red;
       color: $color-white !important;
-      // box-shadow: 0 0 5px 0px rgba($color-white, .5);
+
     }
   }
 
   &.normal {
-    // background-image: linear-gradient(to right, $color-blue, rgba($color-blue, .3));
-
     &::after {
       background-color: $color-blue;
     }
@@ -266,8 +266,6 @@ main {
   }
 
   &.warning {
-    // background-image: linear-gradient(to right, $color-green, rgba($color-green, .3));
-
     &::after {
       background-color: $color-green;
     }
@@ -285,8 +283,6 @@ main {
   }
 
   &.urgent {
-    // background-image: linear-gradient(to right, $color-red, rgba($color-red, .3));
-
     &::after {
       background-color: $color-red;
     }
@@ -457,12 +453,12 @@ main {
   width: 100%;
   font: 18px/22px $main-font;
   min-height: 60px;
-  padding: 10px 15px;
+  padding: 19px 15px;
   border: none;
   border-radius: $main-radius;
   box-shadow: $main-shadow;
   background-color: $color-grey-light;
-  outline-color: transparent;
+  outline: none;
   // -webkit-appearance: none;
 
   @include placeholder {
@@ -483,12 +479,12 @@ main {
     margin-bottom: 0;
     &:nth-of-type(odd) {
       input[type="radio"] + label {
-        border-radius: 3px 0 0 3px;
+        border-radius: 10px 0 0 10px;
       }
     }
     &:nth-of-type(even) {
       input[type="radio"] + label {
-        border-radius: 0 3px 3px 0;
+        border-radius: 0 10px 10px 0;
       }
     }
   }
@@ -530,7 +526,7 @@ main {
 .create-form-elements.controls,
 .edit-form-elements.controls {
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 70px;
 }
 .create-form {
   .edit-form-elements {
@@ -709,7 +705,7 @@ main {
 .nav-panel {
   @include pos(fixed, $bottom: 10px, $left: 0);
   width: 100%;
-  padding: 10px;
+  padding: 0 10px 10px;
 
   &:before {
       content: "";
@@ -723,23 +719,30 @@ main {
     .main-menu {
       max-height: 480px;
       overflow: auto;
+      padding-top: 0;
     }
   }
 
   .main-menu {
     max-height: 0;
     overflow: hidden;
-    transition: max-height .7s;
+    transition: max-height .7s, padding-top .5s;
     will-change: max-height;
-    padding: 0 10px;
+    padding: 10px 10px 0;
     li {
-      margin-bottom: 10px;
+      padding: 15px 0;
+      border-bottom: 1px solid $color-white;
+      &:last-of-type {
+        margin-bottom: 10px;
+      }
     }
   }
   input[type="search"] {
     display: inline-block;
     width: calc(100% - 110px);
     min-height: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     box-shadow: none;
     background-color: $color-white;
   }
@@ -764,7 +767,7 @@ main {
 .service-message {
   @include pos(fixed, center, center);
   width: 280px;
-  padding: 10px;
+  padding: 20px;
   box-shadow: $main-shadow;
   border-radius: $main-radius;
   color: $color-white;
@@ -780,6 +783,7 @@ main {
   }
   .message-title {
     position: relative;
+    width: calc(100% - 40px);
     margin-bottom: 2px;
     padding-right: 30px;
     padding-bottom: 5px;
@@ -788,13 +792,13 @@ main {
       @include pos(absolute, $bottom: 0, $left: 0);
       width: 100%;
       height: 1px;
-      background-image: linear-gradient(to right, transparent 0%, $color-white 50%, transparent 100%);
+      background-color: $color-white;
     }
   }
   .close-message {
-    @include pos(absolute, 5px, $right: 5px);
-    width: 24px;
-    height: 24px;
+    @include pos(absolute, 10px, $right: 10px);
+    width: 32px;
+    height: 32px;
     border: 2px solid $color-white;
     border-radius: 50%;
     z-index: 1;
@@ -803,7 +807,7 @@ main {
     &:after {
       content: "";
       @include pos(absolute, 50%, 50%);
-      width: 10px;
+      width: 16px;
       height: 2px;
       border-radius: 2px;
       background-color: $color-white;
