@@ -43,6 +43,10 @@ main:before {
   z-index: -1;
 }
 
+ul {
+  list-style: none;
+}
+
 .block {
   max-height: 600px;
   opacity: 1;
@@ -135,7 +139,7 @@ main:before {
   margin-bottom: 10px;
   -webkit-box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
           box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
-  border-radius: 3px;
+  border-radius: 10px;
 }
 
 .item:last-of-type {
@@ -395,13 +399,13 @@ main:before {
   width: 100%;
   font: 18px/22px "Ubuntu", sans-serif;
   min-height: 60px;
-  padding: 10px 15px;
+  padding: 19px 15px;
   border: none;
-  border-radius: 3px;
+  border-radius: 10px;
   -webkit-box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
           box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
   background-color: #ededed;
-  outline-color: transparent;
+  outline: none;
 }
 
 .input::-webkit-input-placeholder {
@@ -432,7 +436,7 @@ main:before {
           flex-direction: row;
   width: 100%;
   margin-bottom: 30px;
-  border-radius: 3px;
+  border-radius: 10px;
   -webkit-box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
           box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
 }
@@ -445,11 +449,11 @@ main:before {
 }
 
 .toggler .input-wrap:nth-of-type(odd) input[type="radio"] + label {
-  border-radius: 3px 0 0 3px;
+  border-radius: 10px 0 0 10px;
 }
 
 .toggler .input-wrap:nth-of-type(even) input[type="radio"] + label {
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 10px 10px 0;
 }
 
 .toggler input[type="radio"] {
@@ -490,7 +494,7 @@ main:before {
 .create-form-elements.controls,
 .edit-form-elements.controls {
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 70px;
 }
 
 .create-form .edit-form-elements {
@@ -553,7 +557,7 @@ main:before {
   color: #fff;
   background-color: transparent;
   border: none;
-  border-radius: 3px;
+  border-radius: 10px;
   outline: none;
   text-transform: uppercase;
   cursor: pointer;
@@ -660,7 +664,7 @@ main:before {
   width: 30px;
   height: 30px;
   border: 3px solid rgba(205, 205, 205, 0.5);
-  border-radius: 3px;
+  border-radius: 10px;
 }
 
 .check-btn:before {
@@ -696,7 +700,7 @@ main:before {
   bottom: 10px;
   left: 0;
   width: 100%;
-  padding: 10px;
+  padding: 0 10px 10px;
 }
 
 .nav-panel:before {
@@ -706,7 +710,7 @@ main:before {
   bottom: 0;
   top: 0;
   left: 10px;
-  border-radius: 3px;
+  border-radius: 10px;
   background-color: #ededed;
   -webkit-box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
           box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
@@ -716,18 +720,24 @@ main:before {
 .nav-panel.menu-is-open .main-menu {
   max-height: 480px;
   overflow: auto;
+  padding-top: 0;
 }
 
 .nav-panel .main-menu {
   max-height: 0;
   overflow: hidden;
-  -webkit-transition: max-height .7s;
-  transition: max-height .7s;
+  -webkit-transition: max-height .7s, padding-top .5s;
+  transition: max-height .7s, padding-top .5s;
   will-change: max-height;
-  padding: 0 10px;
+  padding: 10px 10px 0;
 }
 
 .nav-panel .main-menu li {
+  padding: 15px 0;
+  border-bottom: 1px solid #fff;
+}
+
+.nav-panel .main-menu li:last-of-type {
   margin-bottom: 10px;
 }
 
@@ -735,6 +745,8 @@ main:before {
   display: inline-block;
   width: calc(100% - 110px);
   min-height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   -webkit-box-shadow: none;
           box-shadow: none;
   background-color: #fff;
@@ -755,10 +767,10 @@ main:before {
   -webkit-transform: translateY(-50%) translateX(-50%);
           transform: translateY(-50%) translateX(-50%);
   width: 280px;
-  padding: 10px;
+  padding: 20px;
   -webkit-box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
           box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
-  border-radius: 3px;
+  border-radius: 10px;
   color: #fff;
 }
 
@@ -776,6 +788,7 @@ main:before {
 
 .service-message .message-title {
   position: relative;
+  width: calc(100% - 40px);
   margin-bottom: 2px;
   padding-right: 30px;
   padding-bottom: 5px;
@@ -788,16 +801,15 @@ main:before {
   left: 0;
   width: 100%;
   height: 1px;
-  background-image: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(50%, #fff), to(transparent));
-  background-image: linear-gradient(to right, transparent 0%, #fff 50%, transparent 100%);
+  background-color: #fff;
 }
 
 .service-message .close-message {
   position: absolute;
-  right: 5px;
-  top: 5px;
-  width: 24px;
-  height: 24px;
+  right: 10px;
+  top: 10px;
+  width: 32px;
+  height: 32px;
   border: 2px solid #fff;
   border-radius: 50%;
   z-index: 1;
@@ -809,7 +821,7 @@ main:before {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 10px;
+  width: 16px;
   height: 2px;
   border-radius: 2px;
   background-color: #fff;

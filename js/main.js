@@ -16,13 +16,13 @@
     navPanel: document.querySelector('.nav-panel'),
     cancelBtn: document.querySelector('.cancel-btn'),
     addItemBtn: document.querySelector('.add-item-btn'),
-    cleanStoreBtn: document.querySelector('.clean-btn'),
     menuBtn: document.querySelector('.menu-btn'),
     createItemBtn: document.querySelector('.create-btn'),
     deleteItemBtn: document.querySelector('.delete-btn'),
     changeItemBTn: document.querySelector('.change-btn'),
     checkBtn: document.querySelectorAll('.check-btn'),
     showStorageBtn: document.getElementById('show-local-storage'),
+    cleanStorageBtn: document.getElementById('clean-local-storage'),
     callServiceBtn: document.getElementById('call-service-message'),
     serviceMessages: document.querySelector('.service-messages'),
     listTypeInput: document.querySelectorAll('input[name="list-type"]'),
@@ -211,10 +211,6 @@
     setStore();
   }
 
-  function closeNav() {
-    DOM.navPanel.classList.remove('menu-is-open');
-  }
-
   function serviceMessage(messageType='info', messageTitle='', messageText='') {
     const message = `
     <div class="service-message ${messageType}">
@@ -229,15 +225,14 @@
     DOM.serviceMessages.insertAdjacentHTML('beforeend', message);
 
     DOM.serviceMessages.addEventListener('click', (event) => {
-      closeNav();
       if(event.target.classList.contains('close-message')) {
         DOM.serviceMessages.classList.add('hidden');
         setTimeout(() => {
           DOM.serviceMessages.innerHTML = '';
           DOM.serviceMessages.classList.remove('hidden');
-        },1000);
+        },10);
       }
-    })
+    });
   }
 
   // render items
@@ -258,7 +253,7 @@
   // SHOW STORAGE
   DOM.showStorageBtn.addEventListener('click', () => {
     console.log("STORAGE: ", JSON.parse(store.getItem('items')));
-    closeNav();
+    serviceMessage('success', 'Local Storage', store.getItem('items'));
   });
 
   // CANCEL
@@ -268,9 +263,8 @@
   });
 
   // CLEAR STORE
-  DOM.cleanStoreBtn.addEventListener('click', () => {
+  DOM.cleanStorageBtn.addEventListener('click', () => {
     clearStore();
-    closeNav();
   });
 
   // MENU BTN
@@ -358,6 +352,13 @@
   // CALL SERVICE MESSAGE
   DOM.callServiceBtn.addEventListener('click', () => {
     serviceMessage('info', 'Call Test Message', 'Test message text');
+  });
+
+  // CLOSE NAV
+  document.addEventListener('click', (event) => {
+    if(!event.target.classList.contains('menu-btn')) {
+      DOM.navPanel.classList.remove('menu-is-open');
+    }
   });
 
 })(window, document, window.localStorage);
