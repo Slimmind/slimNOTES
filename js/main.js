@@ -1,5 +1,7 @@
 // TODO: create a note object with methods: create, edit, delete
 // TODO: add animations of creating, editing and deleting items
+// TODO: add possibility to choose background color of note
+// TODO: add animation to menu-btn
 
 (function (window, document, store) {
   const DOM = {
@@ -12,6 +14,7 @@
     item: document.querySelectorAll('.item'),
     expandFormToggler: document.querySelectorAll('[name="item-type"]'),
     todoBlock: document.querySelector('.todo-block'),
+    noteBlock: document.querySelector('.note-block'),
     toggleType: document.querySelector('.toggle-type'),
     navPanel: document.querySelector('.nav-panel'),
     cancelBtn: document.querySelector('.cancel-btn'),
@@ -33,11 +36,11 @@
   const month = parseInt(dateData.getMonth() + 1) < 10 ? `0${parseInt(dateData.getMonth()+1)}` : parseInt(dateData.getMonth() + 1);
   const day = dateData.getDate() < 10 ? `0${dateData.getDate()}` : dateData.getDate();
   const dateString = `${dateData.getFullYear()}-${month}-${day}`;
+  let currentItem = { id: '', parentList: '', DOMIndex: '', arrayIndex: '', arrayData: {} };
   let itemId = '';
-  let itemIndex = 0;
 
   function closeHandler(elem, classToRemove) {
-    itemId = '';
+    currentItem = { id: '', parentList: '', DOMIndex: '', arrayIndex: '', arrayData: {} };
     const classes = classToRemove.replace(/ /g, '').split(',');
     if (DOM.html.classList.contains('no-scroll')) {
       DOM.html.classList.remove('no-scroll');
@@ -54,13 +57,24 @@
   }
 
   function openItemHandler(event) {
-    itemId = event.target.getAttribute('id');
-    const item = getNoteFromArray(itemId);
+    const targetItem = event.target;
+    const id = targetItem.getAttribute('id');
+    const arrayIndex = itemArr.findIndex((item) => item.itemId === id);
+
+    currentItem = {
+      id,
+      parentList: targetItem.parentNode,
+      DOMIndex: [...targetItem.parentNode.querySelectorAll('.item')].indexOf(targetItem),
+      arrayIndex,
+      arrayData: itemArr[arrayIndex],
+    };
+
     DOM.itemForm.classList.add('edit-form');
-    if (item.itemType === 'todo') {
+    if (currentItem.arrayData.itemType === 'todo') {
       DOM.itemForm.classList.add('todo-form');
     }
-    fillForm(item);
+
+    fillForm(currentItem.arrayData);
   }
 
   function deleteItemHandler(event, itemId) {
@@ -86,18 +100,15 @@
     });
   }
 
-  function editItem(editingItemId) {
-    const itemParent = document.getElementById(editingItemId).parentNode;
-    const editingItemIndex = [...itemParent.children].indexOf(document.getElementById(editingItemId));
-    const editingItemArrayIndex = itemArr.indexOf(getNoteFromArray(editingItemId));
+  function editItem(item) {
     const changedData = getData(DOM.itemForm);
     let changedProps = 0;
     for (let prop in changedData) {
-      if (changedData[prop] !== itemArr[editingItemArrayIndex][prop]) {
-        itemArr[editingItemArrayIndex][prop] = changedData[prop];
+      if (changedData[prop] !== itemArr[item.arrayIndex][prop]) {
+        itemArr[item.arrayIndex][prop] = changedData[prop];
         changedProps += 1;
         setStore();
-        updateItem(editingItemIndex, itemArr[editingItemArrayIndex]);
+        updateItem(item.DOMIndex, itemArr[item.arrayIndex]);
         closeHandler(DOM.windows, 'active-window, edit-form');
         clearForm();
       }
@@ -142,13 +153,13 @@
   }
 
   function checkOverDue(obj) {
-    return (new Date(obj.noteExpDate) < new Date(dateString)) ? 'overdue' : ''
+    return (new Date(obj.todoExpDate) < new Date(dateString)) ? 'overdue' : ''
   }
 
   function renderItem(obj) {
     let item = '';
     if (obj.itemType === "todo") {
-      item = `<div class="item todo ${obj.todoStatus} ${(obj.todoDone) ? 'done' : ''} ${checkOverDue(obj)}"
+      item = `<div class="item todo ${obj.todoStatus} ${(obj.todoDone) ? 'done' : null} ${checkOverDue(obj)}"
         id="${obj.itemId}"
         data-todo-symbol="${obj.itemTitle.charAt(0)}">
           <h3 class="item-title">${obj.itemTitle}</h3>
@@ -159,7 +170,7 @@
       `;
       DOM.todoList.insertAdjacentHTML('beforeend', item);
     } else {
-      item = `<div class="item note " id="${obj.itemId}">
+      item = `<div class="item note " id="${obj.itemId}" style="background-color: rgba(${obj.noteColor}, .5)">
         <h3 class="item-title">${obj.itemTitle}</h3>
         <p class="item-text">${obj.itemText}</p>
       </div>`;
@@ -222,10 +233,13 @@
     </div>
     `;
 
+    DOM.html.classList.add('service');
+
     DOM.serviceMessages.insertAdjacentHTML('beforeend', message);
 
     DOM.serviceMessages.addEventListener('click', (event) => {
-      if(event.target.classList.contains('close-message')) {
+      if(!event.target.classList.contains('service-message')) {
+        DOM.html.classList.remove('service');
         DOM.serviceMessages.classList.add('hidden');
         setTimeout(() => {
           DOM.serviceMessages.innerHTML = '';
@@ -323,7 +337,7 @@
   // EDIT Item
   DOM.changeItemBTn.addEventListener('click', (event) => {
     event.preventDefault();
-    editItem(itemId);
+    editItem(currentItem);
   });
 
   // CHECK BTN
@@ -340,9 +354,11 @@
         switch (event.target.value) {
           case 'todo':
             DOM.todoBlock.classList.remove('hidden');
+            DOM.noteBlock.classList.add('hidden');
             break;
           default:
             DOM.todoBlock.classList.add('hidden');
+            DOM.noteBlock.classList.remove('hidden');
             break;
         }
       });
