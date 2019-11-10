@@ -78,7 +78,7 @@ $color-main: #003152;
 $color-white: #fff;
 $color-black: #000;
 $color-grey: #cdcdcd;
-$color-grey-light: #ededed;
+$color-grey-light: #efefef;
 $color-green: #226f45;
 $color-blue: #2b5796;
 $color-yellow: amber;
@@ -242,10 +242,13 @@ ul {
   }
 
   &.overdue {
+    box-shadow: 0 0 5px 0 rgba($color-red, .9);
     .todo-date {
-      background-color: $color-red;
-      color: $color-white !important;
-
+      // background-color: $color-red !important;
+      // color: $color-white !important;
+    }
+    .check-btn {
+      border-color: $color-red;
     }
   }
 
@@ -459,13 +462,15 @@ ul {
   box-shadow: $main-shadow;
   background-color: $color-grey-light;
   outline: none;
-  // -webkit-appearance: none;
+  -webkit-appearance: none;
 
   @include placeholder {
     color: rgba($color-main, .3);
   }
 }
-
+input[type="date"] {
+  -webkit-appearance: textfield;
+}
 .toggler {
   @include flex(row);
   width: 100%;
@@ -737,6 +742,9 @@ ul {
       }
     }
   }
+  .controls {
+    padding: 0 5px;
+  }
   input[type="search"] {
     display: inline-block;
     width: calc(100% - 110px);
@@ -756,13 +764,15 @@ ul {
 
 // SERVICE MESSAGES
 .service-messages {
-  // transform: translate(0, 0) scale(1);
-  // opacity: 1;
-  // transition: transform .7s, opacity .7s;
-  // &.hide {
-  //   transform: translate(0, -50vh) scale(.7);
-  //   opacity: 0;
-  // }
+  @include pos(fixed,0,0,0,0);
+  background-color: rgba($color-black, .3);
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  .service & {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 .service-message {
   @include pos(fixed, center, center);
