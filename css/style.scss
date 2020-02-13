@@ -471,6 +471,22 @@ ul {
 input[type="date"] {
   -webkit-appearance: textfield;
 }
+.color {
+  label,
+  input {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  label {
+    margin-right: 20px;
+  }
+}
+input[type="color"] {
+  width: 50px;
+  height: 50px;
+  min-height: auto;
+  padding: 5px;
+}
 .toggler {
   @include flex(row);
   width: 100%;
@@ -711,6 +727,7 @@ input[type="date"] {
   @include pos(fixed, $bottom: 10px, $left: 0);
   width: 100%;
   padding: 0 10px 10px;
+  z-index: 5;
 
   &:before {
       content: "";

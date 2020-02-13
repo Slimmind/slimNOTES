@@ -435,6 +435,23 @@ input[type="date"] {
   -webkit-appearance: textfield;
 }
 
+.color label,
+.color input {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.color label {
+  margin-right: 20px;
+}
+
+input[type="color"] {
+  width: 50px;
+  height: 50px;
+  min-height: auto;
+  padding: 5px;
+}
+
 .toggler {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -710,6 +727,7 @@ input[type="date"] {
   left: 0;
   width: 100%;
   padding: 0 10px 10px;
+  z-index: 5;
 }
 
 .nav-panel:before {
