@@ -58,16 +58,17 @@
 
   function openItemHandler(event) {
     const targetItem = event.target;
-    const id = targetItem.getAttribute('id');
+    const id = event.target.getAttribute('id');
     const arrayIndex = itemArr.findIndex((item) => item.itemId === id);
-
+    
     currentItem = {
-      id,
+      id: id,
       parentList: targetItem.parentNode,
       DOMIndex: [...targetItem.parentNode.querySelectorAll('.item')].indexOf(targetItem),
       arrayIndex,
       arrayData: itemArr[arrayIndex],
     };
+    console.log("ID: ", currentItem);
 
     DOM.itemForm.classList.add('edit-form');
     if (currentItem.arrayData.itemType === 'todo') {
@@ -77,14 +78,13 @@
     fillForm(currentItem.arrayData);
   }
 
-  function deleteItemHandler(event, itemId) {
+  function deleteItemHandler(event) {
     event.preventDefault();
-    if (!itemId) return;
     itemArr = itemArr.filter((note) => {
-      return note.itemId !== itemId;
+      return note.itemId !== currentItem.id;
     });
     setStore();
-    document.getElementById(itemId).remove();
+    currentItem.parentList.removeChild(document.getElementById(currentItem.id));
     closeHandler(DOM.windows, 'active-window');
   }
 
@@ -163,14 +163,14 @@
         id="${obj.itemId}"
         data-todo-symbol="${obj.itemTitle.charAt(0)}">
           <h3 class="item-title">${obj.itemTitle}</h3>
-          <p class="item-text">${obj.itemText}</p>
-          <small class="todo-date">${obj.todoExpDate}</small>
+          ${obj.itemText ? '<p class="item-text">' + obj.itemText + '</p>' : ''}
+          <small class="todo-date">${obj.todoExpDate.split('-').reverse().join('-')}</small>
           <span class="check-btn"></span>
         </div>
       `;
       DOM.todoList.insertAdjacentHTML('beforeend', item);
     } else {
-      item = `<div class="item note " id="${obj.itemId}" style="background-color: rgba(${obj.noteColor}, .5)">
+      item = `<div class="item note " id="${obj.itemId}" style="background-color: ${obj.itemColor}">
         <h3 class="item-title">${obj.itemTitle}</h3>
         <p class="item-text">${obj.itemText}</p>
       </div>`;
@@ -199,7 +199,7 @@
       dataObj = {
         itemType: type,
         itemTitle: form.querySelector('[name="item-title"]').value || '...',
-        itemText: form.querySelector('[name="item-text"]').value || '...',
+        itemText: form.querySelector('[name="item-text"]').value || null,
         todoExpDate: form.querySelector('[name="todo-exp-date"]').value || dateString,
         todoStatus: form.querySelector('[name="todo-status"]:checked').value
       }
@@ -208,6 +208,7 @@
         itemType: type,
         itemTitle: form.querySelector('[name="item-title"]').value || '...',
         itemText: form.querySelector('[name="item-text"]').value || '...',
+        itemColor: form.querySelector('[name="item-color"]').value
       }
     }
     return dataObj;
