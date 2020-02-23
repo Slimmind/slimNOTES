@@ -5,8 +5,8 @@
 
 (function (window, document, store) {
   const DOM = {
-    windows: document.querySelector('.window'),
     html: document.querySelector('html'),
+    windows: document.querySelector('.window'),
     itemForm: document.querySelector('#item-form'),
     itemsList: document.querySelectorAll('.items-list'),
     todoList: document.querySelector('.todo-list'),
@@ -176,7 +176,6 @@
       </div>`;
       DOM.noteList.insertAdjacentHTML('beforeend', item);
     }
-
   }
 
   function renderItems(arr) {
