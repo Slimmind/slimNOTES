@@ -1,0 +1,142 @@
+// MIXINS
+
+@mixin bg ($posX: null, $posY: null, $sizeX: null, $sizeY: null) {
+  background: {
+    repeat: no-repeat;
+    position: $posX $posY;
+    size: $sizeX $sizeY;
+  }
+}
+
+@mixin pos ($pos: null, $top: null, $left: null, $bottom: null, $right: null) {
+  position: $pos;
+  right: $right;
+  bottom: $bottom;
+
+  @if ($top=="center"and $left=="center") {
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+
+  @if($top=="center"and $left !="center") {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  @if not($top=="center") {
+    top: $top;
+  }
+
+  @if($left=="center"and $top !="center") {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @if not($left=="center") {
+    left: $left;
+  }
+}
+
+@mixin flex ($fd: null, $jc: null, $ai: null, $fw: null, $ac: null) {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-direction: $fd;
+  flex-direction: $fd;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-wrap: $fw;
+  align-content: $ac;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content
+  }
+
+  &:-moz-placeholder {
+    opacity: 1;
+    @content
+  }
+
+  &::-moz-placeholder {
+    opacity: 1;
+    @content
+  }
+
+  &:-ms-input-placeholder {
+    @content
+  }
+}
+
+// variables
+
+$color-main: #003152;
+$color-white: #fff;
+$color-black: #000;
+$color-grey: #cdcdcd;
+$color-grey-light: #efefef;
+$color-green: #226f45;
+$color-blue: #2b5796;
+$color-yellow: amber;
+$color-red: #d04526;
+$main-font: 'Ubuntu',
+sans-serif;
+$main-radius: 10px;
+$main-shadow: 0 0 3px 0 rgba(100, 100, 100, .4);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font: 400 14px/20px $main-font;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+}
+
+.no-scroll {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+main {
+  position: relative;
+  height: 100%;
+
+  &:before {
+    content: "";
+    @include pos(absolute, 0, 0);
+    width: 100%;
+    width: 100%;
+    height: 100%;
+    background: url('../img/tiny-squares.png');
+    opacity: .3;
+    z-index: -1;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+.toggle-item-list {
+  padding: 10px 10px 7px;
+  .toggler {
+    margin: 0 auto;
+  }
+}
