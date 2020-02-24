@@ -1,4 +1,4 @@
-export default function getData(form) {
+export default function getFormData(form) {
     const type = form.querySelector('[name="item-type"]:checked').value;
     let dataObj
     if (type === 'todo') {
