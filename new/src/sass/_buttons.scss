@@ -105,3 +105,31 @@
     }
   }
 }
+.check-btn {
+  @include pos(absolute, calc(50% - 15px), $right: 10px);
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba($color-grey, .5);
+  border-radius: $main-radius;
+  // border-radius: 50%;
+
+  &:before {
+    content: '';
+    @include pos(absolute, calc(50% - 10px), $left: calc(50% - 6px));
+    width: 12px;
+    height: 20px;
+    border-right: 4px solid $color-white;
+    border-bottom: 4px solid $color-white;
+    transform: rotate(45deg) translate(-6px, -7px) scaleY(0);
+    opacity: 0;
+    transition: opacity .3s, transform .3s;
+    will-change: transform;
+  }
+
+  &:after {
+    content: '';
+    @include pos(absolute, calc(50% - 15px), calc(50% - 15px));
+    width: 30px;
+    height: 30px;
+  }
+}

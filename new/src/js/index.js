@@ -20,6 +20,16 @@ import checkDone from "./modules/check-done";
 
 
 (function (window, document, store) {
+    const todo = {
+        itemType: "todo",
+        itemId: "1234",
+        todoStatus: "normal",
+        itemTitle: "Test Title",
+        itemText: "Test ToDo text",
+        todoExpDate: "2020-02-25",
+        todoDone: false
+
+    };
     const DOM = elements(document);
 
     let tempStore= (store.length > 0) ? JSON.parse(store.getItem('items')) : []; // itemArr
@@ -32,5 +42,7 @@ import checkDone from "./modules/check-done";
         arrayData: {}
     };
 
-    console.log("TEST: ", DOM);
+    console.log("TEST: ");
+
+    renderItem(todo, DOM);
 })(window, document, window.localStorage);
