@@ -1,4 +1,6 @@
-export default function renderItem(obj) {
+import checkOverDue from "./check-over-due";
+
+export default function renderItem(obj, DOM) {
     let item = '';
     if (obj.itemType === "todo") {
         item = `<div class="item todo ${obj.todoStatus} ${(obj.todoDone) ? 'done' : null} ${checkOverDue(obj)}"
