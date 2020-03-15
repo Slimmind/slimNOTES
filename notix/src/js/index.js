@@ -3,10 +3,6 @@
 import "../sass/styles.scss";
 import elements from "./modules/elements";
 import getItemJSON from "./modules/get-item-json";
-import getFormData from "./helpers/get-form-data";
-import fillForm from "./helpers/fill-form";
-import editItem from "./handlers/handler-edit-item";
-import updateItem from "./handlers/handler-update-item";
 import renderItems from "./modules/render-items";
 import renderItem from "./modules/render-item";
 import serviceMessage from "./modules/service-message";
@@ -18,9 +14,11 @@ import getDate from "./helpers/get-date";
 
 //HANDLERS
 import addItemHandler from "./handlers/handler-add-item";
-import cancelHandler from "./handlers/handler-cancel";
-import openItemHandler from "./handlers/handler-open";
 import createItemHandler from "./handlers/handler-create-item";
+import editItem from "./handlers/handler-edit-item";
+import openItemHandler from "./handlers/handler-open";
+import updateItem from "./handlers/handler-update-item";
+import cancelHandler from "./handlers/handler-cancel";
 
 (function (window, document, store) {
     // const todo = {
@@ -35,10 +33,12 @@ import createItemHandler from "./handlers/handler-create-item";
     const DOM = elements(document);
 
     let tempStore = store.getItem("items") ? JSON.parse(store.getItem("items")) : []; // itemArr
+    console.log("TEMP_STORE: ", tempStore);
 
     renderItems(DOM, tempStore);
 
     let currentItem = {
+        itemType: "",
         id: "",
         parentList: "",
         DOMIndex: "",
@@ -73,7 +73,9 @@ import createItemHandler from "./handlers/handler-create-item";
     };
 
     // EDIT ITEM
-    DOM.changeItemBTn.addEventListener("click", (event) => editItem(event, currentItem, tempStore));
+    DOM.changeItemBTn.addEventListener("click", (event) => editItem(event, DOM, currentItem, tempStore));
+
+    // UPDATE ITEM
 
     // DELETE ITEM
 
