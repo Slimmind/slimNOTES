@@ -6,6 +6,7 @@ export default function openHandler(event, DOM, itemArr, currentItem) {
     const arrayIndex = itemArr.findIndex((item) => item.itemId === id);
 
     currentItem = {
+        itemType: itemArr[arrayIndex].itemType,
         id: id,
         parentList: targetItem.parentNode,
         DOMIndex: [...targetItem.parentNode.querySelectorAll('.item')].indexOf(targetItem),
@@ -20,4 +21,5 @@ export default function openHandler(event, DOM, itemArr, currentItem) {
     }
 
     fillForm(DOM, currentItem.arrayData);
+    return currentItem;
 }
