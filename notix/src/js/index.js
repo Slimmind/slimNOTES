@@ -11,6 +11,7 @@ import toggleItemList from "./modules/toggle-item-list";
 
 // HELPERS
 import getDate from "./helpers/get-date";
+import todoCounter from "./helpers/todo-counter";
 
 //HANDLERS
 import addItemHandler from "./handlers/handler-add-item";
@@ -42,8 +43,8 @@ import cancelHandler from "./handlers/handler-cancel";
 
     let tempStore = store.getItem("items") ? JSON.parse(store.getItem("items")) : []; // itemArr
     console.log("TEMP_STORE: ", tempStore);
-
-    window.vars = vars || {};
+    
+    window.vars = window.vars || {};
     vars = {...vars, 
         DOM: elements(document),
         currentItem,
@@ -92,6 +93,12 @@ import cancelHandler from "./handlers/handler-cancel";
 
     // CANCEL
     vars.DOM.cancelBtn.addEventListener("click", (event) => cancelHandler(event, vars.DOM));
+
+    // MENU BTN
+    vars.DOM.menuBtn.addEventListener("click", () => {
+        vars.DOM.navPanel.classList.toggle("menu-is-open");
+        todoCounter(vars.DOM);
+    });
 
 
 })(window, document, window.localStorage);
