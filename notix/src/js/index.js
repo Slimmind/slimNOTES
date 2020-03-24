@@ -30,12 +30,6 @@ import cancelHandler from "./handlers/handler-cancel";
     //     todoExpDate: "2020-02-25",
     //     todoDone: false
     // };
-    const DOM = elements(document);
-
-    let tempStore = store.getItem("items") ? JSON.parse(store.getItem("items")) : []; // itemArr
-    console.log("TEMP_STORE: ", tempStore);
-
-    renderItems(DOM, tempStore);
 
     let currentItem = {
         itemType: "",
@@ -46,41 +40,58 @@ import cancelHandler from "./handlers/handler-cancel";
         arrayData: {}
     };
 
-    console.table(tempStore);
+    let tempStore = store.getItem("items") ? JSON.parse(store.getItem("items")) : []; // itemArr
+    console.log("TEMP_STORE: ", tempStore);
+
+    window.vars = vars || {};
+    vars = {...vars, 
+        DOM: elements(document),
+        currentItem,
+        tempStore
+    };
+
+    // const DOM = elements(document);
+
+    
+
+    renderItems(vars.DOM, vars.tempStore);
+
+    console.table(vars.tempStore);
 
     // renderItem(todo, DOM);
 
-    toggleItemList(DOM);
+    toggleItemList(vars.DOM);
 
     // ADD ITEM (opens AddITEM form)
-    DOM.addItemBtn.addEventListener("click", () => addItemHandler(DOM));
+    vars.DOM.addItemBtn.addEventListener("click", () => addItemHandler(vars.DOM));
 
     // CREATE ITEM
-    DOM.createItemBtn.addEventListener("click", (event, store) => {
+    vars.DOM.createItemBtn.addEventListener("click", (event, store) => {
         event.preventDefault();
-        createItemHandler(DOM, tempStore);
+        createItemHandler(vars.DOM, vars.tempStore);
     });
 
     // OPEN ITEM
-    for(const list of [...DOM.itemsList]) {
+    for(const list of [...vars.DOM.itemsList]) {
         list.addEventListener("click", (event) => {
             if (event.target.classList.contains("item")) {
-                DOM.html.classList.add("no-scroll");
-                console.log("STORE: ", tempStore);
-                openItemHandler(event, DOM, tempStore, currentItem);
+                vars.DOM.html.classList.add("no-scroll");
+                console.log("STORE: ", vars.tempStore);
+                
+                openItemHandler(event, vars.DOM, vars.tempStore, vars.currentItem);
             }
         });
     };
 
     // EDIT ITEM
-    DOM.changeItemBTn.addEventListener("click", (event) => editItem(event, DOM, currentItem, tempStore));
+    vars.DOM.changeItemBTn.addEventListener("click", (event) => editItem(event, vars.DOM, vars.currentItem, vars.tempStore));
 
     // UPDATE ITEM
 
     // DELETE ITEM
 
     // CANCEL
-    DOM.cancelBtn.addEventListener("click", (event) => cancelHandler(event, DOM));
+    vars.DOM.cancelBtn.addEventListener("click", (event) => cancelHandler(event, vars.DOM));
 
 
 })(window, document, window.localStorage);

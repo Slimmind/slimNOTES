@@ -22,6 +22,7 @@
     }
 
     .main-menu {
+        @include pos(fixed, 70px, 10px);
         max-height: 0;
         overflow: hidden;
         transition: max-height .7s, padding-top .5s;
