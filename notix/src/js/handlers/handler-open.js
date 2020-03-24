@@ -1,11 +1,13 @@
 import fillForm from '../helpers/fill-form';
 
-export default function openHandler(event, DOM, itemArr, currentItem) {
+export default function openHandler(event, DOM, itemArr, curItem) {
     const targetItem = event.target;
     const id = event.target.getAttribute('id');
     const arrayIndex = itemArr.findIndex((item) => item.itemId === id);
 
-    currentItem = {
+    console.log(curItem);
+
+    curItem = {
         itemType: itemArr[arrayIndex].itemType,
         id: id,
         parentList: targetItem.parentNode,
@@ -13,13 +15,12 @@ export default function openHandler(event, DOM, itemArr, currentItem) {
         arrayIndex,
         arrayData: itemArr[arrayIndex],
     };
-    console.log("CUR_ITEM: ", currentItem);
+    console.log("CUR_ITEM: ", curItem);
 
     DOM.itemForm.classList.add('edit-form');
-    if (currentItem.arrayData.itemType === 'todo') {
+    if (curItem.arrayData.itemType === 'todo') {
         DOM.itemForm.classList.add('todo-form');
     }
 
-    fillForm(DOM, currentItem.arrayData);
-    return currentItem;
+    fillForm(DOM, curItem.arrayData);
 }
