@@ -24,6 +24,9 @@ export default function elements(document) {
         callServiceBtn: document.getElementById('call-service-message'),
         serviceMessages: document.querySelector('.service-messages'),
         listTypeInput: document.querySelectorAll('input[name="list-type"]'),
+        todoFilterNormal: document.querySelector('.todo-filter.normal'),
+        todoFilterWarning: document.querySelector('.todo-filter.warning'),
+        todoFilterUrgent: document.querySelector('.todo-filter.urgent')
     };
     return DOM;
 } 
