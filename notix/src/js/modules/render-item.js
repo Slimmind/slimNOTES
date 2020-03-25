@@ -12,7 +12,7 @@ export default function renderItem(DOM, obj) {
             <span class="check-btn"></span>
         </div>
         `;
-        DOM.todoList.insertAdjacentHTML('beforeend', item);
+        DOM.todoList.insertAdjacentHTML("beforeend", item);
     } else {
         item = `<div class="item note " id="${obj.itemId}" style="background-color: ${obj.itemColor}">
         <h3 class="item-title">${obj.itemTitle}</h3>
