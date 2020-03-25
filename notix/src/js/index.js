@@ -43,12 +43,15 @@ import cancelHandler from "./handlers/handler-cancel";
 
     let tempStore = store.getItem("items") ? JSON.parse(store.getItem("items")) : []; // itemArr
     console.log("TEMP_STORE: ", tempStore);
+
+    let filteredTodos = [];
     
     window.vars = window.vars || {};
     vars = {...vars, 
         DOM: elements(document),
         currentItem,
-        tempStore
+        tempStore,
+        filteredTodos
     };
 
     // const DOM = elements(document);
@@ -101,7 +104,7 @@ import cancelHandler from "./handlers/handler-cancel";
     });
 
     // TODO FILTERS
-    for(filter of vars.DOM.todoFilters) {
+    for(const filter of vars.DOM.todoFilters) {
         filter.addEventListener("click", () => {
 
         });
