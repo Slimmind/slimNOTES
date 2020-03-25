@@ -100,5 +100,11 @@ import cancelHandler from "./handlers/handler-cancel";
         todoCounter(vars.DOM);
     });
 
+    // TODO FILTERS
+    for(filter of vars.DOM.todoFilters) {
+        filter.addEventListener("click", () => {
+
+        });
+    }
 
 })(window, document, window.localStorage);
