@@ -1,3 +1,3 @@
-export default function setStore(arr) {
-    window.localStorage.setItem("items", JSON.stringify(arr));
+export default function setStore() {
+    window.localStorage.setItem("items", JSON.stringify(vars.tempStore));
 }

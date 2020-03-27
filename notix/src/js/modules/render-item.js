@@ -1,9 +1,9 @@
 import renderTodo from "./render-todo";
 import renderNote from "./render-note";
 
-export default function renderItem(obj, itemsList) {
+export default function renderItem(obj) {
     if(obj.itemType === "todo") {
-        renderTodo(obj, itemsList);
+        renderTodo(obj);
     } else {
         renderNote(obj);
     }

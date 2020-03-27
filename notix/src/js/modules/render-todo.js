@@ -10,9 +10,9 @@ export default function renderTodo(obj, itemsList) {
             <span class="check-btn"></span>
         </div>
         `;
-    if(itemsList) {
-        itemsList.insertAdjacentHTML("beforeend", item);
+    if(itemsList === "filter") {
+        vars.DOM.filterList.insertAdjacentHTML("beforeend", item);
     } else {
-        vars.DOM.insertAdjacentHTML("beforeend", item);
+        vars.DOM.todoList.insertAdjacentHTML("beforeend", item);
     }
 }
