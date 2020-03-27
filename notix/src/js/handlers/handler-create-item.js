@@ -5,26 +5,26 @@ import getDate from "../helpers/get-date";
 import renderItem from '../modules/render-item';
 import closeHandler from './handler-close';
 
-export default function createHandlerItem(DOM, tempStore) {
+export default function createHandlerItem() {
     let fullItemData = {};
 
-    if (DOM.itemForm.itemType === 'todo') {
+    if (vars.DOM.itemForm.itemType === 'todo') {
         fullItemData = {
-            ...getFormData(DOM.itemForm),
+            ...getFormData(vars.DOM.itemForm),
             itemId: generateID(),
             itemCreationDate: getDate(),
             todoDone: false
         };
     } else {
         fullItemData = {
-            ...getFormData(DOM.itemForm),
+            ...getFormData(vars.DOM.itemForm),
             itemId: generateID(),
             itemCreationDate: getDate(),
         };
     }
 
-    tempStore.push(fullItemData);
-    setStore(tempStore);
-    renderItem(DOM, fullItemData);
-    closeHandler(DOM, DOM.windows, null, 'active-window, todo-form, create-form');
+    vars.tempStore.push(fullItemData);
+    setStore();
+    renderItem(fullItemData);
+    closeHandler(vars.DOM.windows, 'active-window, todo-form, create-form');
 }

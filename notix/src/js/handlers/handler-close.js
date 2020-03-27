@@ -1,12 +1,13 @@
 import clearForm from "../helpers/clear-form";
 
-export default function closeHandler(DOM, elem, currentItem, classToRemove) {
-    currentItem = {};
+export default function closeHandler(elem, classToRemove) {
+    console.log("CLASS: ", classToRemove);
+    vars.currentItem = {};
     const classes = classToRemove.replace(/ /g, '').split(',');
     console.log("CLASSES: ", classToRemove);
 
-    if (DOM.html.classList.contains('no-scroll')) {
-        DOM.html.classList.remove('no-scroll');
+    if (vars.DOM.html.classList.contains('no-scroll')) {
+        vars.DOM.html.classList.remove('no-scroll');
     }
 
     if (elem && classes.length) {
@@ -15,6 +16,6 @@ export default function closeHandler(DOM, elem, currentItem, classToRemove) {
         };
     }
 
-    DOM.todoBlock.classList.remove('hidden');
+    vars.DOM.todoBlock.classList.remove('hidden');
     clearForm();
 }

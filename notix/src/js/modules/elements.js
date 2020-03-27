@@ -27,7 +27,8 @@ export default function elements(document) {
         todoFilters: document.querySelectorAll('.todo-filter'),
         todoFilterNormal: document.querySelector('.todo-filter.normal'),
         todoFilterWarning: document.querySelector('.todo-filter.warning'),
-        todoFilterUrgent: document.querySelector('.todo-filter.urgent')
+        todoFilterUrgent: document.querySelector('.todo-filter.urgent'),
+        cancelTodoFilters: document.querySelector('.cancel-todo-filters'),
     };
     return DOM;
 } 

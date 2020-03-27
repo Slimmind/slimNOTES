@@ -20,49 +20,27 @@ import editItem from "./handlers/handler-edit-item";
 import openItemHandler from "./handlers/handler-open";
 import updateItem from "./handlers/handler-update-item";
 import cancelHandler from "./handlers/handler-cancel";
+import filterTodoHandler from "./handlers/handler-filter-todo";
+import cancelTodoFilters from "./handlers/handler-cancel-todo-filters";
+import deleteItemHandler from "./handlers/handler-delete-item";
 
 (function (window, document, store) {
-    // const todo = {
-    //     itemType: "todo",
-    //     itemId: "1234",
-    //     todoStatus: "normal",
-    //     itemTitle: "Test Title",
-    //     itemText: "Test ToDo text",
-    //     todoExpDate: "2020-02-25",
-    //     todoDone: false
-    // };
-
-    let currentItem = {
-        itemType: "",
-        id: "",
-        parentList: "",
-        DOMIndex: "",
-        arrayIndex: "",
-        arrayData: {}
-    };
-
-    let tempStore = store.getItem("items") ? JSON.parse(store.getItem("items")) : []; // itemArr
-    console.log("TEMP_STORE: ", tempStore);
-
-    let filteredTodos = [];
-    
     window.vars = window.vars || {};
     vars = {...vars, 
         DOM: elements(document),
-        currentItem,
-        tempStore,
-        filteredTodos
+        currentItem: {
+            itemType: "",
+            id: "",
+            parentList: "",
+            DOMIndex: "",
+            arrayIndex: "",
+            arrayData: {}
+        },
+        tempStore: store.getItem("items") ? JSON.parse(store.getItem("items")) : [],
+        filteredTodos: []
     };
 
-    // const DOM = elements(document);
-
-    
-
-    renderItems(vars.DOM, vars.tempStore);
-
-    console.table(vars.tempStore);
-
-    // renderItem(todo, DOM);
+    renderItems(vars.tempStore);
 
     toggleItemList(vars.DOM);
 
@@ -93,6 +71,7 @@ import cancelHandler from "./handlers/handler-cancel";
     // UPDATE ITEM
 
     // DELETE ITEM
+    vars.DOM.deleteItemBtn.addEventListener("click", (event) => deleteItemHandler(event));
 
     // CANCEL
     vars.DOM.cancelBtn.addEventListener("click", (event) => cancelHandler(event, vars.DOM));
@@ -105,9 +84,12 @@ import cancelHandler from "./handlers/handler-cancel";
 
     // TODO FILTERS
     for(const filter of vars.DOM.todoFilters) {
-        filter.addEventListener("click", () => {
-
+        filter.addEventListener("click", (event) => {
+            filterTodoHandler(event.target);
         });
     }
+
+    // CANCEL FILTERS
+    vars.DOM.cancelTodoFilters.addEventListener("click", cancelTodoFilters);
 
 })(window, document, window.localStorage);
