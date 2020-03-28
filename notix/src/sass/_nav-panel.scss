@@ -21,11 +21,11 @@
     }
 
     .main-menu {
-        @include pos(fixed, 75px, 10px);
+        @include pos(fixed, $bottom: 81px, $left: 10px);
         width: 75%;
         max-width: 320px;
-        height: calc(100vh - 160px);
-        max-height: calc(100vh - 160px);
+        height: calc(100vh - 90px);
+        max-height: calc(100vh - 90px);
         padding: 10px;
         border-radius: $main-radius;
         background-color: $color-grey-light;

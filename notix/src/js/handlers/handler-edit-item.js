@@ -1,29 +1,28 @@
-import getFormData from "../helpers/get-form-data";
 import closeHandler from "./handler-close";
+import updateItemHandler from "./handler-update-item";
+import getFormData from "../helpers/get-form-data";
 import clearForm from "../helpers/clear-form";
 import setStore from "../helpers/set-store";
 
-export default function editItem(event, DOM, item, arr) {
+export default function editItem(event) {
     event.preventDefault();
-    const changedData = getFormData(DOM.itemForm);
+    const changedData = getFormData(vars.DOM.itemForm);
     let changedProps = 0;
-    console.log("ITEM");
-    console.log(item);
     for (const prop in changedData) {
         console.log(`${changedData[prop]}`);
-        // if (changedData[prop] !== arr[item.arrayIndex][prop]) {
-        //     arr[item.arrayIndex][prop] = changedData[prop];
-        //     changedProps += 1;
-        //     setStore();
-        //     updateItem(item.DOMIndex, arr[item.arrayIndex]);
-        //     closeHandler(DOM.windows, 'active-window, edit-form');
-        //     clearForm();
-        // }
+        if (changedData[prop] !== vars.tempStore[vars.currentItem.arrayIndex][prop]) {
+            vars.tempStore[vars.currentItem.arrayIndex][prop] = changedData[prop];
+            changedProps += 1;
+            setStore();
+            updateItemHandler(vars.currentItem.DOMIndex, vars.tempStore[vars.currentItem.arrayIndex]);
+            closeHandler(vars.DOM.windows, 'active-window, edit-form');
+            clearForm();
+        }
     }
-    // if (changedProps > 0) {
+    if (changedProps > 0) {
 
-    // } else {
-    //     closeHandler(DOM.windows, 'active-window');
-    //     clearForm();
-    // }
+    } else {
+        closeHandler(vars.DOM.windows, 'active-window');
+        clearForm();
+    }
 }

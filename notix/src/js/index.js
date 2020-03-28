@@ -12,13 +12,14 @@ import toggleItemList from "./modules/toggle-item-list";
 // HELPERS
 import getDate from "./helpers/get-date";
 import todoCounter from "./helpers/todo-counter";
+import openNav from "./helpers/open-nav";
 
 //HANDLERS
 import addItemHandler from "./handlers/handler-add-item";
 import createItemHandler from "./handlers/handler-create-item";
 import editItem from "./handlers/handler-edit-item";
 import openItemHandler from "./handlers/handler-open";
-import updateItem from "./handlers/handler-update-item";
+import updateItemHandler from "./handlers/handler-update-item";
 import cancelHandler from "./handlers/handler-cancel";
 import filterTodoHandler from "./handlers/handler-filter-todo";
 import cancelTodoFilters from "./handlers/handler-cancel-todo-filters";
@@ -58,17 +59,14 @@ import deleteItemHandler from "./handlers/handler-delete-item";
         list.addEventListener("click", (event) => {
             if (event.target.classList.contains("item")) {
                 vars.DOM.html.classList.add("no-scroll");
-                console.log("STORE: ", vars.tempStore);
                 
                 openItemHandler(event, vars.DOM, vars.tempStore, vars.currentItem);
             }
         });
     };
 
-    // EDIT ITEM
-    vars.DOM.changeItemBTn.addEventListener("click", (event) => editItem(event, vars.DOM, vars.currentItem, vars.tempStore));
-
     // UPDATE ITEM
+    vars.DOM.changeItemBtn.addEventListener("click", (event) => updateItemHandler(event));
 
     // DELETE ITEM
     vars.DOM.deleteItemBtn.addEventListener("click", (event) => deleteItemHandler(event));
@@ -78,7 +76,7 @@ import deleteItemHandler from "./handlers/handler-delete-item";
 
     // MENU BTN
     vars.DOM.menuBtn.addEventListener("click", () => {
-        vars.DOM.navPanel.classList.toggle("menu-is-open");
+        openNav();
         todoCounter(vars.DOM);
     });
 
@@ -91,5 +89,8 @@ import deleteItemHandler from "./handlers/handler-delete-item";
 
     // CANCEL FILTERS
     vars.DOM.cancelTodoFilters.addEventListener("click", cancelTodoFilters);
+
+    // SHOW STORAGE
+    vars.DOM.showStorageBtn.addEventListener("click", serviceMessage("success", "Test Message", "lorem ipsum dolor sit amet"));
 
 })(window, document, window.localStorage);

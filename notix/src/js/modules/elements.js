@@ -17,7 +17,7 @@ export default function elements(document) {
         menuBtn: document.querySelector('.menu-btn'),
         createItemBtn: document.querySelector('.create-btn'),
         deleteItemBtn: document.querySelector('.delete-btn'),
-        changeItemBTn: document.querySelector('.change-btn'),
+        changeItemBtn: document.querySelector('.change-btn'),
         checkBtn: document.querySelectorAll('.check-btn'),
         showStorageBtn: document.getElementById('show-local-storage'),
         cleanStorageBtn: document.getElementById('clean-local-storage'),
