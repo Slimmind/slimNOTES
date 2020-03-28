@@ -1,10 +1,8 @@
 import clearForm from "../helpers/clear-form";
 
 export default function closeHandler(elem, classToRemove) {
-    console.log("CLASS: ", classToRemove);
     vars.currentItem = {};
     const classes = classToRemove.replace(/ /g, '').split(',');
-    console.log("CLASSES: ", classToRemove);
 
     if (vars.DOM.html.classList.contains('no-scroll')) {
         vars.DOM.html.classList.remove('no-scroll');

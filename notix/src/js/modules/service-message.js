@@ -1,4 +1,7 @@
-export default function serviceMessage(messageType = 'info', messageTitle = '', messageText = '') {
+import showOverlay from "../helpers/show-overlay";
+import hideOverlay from "../helpers/hide-overlay";
+
+export default function serviceMessage(messageType = "info", messageTitle = "", messageText = "") {
     const message = `
     <div class="service-message ${messageType}">
     <strong class="close-message" role="button" aria-label="close-message"></strong>
@@ -9,17 +12,17 @@ export default function serviceMessage(messageType = 'info', messageTitle = '', 
     </div>
     `;
 
-    DOM.html.classList.add('service');
+    showOverlay();
+    vars.DOM.serviceMessages.classList.add("active")
 
-    DOM.serviceMessages.insertAdjacentHTML('beforeend', message);
+    vars.DOM.serviceMessages.insertAdjacentHTML("beforeend", message);
 
-    DOM.serviceMessages.addEventListener('click', (event) => {
-        if (!event.target.classList.contains('service-message')) {
-            DOM.html.classList.remove('service');
-            DOM.serviceMessages.classList.add('hidden');
+    vars.DOM.serviceMessages.addEventListener("click", (event) => {
+        if (!event.target.classList.contains("service-message")) {
+            hideOverlay()
+            vars.DOM.serviceMessages.classList.remove("active");
             setTimeout(() => {
-                DOM.serviceMessages.innerHTML = '';
-                DOM.serviceMessages.classList.remove('hidden');
+                vars.DOM.serviceMessages.innerHTML = "";
             }, 10);
         }
     });
