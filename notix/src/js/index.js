@@ -18,7 +18,7 @@ import openNav from "./helpers/open-nav";
 import addItemHandler from "./handlers/handler-add-item";
 import createItemHandler from "./handlers/handler-create-item";
 import editItem from "./handlers/handler-edit-item";
-import openItemHandler from "./handlers/handler-open";
+import openItemHandler from "./handlers/handler-open-item";
 import updateItemHandler from "./handlers/handler-update-item";
 import cancelHandler from "./handlers/handler-cancel";
 import filterTodoHandler from "./handlers/handler-filter-todo";
@@ -59,8 +59,7 @@ import deleteItemHandler from "./handlers/handler-delete-item";
         list.addEventListener("click", (event) => {
             if (event.target.classList.contains("item")) {
                 vars.DOM.html.classList.add("no-scroll");
-                
-                openItemHandler(event, vars.DOM, vars.tempStore, vars.currentItem);
+                openItemHandler(event);
             }
         });
     };
@@ -77,7 +76,7 @@ import deleteItemHandler from "./handlers/handler-delete-item";
     // MENU BTN
     vars.DOM.menuBtn.addEventListener("click", () => {
         openNav();
-        todoCounter(vars.DOM);
+        todoCounter();
     });
 
     // TODO FILTERS
@@ -91,6 +90,9 @@ import deleteItemHandler from "./handlers/handler-delete-item";
     vars.DOM.cancelTodoFilters.addEventListener("click", cancelTodoFilters);
 
     // SHOW STORAGE
-    vars.DOM.showStorageBtn.addEventListener("click", serviceMessage("success", "Test Message", "lorem ipsum dolor sit amet"));
+    vars.DOM.showStorageBtn.addEventListener("click", () => {
+        console.log("STORAGE");
+        serviceMessage("success", "Test Message", "lorem ipsum dolor sit amet");
+    });
 
 })(window, document, window.localStorage);
