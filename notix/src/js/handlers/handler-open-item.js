@@ -1,6 +1,6 @@
 import fillForm from '../helpers/fill-form';
 
-export default function openHandler(event) {
+export default function openItemHandler(event) {
     const targetItem = event.target;
     const id = event.target.getAttribute('id');
     const arrayIndex = vars.tempStore.findIndex((item) => item.itemId === id);
