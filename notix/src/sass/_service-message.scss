@@ -2,7 +2,7 @@
 .service-messages {
     @include pos(absolute, 0,0,0,0);
     opacity: 0;
-    transform: translateY(-40px);
+    transform: translateY(-75px);
     transition: opacity .5s .3s;
     transition:  opacity .3s .5s, transform .3s .5s;
     will-change: transform;
