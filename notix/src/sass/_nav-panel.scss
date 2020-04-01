@@ -1,17 +1,11 @@
 .nav-panel {
-    @include pos(fixed, $bottom: 10px, $left: 0);
-    width: 100%;
+    @include pos(fixed, $bottom: 10px, $left: 10px);
+    width: calc(100% - 20px);
     padding: 10px;
+    border-radius: $main-radius;
+    background-color: $color-grey-light;
+    box-shadow: $main-shadow;
     z-index: 5;
-
-    &:before {
-        content: "";
-        @include pos(absolute, 0, 10px, 0, 10px);
-        border-radius: $main-radius;
-        background-color: $color-grey-light;
-        box-shadow: $main-shadow;
-        z-index: -1;
-    }
 
     &.menu-is-open {
         .main-menu {
@@ -93,13 +87,9 @@
         }
     }
 
-    .controls {
-        padding: 0 5px;
-    }
-
     input[type="search"] {
         display: inline-block;
-        width: calc(100% - 110px);
+        width: calc(100% - 90px);
         min-height: 40px;
         padding-top: 10px;
         padding-bottom: 10px;
