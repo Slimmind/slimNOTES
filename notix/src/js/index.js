@@ -17,9 +17,8 @@ import openNav from "./helpers/open-nav";
 //HANDLERS
 import addItemHandler from "./handlers/handler-add-item";
 import createItemHandler from "./handlers/handler-create-item";
-import editItem from "./handlers/handler-edit-item";
 import openItemHandler from "./handlers/handler-open-item";
-import updateItemHandler from "./handlers/handler-update-item";
+import editItemHandler from "./handlers/handler-edit-item";
 import cancelHandler from "./handlers/handler-cancel";
 import filterTodoHandler from "./handlers/handler-filter-todo";
 import cancelTodoFilters from "./handlers/handler-cancel-todo-filters";
@@ -64,8 +63,8 @@ import deleteItemHandler from "./handlers/handler-delete-item";
         });
     };
 
-    // UPDATE ITEM
-    vars.DOM.changeItemBtn.addEventListener("click", (event) => updateItemHandler(event));
+    // EDIT ITEM
+    vars.DOM.changeItemBtn.addEventListener("click", (event) => editItemHandler(event));
 
     // DELETE ITEM
     vars.DOM.deleteItemBtn.addEventListener("click", (event) => deleteItemHandler(event));
