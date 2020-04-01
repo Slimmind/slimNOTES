@@ -1,4 +1,4 @@
-import checkOverDue from "./check-over-due";
+import checkOverDue from "../helpers/check-over-due";
 
 export default function renderTodo(obj, itemsList) {
     let item = `<div class="item todo ${obj.todoStatus} ${(obj.todoDone) ? 'done' : null} ${checkOverDue(obj)}"

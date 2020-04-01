@@ -1,6 +1,11 @@
-export default function updateItemHandler(itemIndex, itemData) {
-    const type = itemData.itemType;
-    const item = (type === "todo") ? vars.DOM.todoList.querySelectorAll(".item")[itemIndex] : vars.DOM.noteList.querySelectorAll(".item")[itemIndex];
+import checkOverDue from "./check-over-due";
+
+export default function updateItem(itemData) {
+    const type = vars.currentItem.itemType;
+    const item = (type === "todo") ?
+        vars.DOM.todos[vars.currentItem.DOMIndex] :
+        vars.DOM.notes[vars.currentItem.DOMIndex];
+
     item.querySelector(".item-title").textContent = itemData.itemTitle;
     item.querySelector(".item-text").textContent = itemData.itemText;
     if (type === "todo") {
