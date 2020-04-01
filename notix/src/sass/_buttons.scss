@@ -17,6 +17,7 @@
   cursor: pointer;
   flex-shrink: 0;
   box-shadow: $main-shadow;
+  z-index: 1;
 
   &.cancel-btn {
     background-color: $color-grey;
