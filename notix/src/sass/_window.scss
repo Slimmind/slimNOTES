@@ -21,6 +21,7 @@
         height: 100%;
         opacity: 0;
         transition: transform .3s, opacity .3s;
+        pointer-events: none;
     }
 
     &.active-window {
@@ -31,6 +32,7 @@
         form {
             transform: translateY(0);
             opacity: 1;
+            pointer-events: all;
         }
     }
 }
