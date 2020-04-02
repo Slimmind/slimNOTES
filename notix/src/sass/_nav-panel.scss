@@ -1,9 +1,11 @@
 .nav-panel {
-    @include pos(absolute, $bottom: 10px, $left: 10px);
+    position: relative;
+    // @include pos(absolute, $bottom: 10px, $left: 10px);
     width: calc(100% - 20px);
+    margin-top: -100px;
     padding: 10px;
     border-radius: $main-radius;
-    background-color: $color-grey-light;
+    background-color: $color-blue;
     box-shadow: $main-shadow;
 
     &.menu-is-open {
