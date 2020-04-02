@@ -1,5 +1,5 @@
 .nav-panel {
-    @include pos(fixed, $bottom: 10px, $left: 10px);
+    @include pos(absolute, $bottom: 10px, $left: 10px);
     width: calc(100% - 20px);
     padding: 10px;
     border-radius: $main-radius;
