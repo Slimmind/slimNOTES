@@ -18,6 +18,10 @@
   flex-shrink: 0;
   box-shadow: $main-shadow;
 
+  &:active {
+    border: 2px solid $color-red;
+  }
+
   &.cancel-btn {
     background-color: $color-grey;
   }
