@@ -76,10 +76,10 @@ module.exports = {
                     }
                 ]
             },
-            // {
-            //     test: /\.html$/,
-            //     use: ['html-loader']
-            // }
+            {
+                test: /\.html$/,
+                use: ['html-loader']
+            }
         ]
     },
     plugins: [
