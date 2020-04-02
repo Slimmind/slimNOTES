@@ -15,6 +15,7 @@
     }
 
     form {
+        display: none;
         position: relative;
         transform-origin: center bottom;
         transform: translateY(100px);
@@ -30,6 +31,7 @@
         z-index: 10;
 
         form {
+            display: block;
             transform: translateY(0);
             opacity: 1;
             pointer-events: all;

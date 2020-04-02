@@ -8,6 +8,7 @@
 
     &.menu-is-open {
         .main-menu {
+            display: block;
             opacity: 1;
             transform: translateX(0);
             pointer-events: all;
@@ -16,6 +17,7 @@
     }
 
     .main-menu {
+        display: none;
         @include pos(fixed, $bottom: 81px, $left: 10px);
         width: 75%;
         max-width: 320px;
