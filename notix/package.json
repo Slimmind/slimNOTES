@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "http-server -1-c -p 3003",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --config './webpack.config.js'",
     "prod": "webpack -p --config './webpack.config.js'",
