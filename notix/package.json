@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=development webpack",
-    "dev": "cross-env NODE_ENV=development webpack --watch",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config './webpack.config.js'",
     "prod": "cross-env NODE_ENV=production webpack --mode production",
-    "serve": "cross-env NODE_ENV=development webpack-dev-server"
+    "serve": "http-server -1-c -p 4000"
   },
   "author": "slimmind",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "css-loader": "^3.4.2",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.0.4",
+    "http-server": "^0.12.1",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
