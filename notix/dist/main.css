@@ -538,14 +538,12 @@ ul {
   box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
 }
 .nav-panel.menu-is-open .main-menu {
-  display: block;
   opacity: 1;
   transform: translateX(0);
   pointer-events: all;
   z-index: 1;
 }
 .nav-panel .main-menu {
-  display: none;
   position: fixed;
   bottom: 81px;
   left: 10px;
@@ -859,7 +857,6 @@ ul {
   margin-bottom: 20px;
 }
 .window form {
-  display: none;
   position: relative;
   transform-origin: center bottom;
   transform: translateY(100px);
@@ -874,7 +871,6 @@ ul {
   z-index: 10;
 }
 .window.active-window form {
-  display: block;
   transform: translateY(0);
   opacity: 1;
   pointer-events: all;

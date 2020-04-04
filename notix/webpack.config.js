@@ -2,25 +2,8 @@ const path = require('path');
 const HTMLPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin'); 
 const isDev = process.env.NODE_ENV === 'development';
-
-const optimize = () => {
-    const config = {
-        splitChunks: {
-            chunks: 'all'
-        }
-    }
-    if(!isDev) {
-        config.minimizer = [
-            new OptimizeCssPlugin(),
-            new TerserPlugin()
-        ];
-    }
-    return config;
-}
 
 const fileName = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
 
@@ -33,13 +16,13 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
+        // new CleanWebpackPlugin(),
         new HTMLPlugin({
             template: 'index.html',
             minify: {
                 collapseWhitespace: !isDev
             }
         }),
-        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: fileName('css')
         }),
@@ -108,9 +91,12 @@ module.exports = {
             },
         ]
     },
-    optimization: optimize(),
     devServer: {
-        port: '4000',
+        contentBase: path.join(__dirname, 'dist'),
+        port: 4000,
         hot: isDev
+    },
+    watchOptions: {
+        ignored: /node_modules/
     }
 }
