@@ -2,19 +2,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Notix</title>
-    <link rel="stylesheet" href="./bundle.css">
-</head>
+    <link rel="stylesheet" href="../dist/bundle.css">
+<link href="main.css" rel="stylesheet"></head>
 
-<body>
+<body style="background-color: green;">
     <div class="wrapper">
         <main>
             <div class="toggle-item-list">
                 <div class="toggler toggle-type">
                     <div class="input-wrap">
-                        <input type="radio" name="list-type" value="todo-list" id="todo-list" checked>
+                        <input type="radio" name="list-type" value="todo-list" id="todo-list" checked="checked">
                         <label for="todo-list">Todo List</label>
                     </div>
                     <div class="input-wrap">
@@ -59,6 +59,7 @@
                         <h3>Edit Item</h3>
                     </div>
                     <!-- FORM'S TITLES end -->
+                    
                     <div class="toggler toggle-type">
                         <div class="input-wrap">
                             <input type="radio" name="item-type" value="todo" id="type-todo" checked="">
@@ -82,18 +83,15 @@
                         </div>
                         <div class="controls align-center">
                             <div class="input-wrap">
-                                <input class="todo-status normal" type="radio" name="todo-status" value="normal"
-                                    id="status-normal" checked="">
+                                <input class="todo-status normal" type="radio" name="todo-status" value="normal" id="status-normal" checked="">
                                 <label for="status-normal">Normal</label>
                             </div>
                             <div class="input-wrap">
-                                <input class="todo-status warning" type="radio" name="todo-status" value="warning"
-                                    id="status-warning">
+                                <input class="todo-status warning" type="radio" name="todo-status" value="warning" id="status-warning">
                                 <label for="status-warning">Warning</label>
                             </div>
                             <div class="input-wrap">
-                                <input class="todo-status urgent" type="radio" name="todo-status" value="urgent"
-                                    id="status-urgent">
+                                <input class="todo-status urgent" type="radio" name="todo-status" value="urgent" id="status-urgent">
                                 <label for="status-urgent">Urgent</label>
                             </div>
                         </div>
@@ -123,6 +121,7 @@
             </div>
         </main>
         <!-- MAIN end -->
+
         <div class="nav-panel">
             <div class="main-menu">
                 <ul>
@@ -130,26 +129,27 @@
                     <li id="call-service-message">Call Service Message</li>
                     <li id="clean-local-storage">Clean Local Storage</li>
                 </ul>
+                <div class="todo-filters">
+                    <strong class="todo-filter normal" data-amount="12"></strong>
+                    <strong class="todo-filter warning" data-amount="104"></strong>
+                    <strong class="todo-filter urgent" data-amount="1278"></strong>
+                    <strong class="todo-filter cancel-todo-filters">All</strong>
+                </div>
             </div>
-            <div class="controls align-center">
+            <div class="controls align-stretch">
                 <button class="btn menu-btn" aria-label="open menu"></button>
                 <input type="search" placeholder="Search..." class="input">
-                <strong class="btn add-item-btn" role="button" aria-label="add item"></strong>
-            </div>
+                <button class="btn add-item-btn" aria-label="add item">
+            </button></div>
         </div>
         <!-- NAV PANEL end -->
+
         <div class="service-messages">
-            <!-- <div class="service-message success">
-                <strong class="close-message" role="button" aria-label="close-message"></strong>
-                <h3 class="message-title">Service Message</h3>
-                <div class="message-content">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum, voluptatem.</p>
-                </div>
-            </div> -->
+            
         </div>
         <!-- SERVICE MESSAG end -->
     </div>
-    <script src="./bundle.js"></script>
-</body>
+    <script src="../dist/bundle.js"></script>
+<script src="main.js"></script></body>
 
 </html>
