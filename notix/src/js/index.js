@@ -2,15 +2,11 @@
 
 import "../sass/styles.scss";
 import elements from "./modules/elements";
-import getItemJSON from "./modules/get-item-json";
 import renderItems from "./modules/render-items";
-import renderItem from "./modules/render-item";
 import serviceMessage from "./modules/service-message";
-import resetForm from "./modules/reset-form";
 import toggleItemList from "./modules/toggle-item-list";
 
 // HELPERS
-import getDate from "./helpers/get-date";
 import todoCounter from "./helpers/todo-counter";
 import openNav from "./helpers/open-nav";
 
@@ -23,6 +19,7 @@ import cancelHandler from "./handlers/handler-cancel";
 import filterTodoHandler from "./handlers/handler-filter-todo";
 import cancelTodoFilters from "./handlers/handler-cancel-todo-filters";
 import deleteItemHandler from "./handlers/handler-delete-item";
+import checkDoneHandler from "./handlers/handler-check-done";
 
 (function (window, document, store) {
     window.vars = window.vars || {};
@@ -93,5 +90,8 @@ import deleteItemHandler from "./handlers/handler-delete-item";
         console.log("STORAGE");
         serviceMessage("success", "Test Message", "lorem ipsum dolor sit amet");
     });
+
+    // CHECK DONE
+    vars.DOM.todoList.addEventListener("click", event => checkDoneHandler(event.target));
 
 })(window, document, window.localStorage);
