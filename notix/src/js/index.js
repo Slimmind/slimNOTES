@@ -94,4 +94,20 @@ import checkDoneHandler from "./handlers/handler-check-done";
     // CHECK DONE
     vars.DOM.todoList.addEventListener("click", event => checkDoneHandler(event.target));
 
+    // CHOOSE TYPE of ITEM
+    [...DOM.expandFormToggler].forEach((input) => {
+      input.addEventListener('change', (event) => {
+        switch (event.target.value) {
+          case 'todo':
+            DOM.todoBlock.classList.remove('hidden');
+            DOM.noteBlock.classList.add('hidden');
+            break;
+          default:
+            DOM.todoBlock.classList.add('hidden');
+            DOM.noteBlock.classList.remove('hidden');
+            break;
+        }
+      });
+    });
+
 })(window, document, window.localStorage);
