@@ -2,6 +2,7 @@ import getDate from "../helpers/get-date";
 
 export default function getFormData(form) {
     const type = form.querySelector("[name=\"item-type\"]:checked").value;
+    console.log("TYPE_TEST: ", type);
     let dataObj
     if (type === "todo") {
         dataObj = {
@@ -16,7 +17,7 @@ export default function getFormData(form) {
             itemType: type,
             itemTitle: form.querySelector("[name=\"item-title\"]").value || "...",
             itemText: form.querySelector("[name=\"item-text\"]").value || "...",
-            itemColor: form.querySelector("[name=\"item-color\"]").value
+            // itemColor: form.querySelector("[name=\"item-color\"]").value
         }
     }
     return dataObj;

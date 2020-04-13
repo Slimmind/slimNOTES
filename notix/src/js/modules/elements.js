@@ -9,7 +9,7 @@ export default function elements(document) {
         item: document.querySelectorAll(".item"),
         todos: document.getElementsByClassName("todo"),
         notes: document.getElementsByClassName("note"),
-        expandFormToggler: document.querySelectorAll("[name=\"item-type\"]"),
+        formTypeInput: document.querySelectorAll("[name=\"item-type\"]"),
         todoBlock: document.querySelector(".todo-block"),
         noteBlock: document.querySelector(".note-block"),
         toggleType: document.querySelector(".toggle-type"),
