@@ -4,11 +4,11 @@ import "../sass/styles.scss";
 import elements from "./modules/elements";
 import renderItems from "./modules/render-items";
 import serviceMessage from "./modules/service-message";
-import toggleItemList from "./modules/toggle-item-list";
 
 // HELPERS
 import todoCounter from "./helpers/todo-counter";
 import openNav from "./helpers/open-nav";
+import toggleFormType from "./helpers/toggle-form-type";
 
 //HANDLERS
 import addItemHandler from "./handlers/handler-add-item";
@@ -34,12 +34,11 @@ import checkDoneHandler from "./handlers/handler-check-done";
             arrayData: {}
         },
         tempStore: store.getItem("items") ? JSON.parse(store.getItem("items")) : [],
-        filteredTodos: []
+        filteredTodos: [],
+        currentItemListType: "todo"
     };
 
     renderItems(vars.tempStore);
-
-    toggleItemList(vars.DOM);
 
     // ADD ITEM (opens AddITEM form)
     vars.DOM.addItemBtn.addEventListener("click", () => addItemHandler(vars.DOM));
@@ -94,20 +93,20 @@ import checkDoneHandler from "./handlers/handler-check-done";
     // CHECK DONE
     vars.DOM.todoList.addEventListener("click", event => checkDoneHandler(event.target));
 
-    // CHOOSE TYPE of ITEM
-    [...DOM.expandFormToggler].forEach((input) => {
-      input.addEventListener('change', (event) => {
-        switch (event.target.value) {
-          case 'todo':
-            DOM.todoBlock.classList.remove('hidden');
-            DOM.noteBlock.classList.add('hidden');
-            break;
-          default:
-            DOM.todoBlock.classList.add('hidden');
-            DOM.noteBlock.classList.remove('hidden');
-            break;
-        }
-      });
-    });
+    // CHOOSE LIST TYPE
+    for (const input of vars.DOM.listTypeInput) {
+        input.addEventListener("change", (event) => {
+            vars.currentItemListType = event.target.value;
+            toggleFormType();
+        });
+    };
+
+    // CHOOSE FORM TYPE
+    for (const input of vars.DOM.formTypeInput) {
+        input.addEventListener("change", (event) => {
+            vars.currentItemListType = event.target.value;
+            toggleFormType();
+        });
+    };
 
 })(window, document, window.localStorage);
