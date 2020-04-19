@@ -193,15 +193,6 @@ input[type="color"] {
     }
 }
 
-.todo-form {
-    .block.hidden {
-        max-height: 600px;
-        opacity: 1;
-        pointer-events: all;
-        overflow: hidden;
-    }
-}
-
 .create-form-elements.controls,
 .edit-form-elements.controls {
     padding-top: 20px;

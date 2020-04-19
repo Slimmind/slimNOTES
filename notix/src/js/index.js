@@ -94,7 +94,7 @@ import checkDoneHandler from "./handlers/handler-check-done";
     vars.DOM.todoList.addEventListener("click", event => checkDoneHandler(event.target));
 
     // CHOOSE LIST TYPE
-    for (const input of vars.DOM.listTypeInput) {
+    for (const input of vars.DOM.toggleList.querySelectorAll("input")) {
         input.addEventListener("change", (event) => {
             vars.currentItemListType = event.target.value;
             toggleFormType();
@@ -102,7 +102,7 @@ import checkDoneHandler from "./handlers/handler-check-done";
     };
 
     // CHOOSE FORM TYPE
-    for (const input of vars.DOM.formTypeInput) {
+    for (const input of vars.DOM.toggleForm.querySelectorAll("input")) {
         input.addEventListener("change", (event) => {
             vars.currentItemListType = event.target.value;
             toggleFormType();

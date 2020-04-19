@@ -1,17 +1,17 @@
 import checkInput from "./check-input";
+import hide from "./hide";
+import show from "./show";
 
 export default function toggleFormType() {
     if(vars.currentItemListType === "todo") {
-        vars.DOM.todoList.classList.remove("hidden");
-        vars.DOM.noteList.classList.add("hidden");
-        vars.DOM.todoBlock.classList.remove("hidden");
-        vars.DOM.noteBlock.classList.add("hidden");
-        checkInput(vars.DOM.toggleType.querySelector(`[value="${vars.currentItemListType}"]`));
+        show(vars.DOM.todoList, vars.DOM.todoBlock);
+        hide(vars.DOM.noteList, vars.DOM.noteBlock);
+        checkInput(vars.DOM.toggleList.querySelector(`[value="${vars.currentItemListType}"]`));
+        checkInput(vars.DOM.toggleForm.querySelector(`[value="${vars.currentItemListType}"]`));
     } else {
-        vars.DOM.todoList.classList.add("hidden");
-        vars.DOM.noteList.classList.remove("hidden");
-        vars.DOM.todoBlock.classList.add("hidden");
-        vars.DOM.noteBlock.classList.remove("hidden");
-        checkInput(vars.DOM.toggleType.querySelector(`[value="${vars.currentItemListType}"]`));
+        show(vars.DOM.noteList, vars.DOM.noteBlock);
+        hide(vars.DOM.todoList, vars.DOM.todoBlock);
+        checkInput(vars.DOM.toggleList.querySelector(`[value="${vars.currentItemListType}"]`));
+        checkInput(vars.DOM.toggleForm.querySelector(`[value="${vars.currentItemListType}"]`));
     }
 }
