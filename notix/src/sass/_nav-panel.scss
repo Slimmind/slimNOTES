@@ -1,5 +1,4 @@
 .nav-panel {
-    position: relative;
     @include pos(absolute, $bottom: 10px, $left: 10px);
     width: calc(100% - 20px);
     margin-top: -100px;
@@ -21,8 +20,8 @@
         @include pos(fixed, $bottom: 81px, $left: 10px);
         width: 75%;
         max-width: 320px;
-        height: calc(100vh - 90px);
-        max-height: calc(100vh - 90px);
+        height: calc(100vh - 140px);
+        max-height: calc(100vh - 140px);
         padding: 10px;
         border-radius: $main-radius;
         background-color: $color-grey-light;
@@ -90,6 +89,10 @@
             color: $color-blue;
             background-color: $color-white;
         }
+    }
+
+    .todo-filters.hidden {
+        visibility: hidden;
     }
 
     input[type="search"] {
