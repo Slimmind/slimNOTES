@@ -12,5 +12,7 @@ export default function updateItem(itemData) {
         item.querySelector(".todo-date").textContent = itemData.todoExpDate;
         item.setAttribute("class", `item todo ${itemData.todoStatus} ${checkOverDue(itemData)}`);
         item.setAttribute("data-todo-symbol", itemData.itemTitle.charAt(0));
+    } else {
+        item.querySelector(".bg").style.backgroundColor = itemData.itemColor;
     }
 }
