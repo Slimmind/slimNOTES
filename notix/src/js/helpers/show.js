@@ -1,3 +1,5 @@
-export default function show(element) {
-    element.classList.remove("hidden");
+export default function show() {
+    for(const elem of arguments) {
+        elem.classList.remove("hidden");
+    }
 }

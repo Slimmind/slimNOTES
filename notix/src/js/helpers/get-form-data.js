@@ -17,7 +17,7 @@ export default function getFormData(form) {
             itemType: type,
             itemTitle: form.querySelector("[name=\"item-title\"]").value || "...",
             itemText: form.querySelector("[name=\"item-text\"]").value || "...",
-            // itemColor: form.querySelector("[name=\"item-color\"]").value
+            itemColor: form.querySelector("[name=\"item-color\"]").value
         }
     }
     return dataObj;

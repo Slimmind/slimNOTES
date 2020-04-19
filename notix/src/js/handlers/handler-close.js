@@ -1,4 +1,6 @@
 import clearForm from "../helpers/clear-form";
+import hide from "../helpers/hide";
+import show from "../helpers/show";
 
 export default function closeHandler(elem, classToRemove) {
     vars.currentItem = {};
@@ -14,6 +16,7 @@ export default function closeHandler(elem, classToRemove) {
         };
     }
 
-    vars.DOM.todoBlock.classList.remove('hidden');
+    show(vars.DOM.todoBlock);
+    hide(vars.DOM.noteBlock);
     clearForm();
 }
