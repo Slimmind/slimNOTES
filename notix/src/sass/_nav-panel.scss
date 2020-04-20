@@ -75,6 +75,10 @@
     [data-amount="0"] {
         color: transparent;
     }
+    .cancel-filters {
+        color: $color-blue;
+        background-color: $color-white;
+    }
 
     .todo-filters {
         @include flex(row, space-between);
@@ -88,9 +92,13 @@
         .todo-filter.urgent {
             background-color: $color-red;
         }
-        .cancel-todo-filters {
-            color: $color-blue;
-            background-color: $color-white;
+    }
+    .note-filters {
+        .filter {
+            margin: 0 13px 10px 0;
+            &:nth-of-type(4n) {
+                margin-right: 0;
+            }
         }
     }
 
