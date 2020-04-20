@@ -27,6 +27,7 @@ export default function elements(document) {
         serviceMessages: document.querySelector(".service-messages"),
         listTypeInput: document.querySelectorAll("input[name=\"list-type\"]"),
         todoFiltersWrap: document.querySelector(".todo-filters"),
+        noteFiltersWrap: document.querySelector(".note-filters"),
         todoFilters: document.querySelectorAll(".todo-filter"),
         todoFilterNormal: document.querySelector(".todo-filter.normal"),
         todoFilterWarning: document.querySelector(".todo-filter.warning"),

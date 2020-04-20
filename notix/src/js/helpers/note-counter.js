@@ -1,7 +1,6 @@
 export default function noteCounter() {
-    // const colorArr = [{color: "#0433ff", qty: 1}, {color: "#942192", qty: 1}];
-    const colors = [];
-    const filterTemplate = `<strong></strong>` 
+    const colors = []; 
+    vars.DOM.noteFiltersWrap.innerHTML = "";
 
     for (const item of vars.tempStore) {
         if (item.itemType === "note") {
@@ -14,6 +13,13 @@ export default function noteCounter() {
         return total;
     }, {});
 
+    for(const item in colorCount) {
+        vars.DOM.noteFiltersWrap.insertAdjacentHTML("beforeend", `<strong class="filter" data-amount="${colorCount[item]}" style="background-color: ${item}"></strong>`
+        );
+        console.log("ITEM: ", item);
+    }
+
+    vars.DOM.noteFiltersWrap.insertAdjacentHTML("beforeend", `<strong class="filter todo-filter cancel-todo-filters">All</strong>`);
 
     console.log("COLORS", colorCount);
 }
