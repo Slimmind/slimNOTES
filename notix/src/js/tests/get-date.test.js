@@ -1,7 +1,5 @@
 const getDate = require('../helpers/get-date.js');
 
-var year = 0;
-
 test('should be defined', () => {
     expect(getDate()).toBeDefined();
 });
