@@ -109,4 +109,7 @@ import checkDoneHandler from "./handlers/handler-check-done";
         });
     };
 
+    // CALL SERVICE MESSAGE
+    vars.DOM.callServiceBtn.addEventListener("click", () => serviceMessage());
+
 })(window, document, window.localStorage);

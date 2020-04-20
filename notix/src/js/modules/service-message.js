@@ -1,7 +1,7 @@
 import showOverlay from "../helpers/show-overlay";
 import hideOverlay from "../helpers/hide-overlay";
 
-export default function serviceMessage(messageType = "info", messageTitle = "", messageText = "") {
+export default function serviceMessage(messageType = "info", messageTitle = "Info", messageText = "test service message") {
     const message = `
     <div class="service-message ${messageType}">
     <strong class="close-message" role="button" aria-label="close-message"></strong>
