@@ -69,7 +69,7 @@ import checkDoneHandler from "./handlers/handler-check-done";
     vars.DOM.cancelBtn.addEventListener("click", (event) => cancelHandler(event, vars.DOM));
 
     // MENU BTN
-    vars.DOM.menuBtn.addEventListener("touchend click", () => {
+    vars.DOM.menuBtn.addEventListener("click", () => {
         openNav();
         todoCounter();
     });
