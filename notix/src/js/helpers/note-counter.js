@@ -14,12 +14,9 @@ export default function noteCounter() {
     }, {});
 
     for(const item in colorCount) {
-        vars.DOM.noteFiltersWrap.insertAdjacentHTML("beforeend", `<strong class="filter" data-amount="${colorCount[item]}" style="background-color: ${item}"></strong>`
+        vars.DOM.noteFiltersWrap.insertAdjacentHTML("beforeend", `<strong class="filter" data-color="${item}" data-amount="${colorCount[item]}" style="background-color: ${item}"></strong>`
         );
-        console.log("ITEM: ", item);
     }
 
-    vars.DOM.noteFiltersWrap.insertAdjacentHTML("beforeend", `<strong class="filter todo-filter cancel-todo-filters">All</strong>`);
-
-    console.log("COLORS", colorCount);
+    vars.DOM.noteFiltersWrap.insertAdjacentHTML("beforeend", `<strong class="filter cancel-filters">All</strong>`);
 }

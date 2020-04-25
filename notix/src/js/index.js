@@ -17,7 +17,7 @@ import openItemHandler from "./handlers/handler-open-item";
 import editItemHandler from "./handlers/handler-edit-item";
 import cancelHandler from "./handlers/handler-cancel";
 import filterTodoHandler from "./handlers/handler-filter-todo";
-import cancelTodoFilters from "./handlers/handler-cancel-todo-filters";
+import filterNoteHandler from "./handlers/handler-filter-note";
 import deleteItemHandler from "./handlers/handler-delete-item";
 import checkDoneHandler from "./handlers/handler-check-done";
 
@@ -51,7 +51,7 @@ import checkDoneHandler from "./handlers/handler-check-done";
 
     // OPEN ITEM
     for(const list of [...vars.DOM.itemsList]) {
-        list.addEventListener("click", (event) => {
+        list.addEventListener("click", event => {
             if (event.target.classList.contains("item")) {
                 vars.DOM.html.classList.add("no-scroll");
                 openItemHandler(event);
@@ -60,13 +60,13 @@ import checkDoneHandler from "./handlers/handler-check-done";
     };
 
     // EDIT ITEM
-    vars.DOM.changeItemBtn.addEventListener("click", (event) => editItemHandler(event));
+    vars.DOM.changeItemBtn.addEventListener("click", event => editItemHandler(event));
 
     // DELETE ITEM
-    vars.DOM.deleteItemBtn.addEventListener("click", (event) => deleteItemHandler(event));
+    vars.DOM.deleteItemBtn.addEventListener("click", event => deleteItemHandler(event));
 
     // CANCEL
-    vars.DOM.cancelBtn.addEventListener("click", (event) => cancelHandler(event, vars.DOM));
+    vars.DOM.cancelBtn.addEventListener("click", event => cancelHandler(event, vars.DOM));
 
     // MENU BTN
     vars.DOM.menuBtn.addEventListener("click", () => {
@@ -75,14 +75,16 @@ import checkDoneHandler from "./handlers/handler-check-done";
     });
 
     // TODO FILTERS
-    for(const filter of vars.DOM.todoFilters) {
-        filter.addEventListener("click", (event) => {
-            filterTodoHandler(event.target);
-        });
-    }
+    vars.DOM.todoFiltersWrap.addEventListener("click", event => {
+        console.log('CLICK todoFiltersWrap');
+        console.log('event.target', event.target);
+        filterTodoHandler(event.target);
+    });
 
-    // CANCEL FILTERS
-    vars.DOM.cancelTodoFilters.addEventListener("click", cancelTodoFilters);
+    // NOTE FILTERS
+    vars.DOM.noteFiltersWrap.addEventListener("click", event => {
+        filterNoteHandler(event.target);
+    });
 
     // SHOW STORAGE
     vars.DOM.showStorageBtn.addEventListener("click", () => {
@@ -95,7 +97,7 @@ import checkDoneHandler from "./handlers/handler-check-done";
 
     // CHOOSE LIST TYPE
     for (const input of vars.DOM.toggleList.querySelectorAll("input")) {
-        input.addEventListener("change", (event) => {
+        input.addEventListener("change", event => {
             vars.currentItemListType = event.target.value;
             toggleFormType();
         });
@@ -103,7 +105,7 @@ import checkDoneHandler from "./handlers/handler-check-done";
 
     // CHOOSE FORM TYPE
     for (const input of vars.DOM.toggleForm.querySelectorAll("input")) {
-        input.addEventListener("change", (event) => {
+        input.addEventListener("change", event => {
             vars.currentItemListType = event.target.value;
             toggleFormType();
         });
