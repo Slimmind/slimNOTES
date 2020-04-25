@@ -1,6 +1,6 @@
 import checkOverDue from "../helpers/check-over-due";
 
-export default function renderTodo(obj, itemsList) {
+export default function renderTodo(obj) {
     let item = `<div class="item todo ${obj.todoStatus} ${(obj.todoDone) ? 'done' : null} ${checkOverDue(obj)}"
         id="${obj.itemId}"
         data-todo-symbol="${obj.itemTitle.charAt(0)}">
@@ -10,9 +10,6 @@ export default function renderTodo(obj, itemsList) {
             <span class="check-btn"></span>
         </div>
         `;
-    if(itemsList === "filter") {
-        vars.DOM.filterList.insertAdjacentHTML("beforeend", item);
-    } else {
-        vars.DOM.todoList.insertAdjacentHTML("beforeend", item);
-    }
+
+    vars.DOM.todoList.insertAdjacentHTML("beforeend", item);
 }

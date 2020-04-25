@@ -28,11 +28,10 @@ export default function elements(document) {
         listTypeInput: document.querySelectorAll("input[name=\"list-type\"]"),
         todoFiltersWrap: document.querySelector(".todo-filters"),
         noteFiltersWrap: document.querySelector(".note-filters"),
-        todoFilters: document.querySelectorAll(".todo-filter"),
-        todoFilterNormal: document.querySelector(".todo-filter.normal"),
-        todoFilterWarning: document.querySelector(".todo-filter.warning"),
-        todoFilterUrgent: document.querySelector(".todo-filter.urgent"),
-        cancelTodoFilters: document.querySelector(".cancel-todo-filters"),
+        todoFilterNormal: document.querySelector(".filter.normal"),
+        todoFilterWarning: document.querySelector(".filter.warning"),
+        todoFilterUrgent: document.querySelector(".filter.urgent"),
+        cancelFilters: document.querySelector(".cancel-filters"),
     };
     return DOM;
 } 
