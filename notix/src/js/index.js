@@ -66,7 +66,9 @@ import checkDoneHandler from "./handlers/handler-check-done";
     vars.DOM.deleteItemBtn.addEventListener("click", event => deleteItemHandler(event));
 
     // CANCEL
-    vars.DOM.cancelBtn.addEventListener("click", event => cancelHandler(event, vars.DOM));
+    for(const btn of vars.DOM.cancelBtn) {
+        btn.addEventListener("click", event => cancelHandler(event));
+    }
 
     // MENU BTN
     vars.DOM.menuBtn.addEventListener("click", () => {
@@ -76,8 +78,6 @@ import checkDoneHandler from "./handlers/handler-check-done";
 
     // TODO FILTERS
     vars.DOM.todoFiltersWrap.addEventListener("click", event => {
-        console.log('CLICK todoFiltersWrap');
-        console.log('event.target', event.target);
         filterTodoHandler(event.target);
     });
 
