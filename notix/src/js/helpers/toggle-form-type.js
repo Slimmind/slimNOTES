@@ -3,6 +3,7 @@ import hide from "./hide";
 import show from "./show";
 
 export default function toggleFormType() {
+    console.log("TYPE: ", vars.currentItemListType);
     if(vars.currentItemListType === "todo") {
         show(vars.DOM.todoList, vars.DOM.todoBlock, vars.DOM.todoFiltersWrap);
         hide(vars.DOM.noteList, vars.DOM.noteBlock, vars.DOM.noteFiltersWrap);

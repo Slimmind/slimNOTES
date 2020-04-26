@@ -1,6 +1,7 @@
 import fillForm from '../helpers/fill-form';
 
 export default function openItemHandler(event) {
+    console.log("TYPE: ", vars.currentItemListType);
     const targetItem = event.target;
     const id = event.target.getAttribute('id');
     const arrayIndex = vars.tempStore.findIndex((item) => item.itemId === id);
@@ -14,10 +15,7 @@ export default function openItemHandler(event) {
         arrayData: vars.tempStore[arrayIndex],
     };
 
-    vars.DOM.itemForm.classList.add('edit-form');
-    if (vars.currentItem.arrayData.itemType === 'todo') {
-        vars.DOM.itemForm.classList.add('todo-form');
-    }
+    vars.DOM.itemForm.classList.add('edit-form', `${vars.currentItemListType}-form`);
 
     fillForm(vars.currentItem.arrayData);
 }
