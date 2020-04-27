@@ -20,6 +20,7 @@ import filterTodoHandler from "./handlers/handler-filter-todo";
 import filterNoteHandler from "./handlers/handler-filter-note";
 import deleteItemHandler from "./handlers/handler-delete-item";
 import checkDoneHandler from "./handlers/handler-check-done";
+import handlerSearch from "./handlers/handler-search";
 
 (function (window, document, store) {
     window.vars = window.vars || {};
@@ -113,5 +114,8 @@ import checkDoneHandler from "./handlers/handler-check-done";
 
     // CALL SERVICE MESSAGE
     vars.DOM.callServiceBtn.addEventListener("click", () => serviceMessage());
+
+    // SEARCH
+    vars.DOM.searchField.addEventListener("keyup", event => handlerSearch(event));
 
 })(window, document, window.localStorage);
