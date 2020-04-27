@@ -33,6 +33,7 @@ export default function elements(document) {
         todoFilterWarning: document.querySelector(".filter.warning"),
         todoFilterUrgent: document.querySelector(".filter.urgent"),
         cancelFilters: document.querySelector(".cancel-filters"),
+        searchField: document.querySelector(".nav-panel input[type=\"search\"]"),
     };
     return DOM;
 } 
