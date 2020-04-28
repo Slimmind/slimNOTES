@@ -1,14 +1,6 @@
 .block {
     max-height: 600px;
-    opacity: 1;
-    pointer-events: all;
-    transition: opacity .5s, max-height .5s;
-    will-change: max-height;
-
     &.hidden {
-        max-height: 0;
-        opacity: 0;
-        pointer-events: none;
-        overflow: hidden;
+        display: none;
     }
 }
