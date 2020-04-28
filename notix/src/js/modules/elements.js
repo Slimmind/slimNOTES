@@ -6,7 +6,7 @@ export default function elements(document) {
         itemsList: document.querySelectorAll(".items-list"),
         todoList: document.querySelector(".todo-list"),
         noteList: document.querySelector(".note-list"),
-        item: document.querySelectorAll(".item"),
+        items: document.getElementsByClassName("item"),
         todos: document.getElementsByClassName("todo"),
         notes: document.getElementsByClassName("note"),
         toggleForm: document.querySelector(".toggle-form-type"),
