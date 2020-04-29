@@ -14,11 +14,12 @@
     }
 }
 .service-message {
-    @include pos(absolute, 0, 0);
-    width: 100vw;
-    max-height: calc(100vh - 80px);
+    @include pos(absolute, 10px, 10px);
+    width: calc(100vw - 20px);
+    max-height: calc(100vh - 100px);
     padding: 10px 10px 10px;
     box-shadow: $main-shadow;
+    border-radius: $main-radius;
     color: $color-white;
 
     &.error {
@@ -47,8 +48,6 @@
         }
     }
     .message-text {
-        // padding-top: 10px;
-        // border-top: 1px solid $color-white;
         color: $color-white;
     }
 

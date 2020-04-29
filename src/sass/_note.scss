@@ -1,5 +1,15 @@
 .note {
     padding: 8px;
+    &:before {
+        content: "";
+        @include pos(absolute, 0, 0, 0, 0);
+        background-color: rgba($color-grey, .4);
+        border-radius: $main-radius;
+    }
+
+    .item-text {
+        color: $color-black;
+    }
 
     &:after {
         content: "";

@@ -90,7 +90,7 @@ import handlerSearch from "./handlers/handler-search";
     // SHOW STORAGE
     vars.DOM.showStorageBtn.addEventListener("click", () => {
         console.log("STORAGE");
-        serviceMessage("success", "Test Message", "lorem ipsum dolor sit amet");
+        serviceMessage("success", "Local Storage", vars.tempStore);
     });
 
     // CHECK DONE
