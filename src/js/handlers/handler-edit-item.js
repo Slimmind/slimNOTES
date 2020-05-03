@@ -1,7 +1,6 @@
 import closeHandler from "./handler-close";
 import updateItem from "../helpers/update-item";
 import getFormData from "../helpers/get-form-data";
-import clearForm from "../helpers/clear-form";
 import setStore from "../helpers/set-store";
 
 export default function editItemHandler(event) {
@@ -23,6 +22,5 @@ export default function editItemHandler(event) {
             clearForm();
     } else {
         closeHandler(vars.DOM.windows, 'active-window');
-        clearForm();
     }
 }

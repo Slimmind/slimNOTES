@@ -1,4 +1,4 @@
-import clearForm from "../helpers/clear-form";
+import resetForm from "../helpers/reset-form";
 import hide from "../helpers/hide";
 import show from "../helpers/show";
 
@@ -18,5 +18,5 @@ export default function closeHandler(elem, classToRemove) {
 
     show(vars.DOM.todoBlock);
     hide(vars.DOM.noteBlock);
-    clearForm();
+    resetForm();
 }
