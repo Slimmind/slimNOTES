@@ -20,8 +20,8 @@
         @include pos(fixed, $bottom: 81px, $left: 10px);
         width: 75%;
         max-width: 320px;
-        height: calc(100vh - 150px);
-        max-height: calc(100vh - 150px);
+        height: calc(100% - 150px);
+        max-height: calc(100% - 150px);
         padding: 10px;
         border-radius: $main-radius;
         background-color: $color-grey-light;
