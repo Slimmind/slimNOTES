@@ -1,0 +1,139 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Notix</title>
+<link href="main.css" rel="stylesheet"></head>
+
+<body>
+    <div class="service-messages">
+            
+    </div>
+    <!-- SERVICE MESSAGES end -->
+
+    <div class="wrapper">
+        <main>
+            <div class="toggle-item-list">
+                <div class="toggler toggle-type">
+                    <div class="input-wrap">
+                        <input type="radio" name="list-type" value="todo" id="todo-list" checked="checked">
+                        <label for="todo-list">Todo List</label>
+                    </div>
+                    <div class="input-wrap">
+                        <input type="radio" name="list-type" value="note" id="note-list">
+                        <label for="note-list">Note List</label>
+                    </div>
+                </div>
+            </div>
+            <!-- TOGGLE ITEM LIST end -->
+
+            <div class="todo-list items-list"></div>
+            <!-- TODO LIST end -->
+
+            <div class="note-list items-list hidden"></div>
+            <!-- NOTE LIST end -->
+
+            <div class="window" id="item-form">
+                <form>
+                    <div class="create-form-elements">
+                        <h3>Create Item</h3>
+                    </div>
+                    <div class="edit-form-elements">
+                        <h3>Edit Item</h3>
+                    </div>
+                    <!-- FORM'S TITLES end -->
+                    
+                    <div class="toggler toggle-form-type create-form-elements">
+                        <div class="input-wrap">
+                            <input type="radio" name="item-type" value="todo" id="type-todo" checked="">
+                            <label for="type-todo">ToDo</label>
+                        </div>
+                        <div class="input-wrap">
+                            <input type="radio" name="item-type" value="note" id="type-note">
+                            <label for="type-note">Note</label>
+                        </div>
+                    </div>
+                    <!-- TOGGLE TYPE OF FORM end-->
+
+                    <div class="input-wrap">
+                        <input class="input" type="text" name="item-title" placeholder="item title...">
+                    </div>
+                    <div class="input-wrap">
+                        <textarea class="input" name="item-text" cols="1" rows="3" placeholder="item text..."></textarea>
+                    </div>
+
+                    <div class="todo-block block">
+                        <div class="input-wrap">
+                            <input class="input" name="todo-exp-date" type="date">
+                        </div>
+                        <div class="controls align-center">
+                            <div class="input-wrap">
+                                <input class="todo-status normal" type="radio" name="todo-status" value="normal" id="status-normal" checked="">
+                                <label for="status-normal">Normal</label>
+                            </div>
+                            <div class="input-wrap">
+                                <input class="todo-status warning" type="radio" name="todo-status" value="warning" id="status-warning">
+                                <label for="status-warning">Warning</label>
+                            </div>
+                            <div class="input-wrap">
+                                <input class="todo-status urgent" type="radio" name="todo-status" value="urgent" id="status-urgent">
+                                <label for="status-urgent">Urgent</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="note-block block">
+                        <div class="input-wrap color">
+                            <label for="color">Choose background color:</label>
+                            <input class="input" name="item-color" type="color" id="color">
+                        </div>
+                    </div>
+
+                    <div class="create-form-elements controls align-stretch">
+                        <button class="btn cancel-btn">Cancel</button>
+                        <button class="btn create-btn">Create</button>
+                    </div>
+                    <!-- CREATE-FORM CONTROLS end -->
+
+                    <div class="edit-form-elements controls align-stretch">
+                        <button class="btn cancel-btn">Cancel</button>
+                        <button class="btn delete-btn">Delete</button>
+                        <button class="btn change-btn">Save</button>
+                    </div>
+                    <!-- EDIT-FORM CONTROLS end -->
+
+                </form>
+            </div>
+        </main>
+        <!-- MAIN end -->
+
+        <div class="nav-panel">
+            <div class="main-menu">
+                <ul>
+                    <li id="show-local-storage">Show Local Storage</li>
+                    <li id="call-service-message">Call Service Message</li>
+                </ul>
+                <div class="todo-filters">
+                    <strong class="filter normal" data-amount="12"></strong>
+                    <strong class="filter warning" data-amount="104"></strong>
+                    <strong class="filter urgent" data-amount="1278"></strong>
+                    <strong class="filter cancel-filters hidden">All</strong>
+                </div>
+                <div class="note-filters">
+                    <div class="filters"></div>
+                    <strong class="filter cancel-filters hidden">All</strong>
+                </div>
+            </div>
+            <div class="controls align-stretch">
+                <button class="btn menu-btn" aria-label="open menu"></button>
+                <input type="search" placeholder="Search..." class="input">
+                <button class="btn add-item-btn" aria-label="add item">
+            </button></div>
+        </div>
+        <!-- NAV PANEL end -->
+    </div>
+<script src="main.js"></script></body>
+
+</html>
