@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://slimmind.github.io/notix",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=development webpack",
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "prod": "cross-env NODE_ENV=production webpack --mode production",
     "serve": "http-server -1-c -p 4000",
-    "devserve": "cross-env NODE_ENV=development webpack-dev-server"
+    "devserve": "cross-env NODE_ENV=development webpack-dev-server",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "author": "slimmind",
   "license": "MIT",
@@ -33,6 +36,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "create-react-app": "^3.4.1"
+    "create-react-app": "^3.4.1",
+    "gh-pages": "^2.2.0"
   }
 }
