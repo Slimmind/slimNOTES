@@ -77,6 +77,7 @@ ul {
   position: relative;
   display: inline-block;
   width: auto;
+  min-width: 40px;
   max-width: 100%;
   height: 40px;
   padding: 5px 15px;
@@ -90,21 +91,24 @@ ul {
   cursor: pointer;
   flex-shrink: 0;
   box-shadow: 0 0 3px 0 rgba(100, 100, 100, 0.4);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 .btn:active {
   border: 2px solid #d04526;
 }
 .btn.cancel-btn {
-  background-color: #cdcdcd;
+  background-image: url(img/icon-back.svg);
 }
 .btn.change-btn {
-  background-color: #2b5796;
+  background-image: url(img/icon-save.svg);
 }
 .btn.create-btn {
-  background-color: #226f45;
+  background-image: url(img/icon-true.svg);
 }
 .btn.delete-btn {
-  background-color: #d04526;
+  background-image: url(img/icon-del.svg);
 }
 .btn.round-btn {
   width: 50px;
@@ -325,6 +329,7 @@ ul {
   background-color: #efefef;
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
 }
 .input::-webkit-input-placeholder {
   color: rgba(0, 49, 82, 0.3);
